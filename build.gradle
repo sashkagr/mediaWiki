@@ -3,10 +3,11 @@ plugins {
     id 'war'
     id 'org.springframework.boot' version '2.6.3'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id "org.sonarqube" version "4.4.1.3373"
 }
-war{
-    archiveName='ROOT'
-}
+
+
+
 
 group 'org.example'
 version '1.0-SNAPSHOT'
@@ -20,7 +21,8 @@ dependencies {
  //   implementation 'org.apache.commons:commons-text:1.9'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    implementation 'mysql:mysql-connector-java:8.0.27'
+    implementation 'mysqпl:mysql-connector-java:8.0.28'
+
 //    // https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-slf4j-impl
    // implementation group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: '2.7'
 //// https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core
