@@ -1,11 +1,13 @@
 package org.example;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import java.util.logging.Logger;
 
 @SpringBootApplication
 public class Main {
+    private static final Logger logger = Logger.getLogger(Main.class.getName());
     public static void main(String[] args) {
-        System.out.println("Hello world!");
+        logger.info("Hello world!");
         SpringApplication.run(Main.class, args);
     }
 }

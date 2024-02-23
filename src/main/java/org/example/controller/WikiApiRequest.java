@@ -1,6 +1,7 @@
 package org.example.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.example.Main;
 import org.example.modal.DescriptionGetApiResponse;
 import org.example.modal.DescriptionGetApiSearchResponse;
 import org.example.modal.Word;
@@ -11,9 +12,11 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 public class WikiApiRequest {
+    private static final Logger logger = Logger.getLogger(WikiApiRequest.class.getName());
     public static List<Word> getDescriptionByTitle(String title) {
         ObjectMapper objectMapper = new ObjectMapper();
         List<Word> result = new ArrayList<>();
@@ -53,7 +56,7 @@ public class WikiApiRequest {
                         .collect(Collectors.toList());
             }
             else {
-                System.out.println("Error: " + responseCode);
+                logger.info("Error: " + responseCode);
             }
 
             conn.disconnect();

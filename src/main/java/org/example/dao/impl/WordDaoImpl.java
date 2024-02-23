@@ -1,5 +1,6 @@
 package org.example.dao.impl;
 
+import org.example.controller.RequestManager;
 import org.example.dao.WordDao;
 import org.example.modal.Word;
 
@@ -11,6 +12,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 public enum WordDaoImpl implements WordDao {
     INSTANCE;
@@ -33,6 +35,7 @@ public enum WordDaoImpl implements WordDao {
 
     private static final String EDIT_WORD = "UPDATE descriptions SET description=? WHERE id=?";
 
+    private static final Logger logger = Logger.getLogger(WordDaoImpl.class.getName());
 
     @Override
     public void addWord(Word word) {
@@ -48,8 +51,7 @@ public enum WordDaoImpl implements WordDao {
             pstmt.setString(2, word.getDescription());
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println(e.getMessage());
+            logger.info(e.getMessage());
         } finally {
             //close connection ,stmt and resultset here
             try { con.close(); } catch(SQLException se) { /*can't do anything */ }
@@ -72,8 +74,7 @@ public enum WordDaoImpl implements WordDao {
             pstmt.setInt(1, word.getId());
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println(e.getMessage());
+            logger.info(e.getMessage());
         } finally {
             //close connection ,stmt and resultset here
             try { con.close(); } catch(SQLException se) { /*can't do anything */ }
@@ -96,8 +97,7 @@ public enum WordDaoImpl implements WordDao {
             pstmt.setInt(2,word.getId());
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println(e.getMessage());
+            logger.info(e.getMessage());
         } finally {
             //close connection ,stmt and resultset here
             try { con.close(); } catch(SQLException se) { /*can't do anything */ }
@@ -124,8 +124,7 @@ public enum WordDaoImpl implements WordDao {
             word.setDescription(rs.getString(3));
             words.add(word);
         } } catch (SQLException e) {
-        e.printStackTrace();
-            System.out.println(e.getMessage());
+            logger.info(e.getMessage());
     } finally {
         //close connection ,stmt and resultset here
         try { con.close(); } catch(SQLException se) { /*can't do anything */ }
