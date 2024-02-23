@@ -17,11 +17,6 @@ import java.util.logging.Logger;
 public enum WordDaoImpl implements WordDao {
     INSTANCE;
 
-    // JDBC URL, username and password of MySQL server
-    private static final String url = "jdbc:mysql://localhost:3306/mediawiki";
-    private static final String user = "root";
-    private static final String password = "root";
-
     // JDBC variables for opening and managing connection
     private static PreparedStatement pstmt;
     private static Connection con;
@@ -41,7 +36,7 @@ public enum WordDaoImpl implements WordDao {
     public void addWord(Word word) {
         try {
             // opening database connection to MySQL server
-            con = DriverManager.getConnection(url, user, password);
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/mediawiki", "root", "root");
             // getting Statement object to execute query
             stmt = con.createStatement();
             // executing SELECT query
@@ -65,7 +60,7 @@ public enum WordDaoImpl implements WordDao {
     public void removeWord(Word word) {
         try {
             // opening database connection to MySQL server
-            con = DriverManager.getConnection(url, user, password);
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/mediawiki", "root", "root");
             // getting Statement object to execute query
             stmt = con.createStatement();
             // executing SELECT query
@@ -87,7 +82,7 @@ public enum WordDaoImpl implements WordDao {
     public void editWord(Word word) {
         try {
             // opening database connection to MySQL server
-            con = DriverManager.getConnection(url, user, password);
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/mediawiki", "root", "root");
             // getting Statement object to execute query
             stmt = con.createStatement();
             // executing SELECT query
@@ -111,7 +106,7 @@ public enum WordDaoImpl implements WordDao {
         List<Word> words = new ArrayList<>();
         try {
             // opening database connection to MySQL server
-            con = DriverManager.getConnection(url, user, password);
+            con = DriverManager.getConnection("jdbc:mysql://localhost:3306/mediawiki", "root", "root");
             // getting Statement object to execute query
             stmt = con.createStatement();
             // executing SELECT query

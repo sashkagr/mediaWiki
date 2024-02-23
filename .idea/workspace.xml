@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="77832474-f946-403b-b37e-9780fbc1c7ef" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/controller/RequestManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/controller/RequestManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/controller/WikiApiRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/controller/WikiApiRequest.java" afterDir="false" />
-    </list>
+    <list default="true" id="77832474-f946-403b-b37e-9780fbc1c7ef" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -116,21 +111,11 @@
       <workItem from="1708527105481" duration="24091000" />
       <workItem from="1708596325889" duration="4943000" />
       <workItem from="1708612081997" duration="2957000" />
+      <workItem from="1708711035235" duration="339000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/org/example/controller/WikiApiRequest.java</url>
-          <line>53</line>
-          <option name="timeStamp" value="15" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>
