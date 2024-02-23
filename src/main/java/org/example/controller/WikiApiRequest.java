@@ -1,7 +1,6 @@
 package org.example.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.example.Main;
 import org.example.modal.DescriptionGetApiResponse;
 import org.example.modal.DescriptionGetApiSearchResponse;
 import org.example.modal.Word;

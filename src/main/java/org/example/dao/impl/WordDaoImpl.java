@@ -1,6 +1,5 @@
 package org.example.dao.impl;
 
-import org.example.controller.RequestManager;
 import org.example.dao.WordDao;
 import org.example.modal.Word;
 

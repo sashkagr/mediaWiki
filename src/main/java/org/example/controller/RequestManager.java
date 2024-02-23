@@ -1,6 +1,5 @@
 package org.example.controller;
 
-import org.example.Main;
 import org.example.modal.Word;
 import org.example.service.WordService;
 import org.example.service.impl.WordServiceImpl;
@@ -46,8 +45,8 @@ public class RequestManager {
         words=WikiApiRequest.getDescriptionByTitle(name);
         int cnt=1;
         for (Word word : words) {
-            word.setDescription(word.getDescription().replaceAll("\\<.*?\\>", ""));
-            logger.info("| "+cnt+"| "+word.getTitle()+"|"+word.getDescription());
+            word.setDescription(word.getDescription().replaceAll("\\<[^\\\\>]*+\\>", ""));
+            logger.info(String.format("| %d | %s | %s", cnt, word.getTitle(), word.getDescription()));
             cnt++;
         }
         logger.info("Select number of title to insert it into SQL");

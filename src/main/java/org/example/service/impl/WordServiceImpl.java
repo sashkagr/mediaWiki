@@ -6,7 +6,6 @@ import org.example.modal.Word;
 import org.example.service.WordService;
 
 import java.util.List;
-import java.util.Optional;
 
 public enum WordServiceImpl implements WordService {
     INSTANCE;
