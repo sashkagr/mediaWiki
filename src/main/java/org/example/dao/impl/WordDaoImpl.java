@@ -49,9 +49,9 @@ public enum WordDaoImpl implements WordDao {
             logger.info(e.getMessage());
         } finally {
             //close connection ,stmt and resultset here
-            try { con.close(); } catch(SQLException se) { /*can't do anything */ }
-            try { stmt.close(); } catch(SQLException se) { /*can't do anything */ }
-            try { rs.close(); } catch(SQLException se) { /*can't do anything */ }
+            try { con.close(); } catch(SQLException e) { logger.info(e.getMessage());}
+            try { stmt.close(); } catch(SQLException e) {logger.info(e.getMessage());}
+            try { rs.close(); } catch(SQLException e) { logger.info(e.getMessage());}
         }
     }
 
@@ -72,9 +72,9 @@ public enum WordDaoImpl implements WordDao {
             logger.info(e.getMessage());
         } finally {
             //close connection ,stmt and resultset here
-            try { con.close(); } catch(SQLException se) { /*can't do anything */ }
-            try { stmt.close(); } catch(SQLException se) { /*can't do anything */ }
-            try { rs.close(); } catch(SQLException se) { /*can't do anything */ }
+            try { con.close(); } catch(SQLException e) { logger.info(e.getMessage()); }
+            try { stmt.close(); } catch(SQLException e) { logger.info(e.getMessage()); }
+            try { rs.close(); } catch(SQLException e) { logger.info(e.getMessage()); }
         }
     }
 
@@ -95,9 +95,9 @@ public enum WordDaoImpl implements WordDao {
             logger.info(e.getMessage());
         } finally {
             //close connection ,stmt and resultset here
-            try { con.close(); } catch(SQLException se) { /*can't do anything */ }
-            try { stmt.close(); } catch(SQLException se) { /*can't do anything */ }
-            try { rs.close(); } catch(SQLException se) { /*can't do anything */ }
+            try { con.close(); } catch(SQLException e) { logger.info(e.getMessage()); }
+            try { stmt.close(); } catch(SQLException e) { logger.info(e.getMessage());}
+            try { rs.close(); } catch(SQLException e) { logger.info(e.getMessage()); }
         }
     }
 
@@ -122,9 +122,9 @@ public enum WordDaoImpl implements WordDao {
             logger.info(e.getMessage());
     } finally {
         //close connection ,stmt and resultset here
-        try { con.close(); } catch(SQLException se) { /*can't do anything */ }
-        try { stmt.close(); } catch(SQLException se) { /*can't do anything */ }
-        try { rs.close(); } catch(SQLException se) { /*can't do anything */ }
+        try { con.close(); } catch(SQLException e) { logger.info(e.getMessage());}
+        try { stmt.close(); } catch(SQLException e) { logger.info(e.getMessage()); }
+        try { rs.close(); } catch(SQLException e) { logger.info(e.getMessage()); }
     }
         return words;
     }

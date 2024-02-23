@@ -49,6 +49,7 @@ public class WikiApiRequest {
                             words.add(searchResponse);
                         }
                     } catch (Exception e) {
+                        logger.info(e.getMessage());
                     }
                 }
                 result = words.stream()
@@ -61,7 +62,7 @@ public class WikiApiRequest {
 
             conn.disconnect();
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.info(e.getMessage());
         }
         return result;
     }
