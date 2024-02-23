@@ -41,19 +41,19 @@ public class RequestManager {
     }
 
     public void definitionController(String name) {
-        List<Word> words;
-        words=WikiApiRequest.getDescriptionByTitle(name);
+        List<Word> descriptions;
+        descriptions=WikiApiRequest.getDescriptionByTitle(name);
         int cnt=1;
-        for (Word word : words) {
+        for (Word word : descriptions) {
             word.setDescription(word.getDescription().replaceAll("\\<[^\\\\>]*+\\>", ""));
             logger.info(String.format("| %d | %s | %s", cnt, word.getTitle(), word.getDescription()));
             cnt++;
         }
         logger.info("Select number of title to insert it into SQL");
         int input = scanner.nextInt();
-        if (input>0&&input<= words.size())
+        if (input>0&&input<= descriptions.size())
         {
-            Word word= words.get(input-1);
+            Word word= descriptions.get(input-1);
             wordService.addWord(word);
 
     }
