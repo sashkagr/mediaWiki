@@ -46,8 +46,10 @@ public class RequestManager {
         int cnt=1;
         for (Word word : descriptions) {
             word.setDescription(word.getDescription().replaceAll("\\<[^\\\\>]*+\\>", ""));
-            if(cnt>0)
-            logger.info(String.format("| %d | %s | %s", cnt, word.getTitle(), word.getDescription()));
+            if(cnt>0){
+                logger.info(String.format("| %d | %s | %s", cnt, word.getTitle(), word.getDescription()));
+
+            }
             cnt++;
         }
         logger.info("Select number of title to insert it into SQL");

@@ -56,8 +56,10 @@ public class WikiApiRequest {
                         .collect(Collectors.toList());
             }
             else {
-                if(responseCode>0)
-                logger.info(String.format("Error: %d", responseCode));
+                if(responseCode>0){
+                    logger.info(String.format("Error: %d", responseCode));
+                }
+
             }
 
             conn.disconnect();
