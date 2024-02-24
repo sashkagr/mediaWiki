@@ -37,9 +37,6 @@ public enum WordDaoImpl implements WordDao {
             // opening database connection to MySQL server
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/mediawiki", "root", "root");
             // getting Statement object to execute query
-            stmt = con.createStatement();
-            // executing SELECT query
-
             pstmt = con.prepareStatement(ADD_WORD_QUERY);
             pstmt.setString(1, word.getTitle());
             pstmt.setString(2, word.getDescription());
