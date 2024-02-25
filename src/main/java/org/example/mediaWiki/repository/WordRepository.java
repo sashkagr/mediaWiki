@@ -1,6 +1,6 @@
-package org.example.MediaWiki.repository;
+package org.example.mediaWiki.repository;
 
-import org.example.MediaWiki.modal.Word;
+import org.example.mediaWiki.modal.Word;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,7 +1,7 @@
-package org.example.MediaWiki.controller;
+package org.example.mediaWiki.controller;
 
-import org.example.MediaWiki.modal.Word;
-import org.example.MediaWiki.service.impl.WordServiceImpl;
+import org.example.mediaWiki.modal.Word;
+import org.example.mediaWiki.service.impl.WordServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
