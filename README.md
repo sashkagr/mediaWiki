@@ -5,7 +5,7 @@ This service is designed to retrieve definitions of words. If the term is alread
 
 ## SonarCloud
 
-[https://sonarcloud.io/project/overview?id=sashkagr_MediaWiki](link)
+https://sonarcloud.io/project/overview?id=sashkagr_MediaWiki
 
 ## Requirements
 The project utilizes Spring Boot, Gradle, and MySQL (any database can be connected). Database operations are performed using JPA repository. It is mandatory to create the ```application.properties``` file.
