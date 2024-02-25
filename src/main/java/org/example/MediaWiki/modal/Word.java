@@ -1,4 +1,4 @@
-package org.example.modal;
+package org.example.MediaWiki.modal;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

@@ -1,6 +1,6 @@
-package org.example.service;
+package org.example.MediaWiki.service;
 
-import org.example.modal.Word;
+import org.example.MediaWiki.modal.Word;
 
 import java.util.List;
 

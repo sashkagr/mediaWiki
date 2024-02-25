@@ -1,9 +1,9 @@
-package org.example.controller;
+package org.example.MediaWiki.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.example.modal.DescriptionGetApiResponse;
-import org.example.modal.DescriptionGetApiSearchResponse;
-import org.example.modal.Word;
+import org.example.MediaWiki.modal.DescriptionGetApiResponse;
+import org.example.MediaWiki.modal.DescriptionGetApiSearchResponse;
+import org.example.MediaWiki.modal.Word;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;

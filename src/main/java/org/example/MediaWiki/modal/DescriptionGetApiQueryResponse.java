@@ -1,4 +1,4 @@
-package org.example.modal;
+package org.example.MediaWiki.modal;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
