@@ -95,12 +95,12 @@ Note that instead of port ```8080```, write your port that you specified in ```a
 * PUT request
 ![img_1.png](img_1.png)
 ## API Documentation
-The Wikipedia API is used [https://habr.com/en/articles/104480/](link). 
+The Wikipedia API is used https://habr.com/en/articles/104480/. 
 To request a list of pages for the entered word in JSON format, use the URL string:
-[https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=Apple&srwhat=text&format=json](link).
+https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=Apple&srwhat=text&format=json.
 Replace ```Apple``` with the requested word. 
 Each page has its own ```pageId```. To request data from this page later, use the URL string: 
-[https://en.wikipedia.org/w/api.php?action=query&prop=extracts&format=json&pageids=18978754](link).
+https://en.wikipedia.org/w/api.php?action=query&prop=extracts&format=json&pageids=18978754.
 Replace ```18978754``` with the required ```pageId```.
 
 
