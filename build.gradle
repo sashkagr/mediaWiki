@@ -9,10 +9,11 @@ plugins {
 sonar {
     properties {
         property "sonar.projectKey", "sashkagr_MediaWiki"
-        property "sonar.organization", "sashkagr"
+        property "sonar.organization", "sashkagr-1"
         property "sonar.host.url", "https://sonarcloud.io"
     }
 }
+
 configurations {
     compileOnly {
         extendsFrom annotationProcessor
