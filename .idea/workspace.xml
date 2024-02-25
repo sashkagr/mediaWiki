@@ -6,7 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="77832474-f946-403b-b37e-9780fbc1c7ef" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/controller/RequestManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/controller/RequestManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/controller/WikiApiRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/controller/WikiApiRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/modal/Word.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/modal/Word.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/impl/WordServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/impl/WordServiceImpl.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -123,7 +126,7 @@
       <workItem from="1708775862579" duration="1010000" />
       <workItem from="1708796610733" duration="15071000" />
       <workItem from="1708812073853" duration="173000" />
-      <workItem from="1708864181471" duration="21450000" />
+      <workItem from="1708864181471" duration="23321000" />
     </task>
     <servers />
   </component>
@@ -135,7 +138,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/org/example/controller/RequestManager.java</url>
-          <line>72</line>
+          <line>78</line>
           <option name="timeStamp" value="14" />
         </line-breakpoint>
       </breakpoints>

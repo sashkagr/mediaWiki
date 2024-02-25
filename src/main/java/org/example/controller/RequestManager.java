@@ -1,6 +1,5 @@
 package org.example.controller;
 
-import org.example.Main;
 import org.example.modal.Word;
 import org.example.service.impl.WordServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 import java.util.logging.Logger;
 
 
@@ -26,7 +24,6 @@ import java.util.logging.Logger;
 public class RequestManager {
 
     private static final Logger logger = Logger.getLogger(RequestManager.class.getName());
-    Scanner scanner = new Scanner(System.in);
     List<Word> words = new ArrayList<>();
     String titleForApi="";
 
@@ -37,7 +34,6 @@ public class RequestManager {
     public String getDefinition(@RequestParam String name) {
 
         words = wordService.getAllUserWords();
-        boolean existance = false;
         String message ="";
         String description=wordService.existingByTitle(name);
             if (description!=null) {
@@ -57,11 +53,21 @@ public class RequestManager {
         String listing = "";
         if(answer.equals("yes")) {
             int cnt = 1;
+            StringBuilder builder = new StringBuilder();
+
             for (Word word : descriptions) {
                 word.setDescription(word.getDescription().replaceAll("\\<[^\\\\>]*+\\>", ""));
-                listing += cnt + "|" + word.getTitle() + "|" + word.getDescription() + "\n";
+                String count = Integer.toString(cnt);
+                builder.append(count)
+                        .append("|")
+                        .append(word.getTitle())
+                        .append("|")
+                        .append(word.getDescription())
+                        .append("\n");
+
                 cnt++;
             }
+            listing = builder.toString();
             listing += "Select number of title to insert it into SQL (to answer enter number in path /search/answer)";
         }
         else {

@@ -17,6 +17,7 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 public class WikiApiRequest {
+    private WikiApiRequest() {}
     private static final Logger logger = Logger.getLogger(WikiApiRequest.class.getName());
 
     public static List<Word> getDescriptionByTitle(String title) {
@@ -24,52 +25,54 @@ public class WikiApiRequest {
         List<Word> result = new ArrayList<>();
         String jsonResponse = "";
         try {
-            String apiUrl = "https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch="+title+"&srwhat=text&format=json";
+            String apiUrl = "https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=" + title + "&srwhat=text&format=json";
             URL url = new URL(apiUrl);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
-
             int responseCode = conn.getResponseCode();
+
             if (responseCode == 200) {
-                BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                String line;
-                StringBuilder response = new StringBuilder();
-
-                while ((line = reader.readLine()) != null) {
-                    response.append(line);
-                }
-                reader.close();
-
-                // Parse the JSON response here and extract the book information
-                jsonResponse = response.toString();
-                DescriptionGetApiResponse responses = objectMapper.readValue(jsonResponse, DescriptionGetApiResponse.class);
-                List<DescriptionGetApiSearchResponse> words = new ArrayList<>();
-                for (DescriptionGetApiSearchResponse searchResponse : responses.getQuery().getSearch()) {
-                    try {
-
-                        if (searchResponse.getDescription() != null && searchResponse.getTitle() != null&& searchResponse.getId()!=null) {
-                            words.add(searchResponse);
-                        }
-                    } catch (Exception e) {
-                        logger.info(e.getMessage());
-                    }
-                }
+                jsonResponse = readResponse(conn);
+                List<DescriptionGetApiSearchResponse> words = extractValidWords(jsonResponse, objectMapper);
                 result = words.stream()
                         .map(WikiApiRequest::mapResponseToModel)
                         .collect(Collectors.toList());
-            }
-            else {
-                if(responseCode>0){
+            } else {
+                if (responseCode > 0) {
                     logger.info(String.format("Error: %d", responseCode));
                 }
-
             }
-
             conn.disconnect();
         } catch (Exception e) {
             logger.info(e.getMessage());
         }
         return result;
+    }
+
+    private static String readResponse(HttpURLConnection conn) throws IOException {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {
+            StringBuilder response = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                response.append(line);
+            }
+            return response.toString();
+        }
+    }
+
+    private static List<DescriptionGetApiSearchResponse> extractValidWords(String jsonResponse, ObjectMapper objectMapper) throws IOException {
+        DescriptionGetApiResponse responses = objectMapper.readValue(jsonResponse, DescriptionGetApiResponse.class);
+        List<DescriptionGetApiSearchResponse> words = new ArrayList<>();
+        for (DescriptionGetApiSearchResponse searchResponse : responses.getQuery().getSearch()) {
+            try {
+                if (searchResponse.getDescription() != null && searchResponse.getTitle() != null && searchResponse.getId() != null) {
+                    words.add(searchResponse);
+                }
+            } catch (Exception e) {
+                logger.info(e.getMessage());
+            }
+        }
+        return words;
     }
 
     private static Word mapResponseToModel(DescriptionGetApiSearchResponse descriptionGetApiSearchResponse) {
@@ -112,7 +115,7 @@ public class WikiApiRequest {
 
         // Удаляем все HTML-теги
         extract = extract.replaceAll("<[^>]*>", "");
-        extract = extract.replaceAll("\n", "");
+        extract = extract.replace("\n", "");
         Word word = new Word();
         word.setTitle(title);
         word.setDescription(extract.trim());
