@@ -1,7 +1,7 @@
-package org.example.mediaWiki.service.impl;
-import org.example.mediaWiki.modal.Word;
-import org.example.mediaWiki.repository.WordRepository;
-import org.example.mediaWiki.service.WordService;
+package org.example.mediawiki.service.impl;
+import org.example.mediawiki.modal.Word;
+import org.example.mediawiki.repository.WordRepository;
+import org.example.mediawiki.service.WordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
