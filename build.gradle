@@ -43,8 +43,6 @@ dependencies {
     implementation 'mysql:mysql-connector-java:8.0.27'
     implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
     runtimeOnly 'com.mysql:mysql-connector-j'
-
-
     implementation group: 'org.mindrot', name: 'jbcrypt', version: '0.4'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.15.3'
 

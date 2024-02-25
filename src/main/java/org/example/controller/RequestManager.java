@@ -123,15 +123,18 @@ public class RequestManager {
     }
 
     @PutMapping("/update/{id}")
-    public void update(@RequestBody Word word, @PathVariable int id)
+    public String update(@RequestBody Word word, @PathVariable int id)
     {
+        String message="";
         Word word1 = wordService.getWordById(id);
         if (word.getTitle()!= null&&word.getDescription()!=null)
         {
             word1.setTitle(word.getTitle());
             word1.setDescription(word.getDescription());
+            wordService.editWord(word1);
+            message="Word was update";
         }
-      wordService.editWord(word1);
+       return message;
     }
 
 
