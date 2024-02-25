@@ -7,6 +7,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class DescriptionGetApiSearchResponse {
 
+       @JsonProperty("pageid")
+       private String id;
+       public String  getId() {
+        return id;
+       }
+    public void setId(String id) {
+        this.id = id;
+    }
+
         @JsonProperty("title")
         private String title;
         public String getTitle() {

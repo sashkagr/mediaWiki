@@ -1,34 +1,58 @@
 package org.example.service.impl;
-
-import org.example.dao.WordDao;
-import org.example.dao.impl.WordDaoImpl;
 import org.example.modal.Word;
+import org.example.repository.WordRepository;
 import org.example.service.WordService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+@Service
+public class WordServiceImpl implements WordService {
+    @Autowired
+    private  WordRepository wordRepository;
 
-public enum WordServiceImpl implements WordService {
-    INSTANCE;
-
-    WordDao wordDao = WordDaoImpl.INSTANCE;
 
     @Override
     public void addWord(Word word) {
-        wordDao.addWord(word);
+        wordRepository.save(word);
     }
 
     @Override
-    public void removeWord(Word word) {
-        wordDao.removeWord(word);
+    public void removeWord(int id) {
+       wordRepository.deleteById(id);
     }
 
     @Override
     public void editWord(Word word) {
-        wordDao.editWord(word);
+        wordRepository.save(word);
     }
 
     @Override
     public List<Word> getAllUserWords() {
-        return wordDao.getUserWords();
+        return wordRepository.findAll();
     }
+    @Override
+    public boolean existingById(int id)
+    {
+        return wordRepository.existsById(id);
+    }
+    @Override
+    public String existingByTitle(String title)
+    {
+        List<Word> words = this.getAllUserWords();
+        for (Word word : words) {
+            if (word.getTitle().equals(title)){
+                return word.getDescription();
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public Word getWordById(int id) {
+        return wordRepository.getById(id);
+    }
+
+
 }

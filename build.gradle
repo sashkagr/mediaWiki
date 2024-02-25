@@ -12,7 +12,11 @@ sonar {
         property "sonar.host.url", "https://sonarcloud.io"
     }
 }
-
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
 war{
     archiveName='ROOT'
 }
@@ -27,9 +31,17 @@ repositories {
 
 dependencies {
  //   implementation 'org.apache.commons:commons-text:1.9'
+    implementation 'org.json:json:20211205'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    implementation 'org.projectlombok:lombok:1.18.22'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     implementation 'mysql:mysql-connector-java:8.0.27'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+    runtimeOnly 'com.mysql:mysql-connector-j'
+
 //    // https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-slf4j-impl
    // implementation group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: '2.7'
 //// https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core

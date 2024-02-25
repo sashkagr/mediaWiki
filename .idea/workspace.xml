@@ -5,9 +5,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="77832474-f946-403b-b37e-9780fbc1c7ef" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/dao/ConnectionDao.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/repository/WordRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/9898723a-4d14-425e-9a05-ef4790fef6aa.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/9898723a-4d14-425e-9a05-ef4790fef6aa.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dao/impl/WordDaoImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/dao/impl/WordDaoImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/controller/RequestManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/controller/RequestManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/controller/WikiApiRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/controller/WikiApiRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dao/ConnectionDao.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dao/WordDao.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/dao/impl/WordDaoImpl.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/modal/DescriptionGetApiSearchResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/modal/DescriptionGetApiSearchResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/modal/Word.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/modal/Word.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/WordService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/WordService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/service/impl/WordServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/service/impl/WordServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,7 +46,7 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="ProjectErrors" />
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectId" id="2cfiRd4oGMU4JylvGl3WmGnsnb4" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
@@ -63,6 +74,7 @@
     &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.345977&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
     &quot;spring.configuration.checksum&quot;: &quot;7c75077a9dcadef0dcbc58dd7a30c659&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
@@ -117,10 +129,27 @@
       <workItem from="1708612081997" duration="2957000" />
       <workItem from="1708711035235" duration="4652000" />
       <workItem from="1708757886427" duration="1139000" />
+      <workItem from="1708759176011" duration="2747000" />
+      <workItem from="1708762980275" duration="637000" />
+      <workItem from="1708775862579" duration="1010000" />
+      <workItem from="1708796610733" duration="15071000" />
+      <workItem from="1708812073853" duration="173000" />
+      <workItem from="1708864181471" duration="17998000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/controller/RequestManager.java</url>
+          <line>72</line>
+          <option name="timeStamp" value="14" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
