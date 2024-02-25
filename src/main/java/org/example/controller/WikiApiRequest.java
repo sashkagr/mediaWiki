@@ -39,7 +39,7 @@ public class WikiApiRequest {
                         .collect(Collectors.toList());
             } else {
                 if (responseCode > 0) {
-                    logger.info(String.format("Error: %d", responseCode));
+                    logger.info("Error with response code");
                 }
             }
             conn.disconnect();
