@@ -20,6 +20,7 @@ settings.gradle
 *.iml
 *.ipr
 *.img
+*.png
 out/
 !**/src/main/**/out/
 !**/src/test/**/out/
