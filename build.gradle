@@ -1,6 +1,5 @@
 plugins {
     id 'java'
-    id 'war'
     id 'org.springframework.boot' version '2.6.3'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id "org.sonarqube" version "4.4.1.3373"
@@ -14,15 +13,6 @@ sonar {
     }
 }
 
-configurations {
-    compileOnly {
-        extendsFrom annotationProcessor
-    }
-}
-war{
-    archiveName='ROOT'
-}
-
 group 'org.example'
 version '1.0-SNAPSHOT'
 sourceCompatibility = '11'
@@ -32,36 +22,20 @@ repositories {
 }
 
 dependencies {
- //   implementation 'org.apache.commons:commons-text:1.9'
     implementation 'org.json:json:20211205'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
-    implementation 'org.projectlombok:lombok:1.18.22'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
     implementation 'mysql:mysql-connector-java:8.0.27'
-    implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
-    //runtimeOnly 'com.mysql:mysql-connector-j'
-    implementation group: 'org.mindrot', name: 'jbcrypt', version: '0.4'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.15.3'
     testImplementation 'junit:junit:4.12'
     testImplementation 'org.dbunit:dbunit:2.7.0'
-//    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
-//    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
 }
 test {
-    // Укажите директорию, в которой находятся ваши тесты
     testClassesDirs = fileTree(dir: 'build/classes/java/test')
-
-    // Укажите директорию, в которой находятся исходные файлы для тестов
     sourceSets.test.java.srcDirs = ['src/test/java']
-
-    // Укажите вывод тестовых результатов в стандартный вывод
     testLogging {
         events "passed", "skipped", "failed"
     }
-}
-test {
-    useJUnitPlatform()
 }

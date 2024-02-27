@@ -17,7 +17,9 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 public class WikiApiRequest {
-    private WikiApiRequest() {}
+    private WikiApiRequest() {
+    }
+
     private static final Logger logger = Logger.getLogger(WikiApiRequest.class.getName());
 
     public static List<Word> getDescriptionByTitle(String title) {
@@ -90,7 +92,6 @@ public class WikiApiRequest {
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestMethod("GET");
 
-        // Чтение ответа от сервера
         BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
         String inputLine;
         StringBuilder content = new StringBuilder();
@@ -100,20 +101,17 @@ public class WikiApiRequest {
         in.close();
         con.disconnect();
 
-        // Обработка JSON-ответа
         JSONObject response = new JSONObject(content.toString());
         JSONObject pages = response.getJSONObject("query").getJSONObject("pages");
         JSONObject page = pages.getJSONObject(id1);
         String title = page.getString("title");
         String extract = page.getString("extract");
 
-        // Обрезаем до первого вхождения тега <h2>
         int index = extract.indexOf("<h2>");
         if (index != -1) {
             extract = extract.substring(0, index);
         }
 
-        // Удаляем все HTML-теги
         extract = extract.replaceAll("<[^>]*>", "");
         extract = extract.replace("\n", "");
         Word word = new Word();

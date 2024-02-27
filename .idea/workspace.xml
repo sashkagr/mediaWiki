@@ -4,7 +4,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="77832474-f946-403b-b37e-9780fbc1c7ef" name="Changes" comment="" />
+    <list default="true" id="77832474-f946-403b-b37e-9780fbc1c7ef" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/9898723a-4d14-425e-9a05-ef4790fef6aa.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/9898723a-4d14-425e-9a05-ef4790fef6aa.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/controller/RequestManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/controller/RequestManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/controller/WikiApiRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/controller/WikiApiRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/modal/DescriptionGetApiQueryResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/modal/DescriptionGetApiQueryResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/modal/DescriptionGetApiResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/modal/DescriptionGetApiResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/modal/DescriptionGetApiSearchResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/modal/DescriptionGetApiSearchResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/modal/Word.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/modal/Word.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/service/WordService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/service/WordService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/service/impl/WordServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/service/impl/WordServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/DatabaseTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/DatabaseTest.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -196,8 +212,8 @@
     <recent_temporary>
       <list>
         <item itemvalue="Spring Boot.Main (1)" />
-        <item itemvalue="JUnit.DatabaseTest.testConnection" />
         <item itemvalue="JUnit.DatabaseTest" />
+        <item itemvalue="JUnit.DatabaseTest.testConnection" />
         <item itemvalue="Gradle.DatabaseTest" />
         <item itemvalue="Gradle.Tests in 'MediaWiki.test'" />
       </list>
@@ -223,22 +239,14 @@
       <workItem from="1708796610733" duration="15071000" />
       <workItem from="1708812073853" duration="173000" />
       <workItem from="1708864181471" duration="32918000" />
-      <workItem from="1708939792394" duration="2803000" />
+      <workItem from="1708939792394" duration="4843000" />
+      <workItem from="1708949690157" duration="16849000" />
+      <workItem from="1708969135422" duration="693000" />
+      <workItem from="1709018600831" duration="2898000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/org/example/mediawiki/controller/RequestManager.java</url>
-          <line>78</line>
-          <option name="timeStamp" value="14" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>

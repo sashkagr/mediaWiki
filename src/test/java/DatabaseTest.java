@@ -13,7 +13,6 @@ public class DatabaseTest {
 
     @Before
     public void setUp() throws Exception {
-        // Устанавливаем соединение с вашей базой данных
         String jdbcUrl = "jdbc:mysql://localhost:3306/mediawiki";
         String user = "root";
         String password = "root";
@@ -22,7 +21,6 @@ public class DatabaseTest {
 
     @After
     public void tearDown() throws Exception {
-        // Закрываем соединение
         if (connection != null) {
             connection.close();
         }
@@ -30,7 +28,6 @@ public class DatabaseTest {
 
     @Test
     public void testConnection() {
-        // Проверяем, что соединение не является null
         assertNotNull("Connection should not be null", connection);
     }
 }

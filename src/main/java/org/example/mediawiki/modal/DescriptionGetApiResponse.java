@@ -6,19 +6,17 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class DescriptionGetApiResponse {
 
-        @JsonProperty("query")
-        private DescriptionGetApiQueryResponse query;
+    @JsonProperty("query")
+    private DescriptionGetApiQueryResponse query;
 
-        public DescriptionGetApiQueryResponse getQuery() {
-            return query;
-        }
+    public DescriptionGetApiQueryResponse getQuery() {
+        return query;
+    }
 
-        public void setQuery(DescriptionGetApiQueryResponse query) {
+    public void setQuery(DescriptionGetApiQueryResponse query) {
 
-            this.query = query;
-        }
-
-
+        this.query = query;
+    }
 
 
 }

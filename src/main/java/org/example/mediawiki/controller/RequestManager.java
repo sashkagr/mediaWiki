@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -25,7 +24,7 @@ public class RequestManager {
 
     private static final Logger logger = Logger.getLogger(RequestManager.class.getName());
     List<Word> words = new ArrayList<>();
-    String titleForApi="";
+    String titleForApi = "";
 
     @Autowired
     WordServiceImpl wordService = new WordServiceImpl();
@@ -34,117 +33,89 @@ public class RequestManager {
     public String getDefinition(@RequestParam String name) {
 
         words = wordService.getAllUserWords();
-        String message ="";
-        String description=wordService.existingByTitle(name);
-            if (description!=null) {
-                message="Correct! Definition:"+description;
-            }
-        else{
-            message="Error! If you would to search in Wiki, enter parameter Yes in path /search/answer";
-            titleForApi=name;
-            }
-      return message;
+        String message = "";
+        String description = wordService.existingByTitle(name);
+        if (description != null) {
+            message = "Correct! Definition:" + description;
+        } else {
+            message = "Error! If you would to search in Wiki, enter parameter Yes in path /search/answer";
+            titleForApi = name;
+        }
+        return message;
     }
+
     @GetMapping("/answer")
-    public String definitionController(@RequestParam String answer) throws IOException {
-        answer=answer.toLowerCase();
+    public List<Word> definitionController(@RequestParam String answer) {
+        answer = answer.toLowerCase();
         List<Word> descriptions;
-        descriptions=WikiApiRequest.getDescriptionByTitle(titleForApi);
-        String listing = "";
-        if(answer.equals("yes")) {
-            int cnt = 1;
-            StringBuilder builder = new StringBuilder();
+        descriptions = WikiApiRequest.getDescriptionByTitle(titleForApi);
+        if (answer.equals("yes")) {
 
             for (Word word : descriptions) {
                 word.setDescription(word.getDescription().replaceAll("\\<[^\\\\>]*+\\>", ""));
-                String count = Integer.toString(cnt);
-                builder.append(count)
-                        .append("|")
-                        .append(word.getTitle())
-                        .append("|")
-                        .append(word.getDescription())
-                        .append("\n");
-
-                cnt++;
             }
-            listing = builder.toString();
-            listing += "Select number of title to insert it into SQL (to answer enter number in path /search/answer)";
-        }
-        else {
+        } else {
             try {
                 int input = Integer.parseInt(answer);
-                if (input > 0 && input <= descriptions.size()) {
-                    int pageId = descriptions.get(input - 1).getId();
-                    Word word = WikiApiRequest.getDescriptionByPageId(pageId);
-                    wordService.addWord(word);
-                    listing = word.getTitle() + "|" + word.getDescription()+"(Added to database)";
+                for (Word word : descriptions) {
+                    if (word.getId() == input) {
+                        int pageId = input;
+                        word = WikiApiRequest.getDescriptionByPageId(pageId);
+                        wordService.addWord(word);
+                        descriptions.clear();
+                        descriptions.add(word);
+                    }
                 }
-            }
-            catch (Exception e)
-            {
+            } catch (Exception e) {
                 logger.info(e.getMessage());
-                listing = "Error! Incorrect data";
             }
 
         }
-        return listing;
+        return descriptions;
     }
+
     @PostMapping("/add")
-    public String create(@RequestBody Word word)
-    {
-        String message ="";
-            if (wordService.existingByTitle(word.getTitle())!=null) {
-                message=  "Error! Word exists" ;
-            }
-            else{
-            if(word.getTitle()!=null&&word.getDescription()!=null)
-            {
+    public String create(@RequestBody Word word) {
+        String message = "";
+        if (wordService.existingByTitle(word.getTitle()) != null) {
+            message = "Error! Word exists";
+        } else {
+            if (word.getTitle() != null && word.getDescription() != null) {
                 wordService.addWord(word);
-                message="Word was added to database";
-            }
-            else{
-                message="Error! You entered incorrect data!";
+                message = "Word was added to database";
+            } else {
+                message = "Error! You entered incorrect data!";
             }
         }
         return message;
     }
+
     @DeleteMapping("/delete/{id}")
-    public String delete(@PathVariable int id)
-    {
-        String message="";
-        if(wordService.existingById(id)){
+    public String delete(@PathVariable int id) {
+        String message = "";
+        if (wordService.existingById(id)) {
             wordService.removeWord(id);
-            message="Word was deleted";
+            message = "Word was deleted";
+        } else {
+            message = "Error! Word does not exist!";
         }
-        else{
-            message="Error! Word does not exist!";
-        }
-       return message;
+        return message;
     }
 
     @PutMapping("/update/{id}")
-    public String update(@RequestBody Word word, @PathVariable int id)
-    {
-        String message="";
+    public String update(@RequestBody Word word, @PathVariable int id) {
+        String message = "";
         Word word1 = wordService.getWordById(id);
-        if (word.getTitle()!= null&&word.getDescription()!=null)
-        {
+        if (word.getTitle() != null && word.getDescription() != null) {
             word1.setTitle(word.getTitle());
             word1.setDescription(word.getDescription());
             wordService.editWord(word1);
-            message="Word was update";
+            message = "Word was update";
         }
-       return message;
+        return message;
     }
 
 
-
-
-
-
-
-
-
-    }
+}
 
 
