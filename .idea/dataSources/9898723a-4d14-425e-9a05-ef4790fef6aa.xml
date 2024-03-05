@@ -1046,43 +1046,131 @@ sys|schema||mysql.sys|localhost|TRIGGER|G</Grants>
       <Host>localhost</Host>
       <Plugin>caching_sha2_password</Plugin>
     </user>
-    <table id="303" parent="293" name="word">
+    <table id="303" parent="293" name="pages">
       <Engine>InnoDB</Engine>
       <CollationName>utf8mb4_0900_ai_ci</CollationName>
     </table>
-    <column id="304" parent="303" name="id">
-      <AutoIncrement>7</AutoIncrement>
-      <DasType>int|0s</DasType>
+    <table id="304" parent="293" name="pages_search">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_0900_ai_ci</CollationName>
+    </table>
+    <table id="305" parent="293" name="search">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_0900_ai_ci</CollationName>
+    </table>
+    <table id="306" parent="293" name="word">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8mb4_0900_ai_ci</CollationName>
+    </table>
+    <column id="307" parent="303" name="id">
+      <AutoIncrement>11</AutoIncrement>
+      <DasType>bigint|0s</DasType>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <column id="305" parent="303" name="description">
-      <DasType>text|0s</DasType>
+    <column id="308" parent="303" name="page_id">
+      <DasType>bigint|0s</DasType>
       <NotNull>1</NotNull>
       <Position>2</Position>
     </column>
-    <column id="306" parent="303" name="title">
+    <column id="309" parent="303" name="title">
       <DasType>varchar(255)|0s</DasType>
-      <NotNull>1</NotNull>
       <Position>3</Position>
     </column>
-    <index id="307" parent="303" name="PRIMARY">
+    <index id="310" parent="303" name="PRIMARY">
       <ColNames>id</ColNames>
       <Type>btree</Type>
       <Unique>1</Unique>
     </index>
-    <index id="308" parent="303" name="title">
-      <ColNames>title</ColNames>
-      <Type>btree</Type>
-      <Unique>1</Unique>
-    </index>
-    <key id="309" parent="303" name="PRIMARY">
+    <key id="311" parent="303" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
       <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
-    <key id="310" parent="303" name="title">
-      <UnderlyingIndexName>title</UnderlyingIndexName>
+    <column id="312" parent="304" name="page_id">
+      <DasType>bigint|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="313" parent="304" name="search_id">
+      <DasType>bigint|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+    </column>
+    <foreign-key id="314" parent="304" name="FKl19oa7x2olj104t1dpxwqofs2">
+      <ColNames>page_id</ColNames>
+      <RefColNames>id</RefColNames>
+      <RefTableName>pages</RefTableName>
+    </foreign-key>
+    <foreign-key id="315" parent="304" name="FK65736t6whb06c5e6odyumq7p4">
+      <ColNames>search_id</ColNames>
+      <RefColNames>id</RefColNames>
+      <RefTableName>search</RefTableName>
+    </foreign-key>
+    <index id="316" parent="304" name="FKl19oa7x2olj104t1dpxwqofs2">
+      <ColNames>page_id</ColNames>
+      <Type>btree</Type>
+    </index>
+    <index id="317" parent="304" name="FK65736t6whb06c5e6odyumq7p4">
+      <ColNames>search_id</ColNames>
+      <Type>btree</Type>
+    </index>
+    <column id="318" parent="305" name="id">
+      <AutoIncrement>2</AutoIncrement>
+      <DasType>bigint|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="319" parent="305" name="title">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>2</Position>
+    </column>
+    <index id="320" parent="305" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="321" parent="305" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="322" parent="306" name="id">
+      <AutoIncrement>1</AutoIncrement>
+      <DasType>bigint|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="323" parent="306" name="description">
+      <DasType>text|0s</DasType>
+      <Position>2</Position>
+    </column>
+    <column id="324" parent="306" name="title">
+      <DasType>varchar(255)|0s</DasType>
+      <Position>3</Position>
+    </column>
+    <column id="325" parent="306" name="search_id">
+      <DasType>bigint|0s</DasType>
+      <Position>4</Position>
+    </column>
+    <foreign-key id="326" parent="306" name="FKp8ucvtefvaerdwq4ulgehe3yf">
+      <ColNames>search_id</ColNames>
+      <RefColNames>id</RefColNames>
+      <RefTableName>search</RefTableName>
+    </foreign-key>
+    <index id="327" parent="306" name="PRIMARY">
+      <ColNames>id</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="328" parent="306" name="FKp8ucvtefvaerdwq4ulgehe3yf">
+      <ColNames>search_id</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="329" parent="306" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
     </key>
   </database-model>
 </dataSource>

@@ -1,59 +1,65 @@
 package org.example.mediawiki.service.impl;
 
+import org.example.mediawiki.modal.Search;
 import org.example.mediawiki.modal.Word;
 import org.example.mediawiki.repository.WordRepository;
-import org.example.mediawiki.service.WordService;
+import org.example.mediawiki.service.Service;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
-@Service
-public class WordServiceImpl implements WordService {
+@org.springframework.stereotype.Service
+public class WordServiceImpl implements Service<Word>{
 
     @Autowired
     private WordRepository wordRepository;
 
-    @Override
-    public void addWord(Word word) {
-        wordRepository.save(word);
+    public boolean existingById(Long id) {
+        return wordRepository.existsById(id);
+    }
+
+    public List<Word> existingBySearch(Search search) {
+        List<Word> words = this.read();
+        List<Word> result = new ArrayList<>();
+        for (Word word : words) {
+            if (word.getSearch().equals(search)) {
+                result.add(word);
+            }
+        }
+        return result;
+    }
+    public Word getWordById(Long id) {
+        return wordRepository.getById(id);
+    }
+    public List<Word> existingBySearchId(Long id) {
+        List<Word> words = this.read();
+        List<Word> result = new ArrayList<>();
+        for (Word word : words) {
+            if (word.getSearch().getId()==id) {
+                result.add(word);
+            }
+        }
+        return result;
     }
 
     @Override
-    public void removeWord(int id) {
+    public void create(Word entity) {
+        wordRepository.save(entity);
+    }
+
+    @Override
+    public void delete(Long id) {
         wordRepository.deleteById(id);
     }
 
     @Override
-    public void editWord(Word word) {
-        wordRepository.save(word);
+    public void update(Word entity) {
+        wordRepository.save(entity);
     }
 
     @Override
-    public List<Word> getAllUserWords() {
+    public List<Word> read() {
         return wordRepository.findAll();
     }
-
-    @Override
-    public boolean existingById(int id) {
-        return wordRepository.existsById(id);
-    }
-
-    @Override
-    public String existingByTitle(String title) {
-        List<Word> words = this.getAllUserWords();
-        for (Word word : words) {
-            if (word.getTitle().equals(title)) {
-                return word.getDescription();
-            }
-        }
-        return null;
-    }
-
-    @Override
-    public Word getWordById(int id) {
-        return wordRepository.getById(id);
-    }
-
-
 }

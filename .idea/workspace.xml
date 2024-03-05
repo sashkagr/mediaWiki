@@ -5,21 +5,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="77832474-f946-403b-b37e-9780fbc1c7ef" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/modal/Pages.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/modal/Search.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/repository/PagesRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/repository/SearchRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/service/impl/PagesServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/service/impl/SearchServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources/9898723a-4d14-425e-9a05-ef4790fef6aa.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/9898723a-4d14-425e-9a05-ef4790fef6aa.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/controller/RequestManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/controller/RequestManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/controller/WikiApiRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/controller/WikiApiRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/modal/DescriptionGetApiQueryResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/modal/DescriptionGetApiQueryResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/modal/DescriptionGetApiResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/modal/DescriptionGetApiResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/modal/DescriptionGetApiSearchResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/modal/DescriptionGetApiSearchResponse.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/modal/Word.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/modal/Word.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/service/WordService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/service/WordService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/repository/WordRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/repository/WordRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/service/WordService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/service/Service.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/service/impl/WordServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/service/impl/WordServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/DatabaseTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/DatabaseTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,9 +45,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Interface" />
         <option value="Enum" />
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -96,6 +97,13 @@
     ]
   }
 }</component>
+  <component name="RunDashboard">
+    <option name="configurationTypes">
+      <set>
+        <option value="SpringBootApplicationConfigurationType" />
+      </set>
+    </option>
+  </component>
   <component name="RunManager" selected="Spring Boot.Main (1)">
     <configuration name="DatabaseTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
@@ -242,11 +250,43 @@
       <workItem from="1708939792394" duration="4843000" />
       <workItem from="1708949690157" duration="16849000" />
       <workItem from="1708969135422" duration="693000" />
-      <workItem from="1709018600831" duration="2898000" />
+      <workItem from="1709018600831" duration="5574000" />
+      <workItem from="1709028589241" duration="1418000" />
+      <workItem from="1709192622158" duration="303000" />
+      <workItem from="1709193122781" duration="1711000" />
+      <workItem from="1709552662758" duration="26696000" />
+      <workItem from="1709583710704" duration="8137000" />
+      <workItem from="1709656495805" duration="14582000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/mediawiki/modal/Pages.java</url>
+          <line>24</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/mediawiki/controller/RequestManager.java</url>
+          <line>44</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/org/example/mediawiki/service/impl/PagesServiceImpl.java</url>
+          <line>65</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="SpringBootApplicationConfigurationType">
+        <watch expression="words" language="JAVA" />
+      </configuration>
+    </watches-manager>
   </component>
 </project>

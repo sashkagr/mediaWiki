@@ -40,9 +40,7 @@ public class WikiApiRequest {
                         .map(WikiApiRequest::mapResponseToModel)
                         .collect(Collectors.toList());
             } else {
-                if (responseCode > 0) {
                     logger.info("Error with response code");
-                }
             }
             conn.disconnect();
         } catch (Exception e) {
@@ -85,8 +83,8 @@ public class WikiApiRequest {
         return word;
     }
 
-    public static Word getDescriptionByPageId(int id) throws IOException {
-        String id1 = Integer.toString(id);
+    public static Word getDescriptionByPageId(long id) throws IOException {
+        String id1 = Long.toString(id);
         String apiUrl = "https://en.wikipedia.org/w/api.php?action=query&prop=extracts&format=json&pageids=" + id1;
         URL url = new URL(apiUrl);
         HttpURLConnection con = (HttpURLConnection) url.openConnection();

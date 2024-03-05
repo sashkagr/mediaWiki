@@ -14,7 +14,6 @@ The project utilizes Spring Boot, Gradle, and MySQL (any database can be connect
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.projectlombok:lombok:1.18.22'
-    implementation 'mysql:mysql-connector-java:8.0.27'
     runtimeOnly 'com.mysql:mysql-connector-j'
 ```
 * Plugins
@@ -89,11 +88,6 @@ Then open the  ```Body``` tab, select ```raw```, and enter the request in JSON f
 }
 ```
 Note that instead of port ```8080```, write your port that you specified in ```application.properties```.
-## Usage Examples
-* GET request 
-![img.png](img.png)
-* PUT request
-![img_1.png](img_1.png)
 ## API Documentation
 The Wikipedia API is used https://habr.com/en/articles/104480/. 
 To request a list of pages for the entered word in JSON format, use the URL string:
