@@ -43,12 +43,15 @@ public class RequestManager {
     @GetMapping
     public List<Word> getDefinition(@RequestParam String name) {
         search = searchService.existingByTitle(name);
+
         if (search != null) {
             words = wordService.existingBySearch(search);
+
             if (!words.isEmpty()) {
                 return words;
             } else {
                 List<Pages> pages = pagesService.read();
+
                 for (Pages page : pages) {
                     if (page.getSearchSet().contains(search)) {
                         Word word = new Word();
@@ -57,7 +60,6 @@ public class RequestManager {
                         word.setTitle(page.getTitle());
                         word.setSearch(search);
                         words.add(word);
-
                     }
                 }
             }
@@ -66,6 +68,7 @@ public class RequestManager {
             search.setTitle(name);
             words = WikiApiRequest.getDescriptionByTitle(name);
             searchService.create(search);
+
             for (Word word : words) {
                 Pages page = new Pages();
                 word.setSearch(search);
@@ -73,11 +76,11 @@ public class RequestManager {
                 page.setPageId(word.getId());
                 page.setTitle(word.getTitle());
                 Pages page1 = pagesService.existingByPageId(page.getPageId());
-                if(page1!=null) {
+
+                if (page1 != null) {
                     page1.getSearchSet().add(search);
                     pagesService.update(page1);
-                }
-                else {
+                } else {
                     page.getSearchSet().add(search);
                     pagesService.create(page);
                 }
@@ -85,6 +88,7 @@ public class RequestManager {
         }
         return words;
     }
+
 
     @GetMapping("/{id}")
     public Word definitionController(@PathVariable Long id) {
@@ -107,13 +111,12 @@ public class RequestManager {
     @PatchMapping("/{id}")
     public String updateSearch(@PathVariable Long id, @RequestBody Search newSearch) {
         Search existingSearch = searchService.getSearchById(id);
-        if (existingSearch!=null) {
-            if (newSearch.getTitle() != null) {
-                existingSearch.setTitle(newSearch.getTitle());
-                searchService.update(existingSearch);
-                return "Search was updated";
-            }
+        if (existingSearch != null && newSearch.getTitle() != null) {
+            existingSearch.setTitle(newSearch.getTitle());
+            searchService.update(existingSearch);
+            return "Search was updated";
         }
+
         return "Invalid input!";
     }
 
