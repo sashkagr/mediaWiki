@@ -5,7 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="77832474-f946-403b-b37e-9780fbc1c7ef" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/controller/RequestManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/controller/RequestManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -244,7 +244,7 @@
       <workItem from="1709552662758" duration="26696000" />
       <workItem from="1709583710704" duration="8137000" />
       <workItem from="1709656495805" duration="15417000" />
-      <workItem from="1709672428185" duration="635000" />
+      <workItem from="1709672428185" duration="1311000" />
     </task>
     <servers />
   </component>
@@ -258,11 +258,6 @@
           <url>file://$PROJECT_DIR$/src/main/java/org/example/mediawiki/modal/Pages.java</url>
           <line>19</line>
           <option name="timeStamp" value="1" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/org/example/mediawiki/controller/RequestManager.java</url>
-          <line>44</line>
-          <option name="timeStamp" value="3" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

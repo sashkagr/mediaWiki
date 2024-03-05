@@ -43,52 +43,55 @@ public class RequestManager {
     @GetMapping
     public List<Word> getDefinition(@RequestParam String name) {
         search = searchService.existingByTitle(name);
-
         if (search != null) {
             words = wordService.existingBySearch(search);
-
             if (!words.isEmpty()) {
                 return words;
             } else {
-                List<Pages> pages = pagesService.read();
-
-                for (Pages page : pages) {
-                    if (page.getSearchSet().contains(search)) {
-                        Word word = new Word();
-                        Long pageId = page.getPageId();
-                        word.setId(pageId);
-                        word.setTitle(page.getTitle());
-                        word.setSearch(search);
-                        words.add(word);
-                    }
-                }
+                return getWordsFromPages(search);
             }
         } else {
-            search = new Search();
-            search.setTitle(name);
-            words = WikiApiRequest.getDescriptionByTitle(name);
-            searchService.create(search);
+            return createSearchAndWords(name);
+        }
+    }
 
-            for (Word word : words) {
-                Pages page = new Pages();
+    private List<Word> getWordsFromPages(Search search) {
+        List<Pages> pages = pagesService.read();
+        for (Pages page : pages) {
+            if (page.getSearchSet().contains(search)) {
+                Word word = new Word();
+                Long pageId = page.getPageId();
+                word.setId(pageId);
+                word.setTitle(page.getTitle());
                 word.setSearch(search);
-                word.setDescription(word.getDescription().replaceAll("\\<[^\\\\>]*+\\>", ""));
-                page.setPageId(word.getId());
-                page.setTitle(word.getTitle());
-                Pages page1 = pagesService.existingByPageId(page.getPageId());
-
-                if (page1 != null) {
-                    page1.getSearchSet().add(search);
-                    pagesService.update(page1);
-                } else {
-                    page.getSearchSet().add(search);
-                    pagesService.create(page);
-                }
+                words.add(word);
             }
         }
         return words;
     }
 
+    private List<Word> createSearchAndWords(String name) {
+        words = WikiApiRequest.getDescriptionByTitle(name);
+        search = new Search();
+        search.setTitle(name);
+        searchService.create(search);
+        for (Word word : words) {
+            Pages page = new Pages();
+            word.setSearch(search);
+            word.setDescription(word.getDescription().replaceAll("\\<[^\\\\>]*+\\>", ""));
+            page.setPageId(word.getId());
+            page.setTitle(word.getTitle());
+            Pages page1 = pagesService.existingByPageId(page.getPageId());
+            if (page1 != null) {
+                page1.getSearchSet().add(search);
+                pagesService.update(page1);
+            } else {
+                page.getSearchSet().add(search);
+                pagesService.create(page);
+            }
+        }
+        return words;
+    }
 
     @GetMapping("/{id}")
     public Word definitionController(@PathVariable Long id) {
