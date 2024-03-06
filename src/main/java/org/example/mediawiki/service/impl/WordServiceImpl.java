@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @org.springframework.stereotype.Service
-public class WordServiceImpl implements Service<Word>{
+public class WordServiceImpl implements Service<Word> {
 
     @Autowired
     private WordRepository wordRepository;
@@ -23,20 +23,22 @@ public class WordServiceImpl implements Service<Word>{
         List<Word> words = this.read();
         List<Word> result = new ArrayList<>();
         for (Word word : words) {
-            if (word.getSearch().equals(search)) {
+            if (word.getSearch() != null && word.getSearch().equals(search)) {
                 result.add(word);
             }
         }
         return result;
     }
+
     public Word getWordById(Long id) {
         return wordRepository.getById(id);
     }
+
     public List<Word> existingBySearchId(Long id) {
         List<Word> words = this.read();
         List<Word> result = new ArrayList<>();
         for (Word word : words) {
-            if (word.getSearch().getId()==id) {
+            if (word.getSearch().getId() == id) {
                 result.add(word);
             }
         }

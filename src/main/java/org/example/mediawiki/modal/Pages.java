@@ -1,4 +1,5 @@
 package org.example.mediawiki.modal;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -24,8 +25,8 @@ public class Pages {
     private long pageId;
 
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name="pages_search",
-            joinColumns=  @JoinColumn(name="page_id", referencedColumnName="id"),
-            inverseJoinColumns= @JoinColumn(name="search_id", referencedColumnName="id") )
+    @JoinTable(name = "pages_search",
+            joinColumns = @JoinColumn(name = "page_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "search_id", referencedColumnName = "id"))
     private List<Search> searchSet = new ArrayList<>();
 }

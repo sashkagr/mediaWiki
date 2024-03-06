@@ -40,7 +40,7 @@ public class WikiApiRequest {
                         .map(WikiApiRequest::mapResponseToModel)
                         .collect(Collectors.toList());
             } else {
-                    logger.info("Error with response code");
+                logger.info("Error with response code");
             }
             conn.disconnect();
         } catch (Exception e) {

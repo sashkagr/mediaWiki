@@ -111,6 +111,7 @@ public class RequestManager {
         }
         return null;
     }
+
     @PatchMapping("/{id}")
     public String updateSearch(@PathVariable Long id, @RequestBody Search newSearch) {
         Search existingSearch = searchService.getSearchById(id);
@@ -151,7 +152,7 @@ public class RequestManager {
         String message = "";
         if (searchService.existingById(id)) {
             List<Word> wordsBySearch = wordService.existingBySearchId(id);
-            if(!wordsBySearch.isEmpty()) {
+            if (!wordsBySearch.isEmpty()) {
                 for (Word word : wordsBySearch) {
                     wordService.delete(word.getId());
                 }
@@ -173,7 +174,12 @@ public class RequestManager {
         if (word.getTitle() != null && word.getDescription() != null) {
             word1.setTitle(word.getTitle());
             word1.setDescription(word.getDescription());
-            word1.setSearch(word.getSearch());
+            if (word.getSearch() != null) {
+                Search searchCurrent = searchService.existingByTitle(word.getSearch().getTitle());
+                if (searchCurrent != null) {
+                    word1.setSearch(word.getSearch());
+                }
+            }
             wordService.update(word1);
             message = "Word was update";
         }

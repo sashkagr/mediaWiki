@@ -6,8 +6,9 @@ import org.example.mediawiki.service.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+
 @org.springframework.stereotype.Service
-public class SearchServiceImpl implements Service<Search>{
+public class SearchServiceImpl implements Service<Search> {
 
     @Autowired
     private SearchRepository searchRepository;
@@ -19,7 +20,7 @@ public class SearchServiceImpl implements Service<Search>{
     public Search existingByTitle(String title) {
         List<Search> searches = this.read();
         for (Search search : searches) {
-            if (search.getTitle().toLowerCase().equals(title.toLowerCase())){
+            if (search.getTitle().toLowerCase().equals(title.toLowerCase())) {
                 return search;
             }
         }
@@ -47,5 +48,6 @@ public class SearchServiceImpl implements Service<Search>{
 
     @Override
     public List<Search> read() {
-        return searchRepository.findAll();    }
+        return searchRepository.findAll();
+    }
 }

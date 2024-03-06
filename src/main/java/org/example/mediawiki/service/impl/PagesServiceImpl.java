@@ -18,30 +18,31 @@ public class PagesServiceImpl implements Service<Pages> {
     public Pages existingByPageId(Long pageId) {
         List<Pages> pages = this.read();
         for (Pages page : pages) {
-            if (page.getPageId()==pageId) {
+            if (page.getPageId() == pageId) {
                 return page;
             }
         }
         return null;
     }
 
-public void deleteBySearchId(Long id) {
-    List<Pages> pages = this.read();
-    for (Pages page : pages) {
-        Iterator<Search> iterator = page.getSearchSet().iterator();
-        while (iterator.hasNext()) {
-            Search search = iterator.next();
-            if (search.getId() == id) {
-                iterator.remove();
-                if (page.getSearchSet().isEmpty()) {
-                    this.delete(page.getId());
-                } else {
-                    this.update(page);
+    public void deleteBySearchId(Long id) {
+        List<Pages> pages = this.read();
+        for (Pages page : pages) {
+            Iterator<Search> iterator = page.getSearchSet().iterator();
+            while (iterator.hasNext()) {
+                Search search = iterator.next();
+                if (search.getId() == id) {
+                    iterator.remove();
+                    if (page.getSearchSet().isEmpty()) {
+                        this.delete(page.getId());
+                    } else {
+                        this.update(page);
+                    }
                 }
             }
         }
     }
-}
+
     @Override
     public void create(Pages entity) {
         pagesRepository.save(entity);
