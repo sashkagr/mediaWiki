@@ -134,14 +134,12 @@ public class RequestManager {
 
     @GetMapping("/showSearches")
     public List<Search> showAllSearches() {
-        List<Search> searches = searchService.read();
-        return searches;
+        return searchService.read();
     }
 
     @GetMapping("/showPages")
     public List<Pages> showAllPages() {
-        List<Pages> pages = pagesService.read();
-        return pages;
+        return pagesService.read();
     }
 
     @PostMapping("/add/{id}")
