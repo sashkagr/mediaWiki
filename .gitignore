@@ -7,7 +7,8 @@ gradle/wrapper
 gradlew
 gradlew.bat
 settings.gradle
-
+src/main/resources
+src/test
 ### IntelliJ IDEA ###
 **/.idea
 .idea
