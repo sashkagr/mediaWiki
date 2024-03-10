@@ -2,6 +2,8 @@
 
 # Project Description
 This service is designed to retrieve definitions of words. If the term is already present in the database, the service outputs its definition. Otherwise, it requests permission to search the Wikipedia API, and then displays a brief list of pages. The user selects the desired page, and then retrieves its content, which is then stored in the database.
+The project implements many-to-many connections (between the Search and Pages entities) and one-to-many connections (between
+entities Search and Word).
 
 ## SonarCloud
 
@@ -20,12 +22,6 @@ The project utilizes Spring Boot, Gradle, and MySQL (any database can be connect
 ``` id 'org.springframework.boot' version '2.6.3'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
  ```
-* Work with annotations
-```configurations {
-    compileOnly {
-        extendsFrom annotationProcessor
-    }
- ```    
     
 ## Installation and Running
 * Configure Spring Boot Application in the ```Main class```. 
@@ -38,7 +34,6 @@ spring.datasource.url = jdbc:mysql://localhost:3306/mediawiki
 spring.datasource.username = <username of your database>
 spring.datasource.password = <password of your database>
 spring.jpa.hibernate.ddl-auto=update
-spring.jackson.serialization.FAIL_ON_EMPTY_BEANS=false
 ```
 * It is recommended to install Postman, from which requests will be sent.
 
@@ -47,14 +42,10 @@ To work with all requests related to this code, enter the URL in the following f
 To enter a word for search:
 ```
 http://localhost:8080/search/?name=<your word>
-``` 
-To allow access to the Wikipedia API: 
-```
-http://localhost:8080/search/answer/?answer=Yes
 ```
 To select the desired article from the list: 
 ```
-http://localhost:8080/search/answer/?answer=<index of article>
+http://localhost:8080/search/{id}
 ```
 Then the article will be added to the database.
 * Use ```@PostMapping``` (POST request in Postman). 
@@ -73,13 +64,13 @@ Then open the  ```Body``` tab, select ```raw```, and enter the request in JSON f
 To delete a record from the database, you need to know its ```id```.
 Enter:
 ```
-http://localhost:8080/search/delete/<your id>
+http://localhost:8080/search/delete/{id}
 ```
 * Use ```@PutMapping``` (PUT request in Postman). 
 To update a record in the database, you need to know its id. 
 Enter: 
 ```
-http://localhost:8080/search/update/<your id>
+http://localhost:8080/search/update/{id}
 ```
 Then open the  ```Body``` tab, select ```raw```, and enter the request in JSON format:
 ```{

@@ -34,16 +34,6 @@ public class WordServiceImpl implements Service<Word> {
         return wordRepository.getById(id);
     }
 
-    public List<Word> existingBySearchId(Long id) {
-        List<Word> words = this.read();
-        List<Word> result = new ArrayList<>();
-        for (Word word : words) {
-            if (word.getSearch().getId() == id) {
-                result.add(word);
-            }
-        }
-        return result;
-    }
 
     @Override
     public void create(Word entity) {

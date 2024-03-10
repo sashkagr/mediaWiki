@@ -28,8 +28,6 @@ import java.util.logging.Logger;
 public class RequestManager {
 
     private static final Logger logger = Logger.getLogger(RequestManager.class.getName());
-    private List<Word> words = new ArrayList<>();
-    private Search search = new Search();
 
     @Autowired
     private WordServiceImpl wordService;
@@ -40,28 +38,32 @@ public class RequestManager {
     @Autowired
     private SearchServiceImpl searchService;
 
+    Search currentSearch = new Search();
+
     @GetMapping
     public List<Word> getDefinition(@RequestParam String name) {
-        search = searchService.existingByTitle(name);
+        Search search = searchService.existingByTitle(name);
+        List<Word> words = new ArrayList<>();
         if (search != null) {
             words = wordService.existingBySearch(search);
-            if (!words.isEmpty()) {
-                return words;
-            } else {
-                return getWordsFromPages(search);
+            if (words.isEmpty()) {
+                words = getWordsFromPages(search);
             }
+            currentSearch = search;
         } else {
-            return createSearchAndWords(name);
+            words = createSearchAndWords(name);
         }
+
+        return words;
     }
 
     private List<Word> getWordsFromPages(Search search) {
+        List<Word> words = new ArrayList<>();
         List<Pages> pages = pagesService.read();
         for (Pages page : pages) {
-            if (page.getSearchSet().contains(search)) {
+            if (page.getSearches().contains(search)) {
                 Word word = new Word();
-                Long pageId = page.getPageId();
-                word.setId(pageId);
+                word.setId(page.getPageId());
                 word.setTitle(page.getTitle());
                 word.setSearch(search);
                 words.add(word);
@@ -71,8 +73,8 @@ public class RequestManager {
     }
 
     private List<Word> createSearchAndWords(String name) {
-        words = WikiApiRequest.getDescriptionByTitle(name);
-        search = new Search();
+        List<Word> words = WikiApiRequest.getDescriptionByTitle(name);
+        Search search = new Search();
         search.setTitle(name);
         searchService.create(search);
         for (Word word : words) {
@@ -81,36 +83,41 @@ public class RequestManager {
             word.setDescription(word.getDescription().replaceAll("\\<[^\\\\>]*+\\>", ""));
             page.setPageId(word.getId());
             page.setTitle(word.getTitle());
-            Pages page1 = pagesService.existingByPageId(page.getPageId());
-            if (page1 != null) {
-                page1.getSearchSet().add(search);
-                pagesService.update(page1);
+            Pages existingPage = pagesService.existingByPageId(page.getPageId());
+            if (existingPage != null) {
+                existingPage.getSearches().add(search);
+                pagesService.update(existingPage);
             } else {
-                page.getSearchSet().add(search);
+                page.getSearches().add(search);
                 pagesService.create(page);
             }
         }
+        currentSearch = search;
         return words;
     }
 
     @GetMapping("/{id}")
     public Word definitionController(@PathVariable Long id) {
         try {
-            for (Word word : words) {
-                if (word.getId() == id) {
-                    Word retrievedWord = WikiApiRequest.getDescriptionByPageId(id);
-                    retrievedWord.setSearch(search);
-                    wordService.create(retrievedWord);
-                    pagesService.existingByPageId(id).getSearchSet().clear();
-                    pagesService.delete(pagesService.existingByPageId(id).getId());
-                    return retrievedWord;
+            Word retrievedWord = WikiApiRequest.getDescriptionByPageId(id);
+            retrievedWord.setSearch(currentSearch);
+            wordService.create(retrievedWord);
+            Pages page = pagesService.existingByPageId(id);
+            if (page != null) {
+                for (Search search : page.getSearches()) {
+                    search.getPages().remove(page);
                 }
+                page.getSearches().clear();
+                pagesService.update(page);
+                pagesService.delete(page.getId());
             }
+            return retrievedWord;
         } catch (NumberFormatException | IOException e) {
             logger.info("Invalid input!");
+            return null;
         }
-        return null;
     }
+
 
     @PatchMapping("/{id}")
     public String updateSearch(@PathVariable Long id, @RequestBody Search newSearch) {
@@ -125,9 +132,25 @@ public class RequestManager {
     }
 
 
-    @PostMapping("/add")
-    public Word create(@RequestBody Word word) {
+    @GetMapping("/showSearches")
+    public List<Search> showAllSearches() {
+        List<Search> searches = searchService.read();
+        return searches;
+    }
+
+    @GetMapping("/showPages")
+    public List<Pages> showAllPages() {
+        List<Pages> pages = pagesService.read();
+        return pages;
+    }
+
+    @PostMapping("/add/{id}")
+    public Word create(@RequestBody Word word, @PathVariable Long id) {
         if (word.getTitle() != null && word.getDescription() != null) {
+            if (id != null) {
+                Search search = searchService.getSearchById(id);
+                word.setSearch(search);
+            }
             wordService.create(word);
         } else {
             logger.info("Error! You entered incorrect data!");
@@ -151,13 +174,6 @@ public class RequestManager {
     public String deleteSearch(@PathVariable Long id) {
         String message = "";
         if (searchService.existingById(id)) {
-            List<Word> wordsBySearch = wordService.existingBySearchId(id);
-            if (!wordsBySearch.isEmpty()) {
-                for (Word word : wordsBySearch) {
-                    wordService.delete(word.getId());
-                }
-            }
-            pagesService.deleteBySearchId(id);
             searchService.delete(id);
             message = "Search was deleted";
         } else {

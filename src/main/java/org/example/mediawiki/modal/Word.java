@@ -1,5 +1,6 @@
 package org.example.mediawiki.modal;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,8 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-@Data
 @Entity
+@Data
 @NoArgsConstructor
 public class Word {
     @Id
@@ -20,7 +21,11 @@ public class Word {
 
     @ManyToOne
     @JoinColumn(name = "search_id")
+    @JsonIgnore
     private Search search;
+
     private String title;
     private String description;
 }
+
+

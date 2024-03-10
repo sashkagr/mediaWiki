@@ -1,9 +1,9 @@
 package org.example.mediawiki.modal;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.CascadeType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -14,8 +14,8 @@ import javax.persistence.Id;
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
 @Entity
+@Data
 @NoArgsConstructor
 public class Pages {
     @Id
@@ -24,9 +24,10 @@ public class Pages {
     private String title;
     private long pageId;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(name = "pages_search",
-            joinColumns = @JoinColumn(name = "page_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "search_id", referencedColumnName = "id"))
-    private List<Search> searchSet = new ArrayList<>();
+            joinColumns = @JoinColumn(name = "page_id"),
+            inverseJoinColumns = @JoinColumn(name = "search_id"))
+    @JsonIgnore
+    private List<Search> searches = new ArrayList<>();
 }
