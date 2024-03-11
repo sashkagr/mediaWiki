@@ -5,6 +5,7 @@ import org.example.mediawiki.modal.Word;
 import org.example.mediawiki.repository.WordRepository;
 import org.example.mediawiki.service.Service;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +16,7 @@ public class WordServiceImpl implements Service<Word> {
     @Autowired
     private WordRepository wordRepository;
 
+    @Transactional
     public boolean existingById(Long id) {
         return wordRepository.existsById(id);
     }
@@ -30,6 +32,7 @@ public class WordServiceImpl implements Service<Word> {
         return result;
     }
 
+    @Transactional
     public Word getWordById(Long id) {
         return wordRepository.getById(id);
     }
@@ -41,16 +44,19 @@ public class WordServiceImpl implements Service<Word> {
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
         wordRepository.deleteById(id);
     }
 
     @Override
+    @Transactional
     public void update(Word entity) {
         wordRepository.save(entity);
     }
 
     @Override
+    @Transactional
     public List<Word> read() {
         return wordRepository.findAll();
     }

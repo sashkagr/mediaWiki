@@ -4,6 +4,7 @@ import org.example.mediawiki.modal.Pages;
 import org.example.mediawiki.repository.PagesRepository;
 import org.example.mediawiki.service.Service;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -25,22 +26,26 @@ public class PagesServiceImpl implements Service<Pages> {
 
 
     @Override
+    @Transactional
     public void create(Pages entity) {
         pagesRepository.save(entity);
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
         pagesRepository.deleteById(id);
     }
 
     @Override
+    @Transactional
     public void update(Pages entity) {
         pagesRepository.save(entity);
 
     }
 
     @Override
+    @Transactional
     public List<Pages> read() {
         return pagesRepository.findAll();
     }
