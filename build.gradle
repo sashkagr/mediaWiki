@@ -29,13 +29,6 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     implementation 'mysql:mysql-connector-java:8.0.27'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.15.3'
-    testImplementation 'junit:junit:4.12'
-    testImplementation 'org.dbunit:dbunit:2.7.0'
+
 }
-test {
-    testClassesDirs = fileTree(dir: 'build/classes/java/test')
-    sourceSets.test.java.srcDirs = ['src/test/java']
-    testLogging {
-        events "passed", "skipped", "failed"
-    }
-}
+

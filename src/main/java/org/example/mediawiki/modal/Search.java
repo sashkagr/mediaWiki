@@ -30,7 +30,6 @@ public class Search {
     @OneToMany(mappedBy = "search", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Word> words = new ArrayList<>();
 
-
     @Override
     public String toString() {
         return "Search{" +
