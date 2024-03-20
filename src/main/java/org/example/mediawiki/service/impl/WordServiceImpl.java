@@ -29,10 +29,8 @@ public class WordServiceImpl implements Service<Word> {
             }
         }
         Word word = wordRepository.existingById(id);
-        if (word != null) {
-            return true;
-        }
-        return false;
+        return word != null;
+
     }
 
     public List<Word> existingBySearch(Search search) {

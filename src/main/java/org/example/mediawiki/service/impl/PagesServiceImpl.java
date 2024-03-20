@@ -27,8 +27,7 @@ public class PagesServiceImpl implements Service<Pages> {
                 }
             }
         }
-        Pages page = pagesRepository.existingByPageId(pageId);
-        return page;
+        return pagesRepository.existingByPageId(pageId);
     }
 
     @Override

@@ -29,10 +29,8 @@ public class SearchServiceImpl implements Service<Search> {
             }
         }
         Search search = searchRepository.existingById(id);
-        if (search != null) {
-            return true;
-        }
-        return false;
+        return search != null;
+
     }
 
     public Search existingByTitle(String title) {

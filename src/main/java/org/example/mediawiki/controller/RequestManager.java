@@ -42,8 +42,7 @@ public class RequestManager {
 
     @GetMapping("/useful")
     public List<Word> getUsefulData(@RequestParam("title") String title){
-       List<Word> result = wordService.findWordByTitle(title);
-        return result;
+        return wordService.findWordByTitle(title);
     }
 
 
