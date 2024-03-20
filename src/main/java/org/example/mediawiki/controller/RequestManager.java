@@ -40,6 +40,13 @@ public class RequestManager {
 
     Search currentSearch = new Search();
 
+    @GetMapping("/useful")
+    public List<Word> getUsefulData(@RequestParam("title") String title){
+       List<Word> result = wordService.findWordByTitle(title);
+        return result;
+    }
+
+
     @GetMapping
     public List<Word> getDefinition(@RequestParam String name) {
         Search search = searchService.existingByTitle(name);
@@ -59,16 +66,15 @@ public class RequestManager {
 
     private List<Word> getWordsFromPages(Search search) {
         List<Word> words = new ArrayList<>();
-        List<Pages> pages = pagesService.read();
+        List<Pages> pages = pagesService.existingBySearch(search);
         for (Pages page : pages) {
-            if (page.getSearches().contains(search)) {
                 Word word = new Word();
                 word.setId(page.getPageId());
                 word.setTitle(page.getTitle());
                 word.setSearch(search);
                 words.add(word);
             }
-        }
+
         return words;
     }
 
@@ -118,7 +124,6 @@ public class RequestManager {
         }
     }
 
-
     @PatchMapping("/{id}")
     public String updateSearch(@PathVariable Long id, @RequestBody Search newSearch) {
         Search existingSearch = searchService.getSearchById(id);
@@ -130,7 +135,6 @@ public class RequestManager {
 
         return "Invalid input!";
     }
-
 
     @GetMapping("/showSearches")
     public List<Search> showAllSearches() {
@@ -179,7 +183,6 @@ public class RequestManager {
         }
         return message;
     }
-
 
     @PutMapping("/update/{id}")
     public String update(@RequestBody Word word, @PathVariable Long id) {

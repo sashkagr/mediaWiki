@@ -1,11 +1,14 @@
 package org.example.mediawiki.service.impl;
 
+import org.example.mediawiki.cache.Cache;
 import org.example.mediawiki.modal.Pages;
+import org.example.mediawiki.modal.Search;
 import org.example.mediawiki.repository.PagesRepository;
 import org.example.mediawiki.service.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @org.springframework.stereotype.Service
@@ -14,16 +17,19 @@ public class PagesServiceImpl implements Service<Pages> {
     @Autowired
     private PagesRepository pagesRepository;
 
+    private Cache cache = new Cache();
+
     public Pages existingByPageId(Long pageId) {
-        List<Pages> pages = this.read();
-        for (Pages page : pages) {
-            if (page.getPageId() == pageId) {
-                return page;
+        for (String key : cache.getCache().keySet()) {
+            for (Pages element : (List<Pages>) cache.getCache().get(key)) {
+                if (element.getPageId() == pageId) {
+                    return element;
+                }
             }
         }
-        return null;
+        Pages page = pagesRepository.existingByPageId(pageId);
+        return page;
     }
-
 
     @Override
     @Transactional
@@ -34,12 +40,34 @@ public class PagesServiceImpl implements Service<Pages> {
     @Override
     @Transactional
     public void delete(Long id) {
+        for (String key : cache.getCache().keySet()) {
+            List<Pages> pages = (List<Pages>) cache.getCache().get(key);
+            for (Pages element : pages) {
+                if (element.getId() == id) {
+                    pages.remove(element);
+                    cache.remove(key);
+                    cache.put(key, pages);
+                    break;
+                }
+            }
+        }
         pagesRepository.deleteById(id);
     }
 
     @Override
     @Transactional
     public void update(Pages entity) {
+        for (String key : cache.getCache().keySet()) {
+            List<Pages> pages = (List<Pages>) cache.getCache().get(key);
+            for (Pages element : pages) {
+                if (element.getId() == entity.getId()) {
+                    pages.remove(element);
+                    cache.remove(key);
+                    cache.put(key, pages);
+                    break;
+                }
+            }
+        }
         pagesRepository.save(entity);
 
     }
@@ -47,7 +75,50 @@ public class PagesServiceImpl implements Service<Pages> {
     @Override
     @Transactional
     public List<Pages> read() {
-        return pagesRepository.findAll();
+        cache.clear();
+        List<Pages> pages = new ArrayList<>();
+        pages = pagesRepository.findAll();
+        for (Pages page : pages) {
+            List<Pages> pagesList = (List<Pages>) cache.get((Long.toString(page.getId())));
+            if (pagesList != null) {
+                cache.remove((Long.toString(page.getId())));
+                pagesList.add(page);
+            }
+            cache.put((Long.toString(page.getId())), page);
+        }
+        return pages;
+
+    }
+
+
+    public List<Pages> existingBySearch(Search search) {
+        List<Pages> result = new ArrayList<>();
+        List<Pages> pages = new ArrayList<>();
+        for (String key : cache.getCache().keySet()) {
+            pages = (List<Pages>) cache.getCache().get(key);
+            for (Pages page : pages) {
+                if (page.getSearches().contains(search)) {
+                    result.add(page);
+                }
+            }
+        }
+        if (result.isEmpty()) {
+
+            pages = pagesRepository.existingBySearch(search);
+            for (Pages page : pages) {
+                result.add(page);
+                List<Pages> pagesList = (List<Pages>) cache.get(Long.toString(page.getId()));
+                if (pagesList == null) {
+                    pagesList = new ArrayList<>();
+                    cache.remove(Long.toString(page.getId()));
+                }
+                pagesList.add(page);
+                cache.put(Long.toString(page.getId()), pagesList);
+            }
+
+
+        }
+        return result;
     }
 }
 
