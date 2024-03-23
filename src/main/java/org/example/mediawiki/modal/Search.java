@@ -27,17 +27,17 @@ public class Search {
     @JsonIgnore
     private List<Pages> pages = new ArrayList<>();
 
-    @OneToMany(mappedBy = "search", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "search", cascade = CascadeType.ALL,
+            orphanRemoval = true)
     private List<Word> words = new ArrayList<>();
 
     @Override
     public String toString() {
-        return "Search{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                '}';
+        return "Search{"
+                + "id=" + id
+                + ", title='" + title + '\''
+                + '}';
     }
-
 }
 
 

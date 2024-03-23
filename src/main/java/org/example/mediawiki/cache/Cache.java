@@ -8,26 +8,26 @@ import java.util.concurrent.ConcurrentHashMap;
 @Component
 public class Cache {
 
-        private Map<String, Object> projectCache = new ConcurrentHashMap<>();
+        private final Map<String, Object> wikiCache = new ConcurrentHashMap<>();
 
-        public void put(String key, Object value) {
-            projectCache.put(key, value);
+        public void put(final String key, final Object value) {
+            wikiCache.put(key, value);
         }
 
-        public Object get(String key) {
-            return projectCache.get(key);
+        public Object get(final String key) {
+            return wikiCache.get(key);
         }
 
-        public void remove(String key) {
-            projectCache.remove(key);
+        public void remove(final String key) {
+            wikiCache.remove(key);
         }
 
         public void clear() {
-            projectCache.clear();
+            wikiCache.clear();
         }
 
     public Map<String, Object> getCache() {
-        return this.projectCache;
+        return this.wikiCache;
     }
 
 }

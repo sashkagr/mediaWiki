@@ -15,12 +15,11 @@ public class SearchServiceImpl implements Service<Search> {
 
     private Cache cache = new Cache();
 
-
     @Autowired
     private SearchRepository searchRepository;
 
     @Transactional
-    public boolean existingById(Long id) {
+    public boolean existingById(final Long id) {
         for (String key : cache.getCache().keySet()) {
             for (Search element : (List<Search>) cache.getCache().get(key)) {
                 if (element.getId() == id) {
@@ -33,7 +32,7 @@ public class SearchServiceImpl implements Service<Search> {
 
     }
 
-    public Search existingByTitle(String title) {
+    public Search existingByTitle(final String title) {
         for (String key : cache.getCache().keySet()) {
             for (Search element : (List<Search>) cache.getCache().get(key)) {
                 if (element.getTitle() == title) {
@@ -53,7 +52,7 @@ public class SearchServiceImpl implements Service<Search> {
     }
 
     @Transactional
-    public Search getSearchById(Long id) {
+    public Search getSearchById(final Long id) {
         for (String key : cache.getCache().keySet()) {
             for (Search element : (List<Search>) cache.getCache().get(key)) {
                 if (element.getId() == id) {
@@ -76,13 +75,13 @@ public class SearchServiceImpl implements Service<Search> {
 
     @Override
     @Transactional
-    public void create(Search entity) {
+    public void create(final Search entity) {
         searchRepository.save(entity);
     }
 
     @Override
     @Transactional
-    public void delete(Long id) {
+    public void delete(final Long id) {
         for (String key : cache.getCache().keySet()) {
             List<Search> searches = (List<Search>) cache.getCache().get(key);
             for (Search element : searches) {
@@ -99,7 +98,7 @@ public class SearchServiceImpl implements Service<Search> {
 
     @Override
     @Transactional
-    public void update(Search entity) {
+    public void update(final Search entity) {
         for (String key : cache.getCache().keySet()) {
             List<Search> searches = (List<Search>) cache.getCache().get(key);
             for (Search element : searches) {
@@ -121,7 +120,8 @@ public class SearchServiceImpl implements Service<Search> {
         List<Search> searches = new ArrayList<>();
         searches = searchRepository.findAll();
         for (Search search : searches) {
-            List<Search> searchList = (List<Search>) cache.get((Long.toString(search.getId())));
+            List<Search> searchList = (List<Search>) cache.
+                    get((Long.toString(search.getId())));
             if (searchList != null) {
                 cache.remove((Long.toString(search.getId())));
                 searchList.add(search);

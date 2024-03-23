@@ -20,37 +20,43 @@ public class WikiApiRequest {
     private WikiApiRequest() {
     }
 
-    private static final Logger logger = Logger.getLogger(WikiApiRequest.class.getName());
+    private static final Logger LOGGER = Logger.
+            getLogger(WikiApiRequest.class.getName());
 
-    public static List<Word> getDescriptionByTitle(String title) {
+    public static List<Word> getDescriptionByTitle(final String title) {
         ObjectMapper objectMapper = new ObjectMapper();
         List<Word> result = new ArrayList<>();
         String jsonResponse = "";
         try {
-            String apiUrl = "https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=" + title + "&srwhat=text&format=json";
+            String apiUrl =
+                    "https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch="
+                            + title + "&srwhat=text&format=json";
             URL url = new URL(apiUrl);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             int responseCode = conn.getResponseCode();
-
             if (responseCode == 200) {
                 jsonResponse = readResponse(conn);
-                List<DescriptionGetApiSearchResponse> words = extractValidWords(jsonResponse, objectMapper);
+                List<DescriptionGetApiSearchResponse> words =
+                        extractValidWords(jsonResponse, objectMapper);
                 result = words.stream()
                         .map(WikiApiRequest::mapResponseToModel)
                         .collect(Collectors.toList());
             } else {
-                logger.info("Error with response code");
+                LOGGER.info("Error with response code");
             }
             conn.disconnect();
         } catch (Exception e) {
-            logger.info(e.getMessage());
+            LOGGER.info(e.getMessage());
         }
         return result;
     }
 
-    private static String readResponse(HttpURLConnection conn) throws IOException {
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {
+    private static String readResponse(final HttpURLConnection conn)
+            throws IOException {
+        try (BufferedReader reader =
+                     new BufferedReader(new InputStreamReader(conn.
+                             getInputStream()))) {
             StringBuilder response = new StringBuilder();
             String line;
             while ((line = reader.readLine()) != null) {
@@ -60,22 +66,30 @@ public class WikiApiRequest {
         }
     }
 
-    private static List<DescriptionGetApiSearchResponse> extractValidWords(String jsonResponse, ObjectMapper objectMapper) throws IOException {
-        DescriptionGetApiResponse responses = objectMapper.readValue(jsonResponse, DescriptionGetApiResponse.class);
+    private static List<DescriptionGetApiSearchResponse>
+    extractValidWords(final String jsonResponse,
+                      final ObjectMapper objectMapper) throws IOException {
+        DescriptionGetApiResponse responses = objectMapper.
+                readValue(jsonResponse, DescriptionGetApiResponse.class);
         List<DescriptionGetApiSearchResponse> words = new ArrayList<>();
-        for (DescriptionGetApiSearchResponse searchResponse : responses.getQuery().getSearch()) {
+        for (DescriptionGetApiSearchResponse searchResponse
+                : responses.getQuery().getSearch()) {
             try {
-                if (searchResponse.getDescription() != null && searchResponse.getTitle() != null && searchResponse.getId() != null) {
+                if (searchResponse.getDescription() != null
+                        && searchResponse.getTitle() != null
+                        && searchResponse.getId() != null) {
                     words.add(searchResponse);
                 }
             } catch (Exception e) {
-                logger.info(e.getMessage());
+                LOGGER.info(e.getMessage());
             }
         }
         return words;
     }
 
-    private static Word mapResponseToModel(DescriptionGetApiSearchResponse descriptionGetApiSearchResponse) {
+    private static Word
+    mapResponseToModel(final DescriptionGetApiSearchResponse
+                               descriptionGetApiSearchResponse) {
         Word word = new Word();
         word.setId(Integer.parseInt(descriptionGetApiSearchResponse.getId()));
         word.setTitle(descriptionGetApiSearchResponse.getTitle());
@@ -83,14 +97,17 @@ public class WikiApiRequest {
         return word;
     }
 
-    public static Word getDescriptionByPageId(long id) throws IOException {
+    public static Word
+    getDescriptionByPageId(final long id) throws IOException {
         String id1 = Long.toString(id);
-        String apiUrl = "https://en.wikipedia.org/w/api.php?action=query&prop=extracts&format=json&pageids=" + id1;
+        String apiUrl =
+                "https://en.wikipedia.org/w/api.php?action=query&prop=extracts&format=json&pageids="
+                        + id1;
         URL url = new URL(apiUrl);
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestMethod("GET");
-
-        BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+        BufferedReader in =
+                new BufferedReader(new InputStreamReader(con.getInputStream()));
         String inputLine;
         StringBuilder content = new StringBuilder();
         while ((inputLine = in.readLine()) != null) {
@@ -98,18 +115,16 @@ public class WikiApiRequest {
         }
         in.close();
         con.disconnect();
-
         JSONObject response = new JSONObject(content.toString());
-        JSONObject pages = response.getJSONObject("query").getJSONObject("pages");
+        JSONObject pages = response.getJSONObject("query").
+                getJSONObject("pages");
         JSONObject page = pages.getJSONObject(id1);
         String title = page.getString("title");
         String extract = page.getString("extract");
-
         int index = extract.indexOf("<h2>");
         if (index != -1) {
             extract = extract.substring(0, index);
         }
-
         extract = extract.replaceAll("<[^>]*>", "");
         extract = extract.replace("\n", "");
         Word word = new Word();

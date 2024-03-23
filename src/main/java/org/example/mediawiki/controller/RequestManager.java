@@ -27,7 +27,8 @@ import java.util.logging.Logger;
 @RequestMapping("/search")
 public class RequestManager {
 
-    private static final Logger logger = Logger.getLogger(RequestManager.class.getName());
+    private static final Logger LOGGER = Logger.
+            getLogger(RequestManager.class.getName());
 
     @Autowired
     private WordServiceImpl wordService;
@@ -38,16 +39,16 @@ public class RequestManager {
     @Autowired
     private SearchServiceImpl searchService;
 
-    Search currentSearch = new Search();
+    private Search currentSearch = new Search();
 
     @GetMapping("/useful")
-    public List<Word> getUsefulData(@RequestParam("title") String title){
+    public List<Word> getUsefulData(@RequestParam("title") final String title) {
         return wordService.findWordByTitle(title);
     }
 
 
     @GetMapping
-    public List<Word> getDefinition(@RequestParam String name) {
+    public List<Word> getDefinition(@RequestParam final String name) {
         Search search = searchService.existingByTitle(name);
         List<Word> words = new ArrayList<>();
         if (search != null) {
@@ -63,21 +64,21 @@ public class RequestManager {
         return words;
     }
 
-    private List<Word> getWordsFromPages(Search search) {
+    private List<Word> getWordsFromPages(final Search search) {
         List<Word> words = new ArrayList<>();
         List<Pages> pages = pagesService.existingBySearch(search);
         for (Pages page : pages) {
-                Word word = new Word();
-                word.setId(page.getPageId());
-                word.setTitle(page.getTitle());
-                word.setSearch(search);
-                words.add(word);
-            }
+            Word word = new Word();
+            word.setId(page.getPageId());
+            word.setTitle(page.getTitle());
+            word.setSearch(search);
+            words.add(word);
+        }
 
         return words;
     }
 
-    private List<Word> createSearchAndWords(String name) {
+    private List<Word> createSearchAndWords(final String name) {
         List<Word> words = WikiApiRequest.getDescriptionByTitle(name);
         Search search = new Search();
         search.setTitle(name);
@@ -85,10 +86,12 @@ public class RequestManager {
         for (Word word : words) {
             Pages page = new Pages();
             word.setSearch(search);
-            word.setDescription(word.getDescription().replaceAll("\\<[^\\\\>]*+\\>", ""));
+            word.setDescription(word.getDescription().
+                    replaceAll("\\<[^\\\\>]*+\\>", ""));
             page.setPageId(word.getId());
             page.setTitle(word.getTitle());
-            Pages existingPage = pagesService.existingByPageId(page.getPageId());
+            Pages existingPage = pagesService.
+                    existingByPageId(page.getPageId());
             if (existingPage != null) {
                 existingPage.getSearches().add(search);
                 pagesService.update(existingPage);
@@ -102,7 +105,7 @@ public class RequestManager {
     }
 
     @GetMapping("/{id}")
-    public Word definitionController(@PathVariable Long id) {
+    public Word definitionController(@PathVariable final Long id) {
         try {
             Word retrievedWord = WikiApiRequest.getDescriptionByPageId(id);
             retrievedWord.setSearch(currentSearch);
@@ -118,20 +121,20 @@ public class RequestManager {
             }
             return retrievedWord;
         } catch (NumberFormatException | IOException e) {
-            logger.info("Invalid input!");
+            LOGGER.info("Invalid input!");
             return null;
         }
     }
 
     @PatchMapping("/{id}")
-    public String updateSearch(@PathVariable Long id, @RequestBody Search newSearch) {
+    public String updateSearch(@PathVariable final Long id,
+                               @RequestBody final Search newSearch) {
         Search existingSearch = searchService.getSearchById(id);
         if (existingSearch != null && newSearch.getTitle() != null) {
             existingSearch.setTitle(newSearch.getTitle());
             searchService.update(existingSearch);
             return "Search was updated";
         }
-
         return "Invalid input!";
     }
 
@@ -146,7 +149,8 @@ public class RequestManager {
     }
 
     @PostMapping("/add/{id}")
-    public Word create(@RequestBody Word word, @PathVariable Long id) {
+    public Word create(@RequestBody final Word word,
+                       @PathVariable final Long id) {
         if (word.getTitle() != null && word.getDescription() != null) {
             if (id != null) {
                 Search search = searchService.getSearchById(id);
@@ -154,13 +158,13 @@ public class RequestManager {
             }
             wordService.create(word);
         } else {
-            logger.info("Error! You entered incorrect data!");
+            LOGGER.info("Error! You entered incorrect data!");
         }
         return word;
     }
 
     @DeleteMapping("/delete/{id}")
-    public String delete(@PathVariable Long id) {
+    public String delete(@PathVariable final Long id) {
         String message = "";
         if (wordService.existingById(id)) {
             wordService.delete(id);
@@ -172,7 +176,7 @@ public class RequestManager {
     }
 
     @DeleteMapping("/delete-search/{id}")
-    public String deleteSearch(@PathVariable Long id) {
+    public String deleteSearch(@PathVariable final Long id) {
         String message = "";
         if (searchService.existingById(id)) {
             searchService.delete(id);
@@ -184,14 +188,16 @@ public class RequestManager {
     }
 
     @PutMapping("/update/{id}")
-    public String update(@RequestBody Word word, @PathVariable Long id) {
+    public String update(@RequestBody final Word word,
+                         @PathVariable final Long id) {
         String message = "Error! You entered incorrect data!";
         Word word1 = wordService.getWordById(id);
         if (word.getTitle() != null && word.getDescription() != null) {
             word1.setTitle(word.getTitle());
             word1.setDescription(word.getDescription());
             if (word.getSearch() != null) {
-                Search searchCurrent = searchService.existingByTitle(word.getSearch().getTitle());
+                Search searchCurrent = searchService.
+                        existingByTitle(word.getSearch().getTitle());
                 if (searchCurrent != null) {
                     word1.setSearch(word.getSearch());
                 }
@@ -201,7 +207,6 @@ public class RequestManager {
         }
         return message;
     }
-
 
 }
 

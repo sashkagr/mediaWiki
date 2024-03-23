@@ -7,10 +7,10 @@ import java.util.logging.Logger;
 
 @SpringBootApplication
 public class Main {
-    private static final Logger logger = Logger.getLogger(Main.class.getName());
-
-    public static void main(String[] args) {
-        logger.info("Hello world!");
+    private static final Logger LOGGER = Logger.
+            getLogger(Main.class.getName());
+    public static void main(final String[] args) {
+        LOGGER.info("Hello world!");
         SpringApplication.run(Main.class, args);
     }
 }

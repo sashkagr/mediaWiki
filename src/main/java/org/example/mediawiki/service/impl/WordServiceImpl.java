@@ -20,7 +20,7 @@ public class WordServiceImpl implements Service<Word> {
     private Cache cache = new Cache();
 
     @Transactional
-    public boolean existingById(Long id) {
+    public boolean existingById(final Long id) {
         for (String key : cache.getCache().keySet()) {
             for (Word element : (List<Word>) cache.getCache().get(key)) {
                 if (element.getId() == id) {
@@ -33,7 +33,7 @@ public class WordServiceImpl implements Service<Word> {
 
     }
 
-    public List<Word> existingBySearch(Search search) {
+    public List<Word> existingBySearch(final Search search) {
         String cacheKey = Long.toString(search.getId());
         Object cachedData = cache.get(cacheKey);
         if (cachedData != null) {
@@ -48,7 +48,7 @@ public class WordServiceImpl implements Service<Word> {
     }
 
     @Transactional
-    public Word getWordById(Long id) {
+    public Word getWordById(final Long id) {
         for (String key : cache.getCache().keySet()) {
             for (Word element : (List<Word>) cache.getCache().get(key)) {
                 if (element.getId() == id) {
@@ -58,7 +58,8 @@ public class WordServiceImpl implements Service<Word> {
         }
         Word word = wordRepository.existingById(id);
         List<Word> words = new ArrayList<>();
-        Object cachedData = cache.get(Long.toString((word.getSearch().getId())));
+        Object cachedData = cache.
+                get(Long.toString((word.getSearch().getId())));
         if (cachedData != null) {
             cache.remove(Long.toString((word.getSearch().getId())));
             words = (List<Word>) cachedData;
@@ -70,13 +71,13 @@ public class WordServiceImpl implements Service<Word> {
     }
 
     @Override
-    public void create(Word entity) {
+    public void create(final Word entity) {
         wordRepository.save(entity);
     }
 
     @Override
     @Transactional
-    public void delete(Long id) {
+    public void delete(final Long id) {
         for (String key : cache.getCache().keySet()) {
             List<Word> words = (List<Word>) cache.getCache().get(key);
             for (Word element : words) {
@@ -93,7 +94,7 @@ public class WordServiceImpl implements Service<Word> {
 
     @Override
     @Transactional
-    public void update(Word entity) {
+    public void update(final Word entity) {
         for (String key : cache.getCache().keySet()) {
             List<Word> words = (List<Word>) cache.getCache().get(key);
             for (Word element : words) {
@@ -115,7 +116,8 @@ public class WordServiceImpl implements Service<Word> {
         cache.clear();
         List<Word> words = wordRepository.findAll();
         for (Word word : words) {
-            List<Word> wordsList = (List<Word>) cache.get((Long.toString(word.getSearch().getId())));
+            List<Word> wordsList = (List<Word>) cache.
+                    get((Long.toString(word.getSearch().getId())));
             if (wordsList != null) {
                 cache.remove((Long.toString(word.getId())));
                 wordsList.add(word);
@@ -127,7 +129,7 @@ public class WordServiceImpl implements Service<Word> {
     }
 
     @Transactional
-    public List<Word> findWordByTitle(String title) {
+    public List<Word> findWordByTitle(final String title) {
         List<Word> words = new ArrayList<>();
         for (String key : cache.getCache().keySet()) {
             for (Word element : (List<Word>) cache.getCache().get(key)) {
@@ -139,9 +141,11 @@ public class WordServiceImpl implements Service<Word> {
         if (!words.isEmpty()) {
             return words;
         } else {
-            List<Word> wordsByTitle = wordRepository.findWordByTitle(title);
+            List<Word> wordsByTitle = wordRepository.
+                    findWordByTitle(title);
             for (Word word : wordsByTitle) {
-                words = (List<Word>) cache.get(Long.toString(word.getSearch().getId()));
+                words = (List<Word>) cache.
+                        get(Long.toString(word.getSearch().getId()));
                 if (words == null) {
                     words = new ArrayList<>();
                 } else {

@@ -19,7 +19,7 @@ public class PagesServiceImpl implements Service<Pages> {
 
     private Cache cache = new Cache();
 
-    public Pages existingByPageId(Long pageId) {
+    public Pages existingByPageId(final Long pageId) {
         for (String key : cache.getCache().keySet()) {
             for (Pages element : (List<Pages>) cache.getCache().get(key)) {
                 if (element.getPageId() == pageId) {
@@ -32,13 +32,13 @@ public class PagesServiceImpl implements Service<Pages> {
 
     @Override
     @Transactional
-    public void create(Pages entity) {
+    public void create(final Pages entity) {
         pagesRepository.save(entity);
     }
 
     @Override
     @Transactional
-    public void delete(Long id) {
+    public void delete(final Long id) {
         for (String key : cache.getCache().keySet()) {
             List<Pages> pages = (List<Pages>) cache.getCache().get(key);
             for (Pages element : pages) {
@@ -55,7 +55,7 @@ public class PagesServiceImpl implements Service<Pages> {
 
     @Override
     @Transactional
-    public void update(Pages entity) {
+    public void update(final Pages entity) {
         for (String key : cache.getCache().keySet()) {
             List<Pages> pages = (List<Pages>) cache.getCache().get(key);
             for (Pages element : pages) {
@@ -78,7 +78,8 @@ public class PagesServiceImpl implements Service<Pages> {
         List<Pages> pages = new ArrayList<>();
         pages = pagesRepository.findAll();
         for (Pages page : pages) {
-            List<Pages> pagesList = (List<Pages>) cache.get((Long.toString(page.getId())));
+            List<Pages> pagesList = (List<Pages>) cache.
+                    get((Long.toString(page.getId())));
             if (pagesList != null) {
                 cache.remove((Long.toString(page.getId())));
                 pagesList.add(page);
@@ -90,7 +91,7 @@ public class PagesServiceImpl implements Service<Pages> {
     }
 
 
-    public List<Pages> existingBySearch(Search search) {
+    public List<Pages> existingBySearch(final Search search) {
         List<Pages> result = new ArrayList<>();
         List<Pages> pages = new ArrayList<>();
         for (String key : cache.getCache().keySet()) {
@@ -106,7 +107,8 @@ public class PagesServiceImpl implements Service<Pages> {
             pages = pagesRepository.existingBySearch(search);
             for (Pages page : pages) {
                 result.add(page);
-                List<Pages> pagesList = (List<Pages>) cache.get(Long.toString(page.getId()));
+                List<Pages> pagesList = (List<Pages>) cache.
+                        get(Long.toString(page.getId()));
                 if (pagesList == null) {
                     pagesList = new ArrayList<>();
                     cache.remove(Long.toString(page.getId()));
