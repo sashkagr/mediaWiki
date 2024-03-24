@@ -73,12 +73,7 @@ public class WordAspect {
                 (MethodSignature) joinPoint.getSignature();
         if (methodSignature.getName().equals("update")) {
             Object[] arguments = joinPoint.getArgs();
-            for (Object arg : arguments) {
-                if (arg instanceof Word word) {
                     log.info("Try change word");
-                    break;
-                }
-            }
         }
         Object result;
         try {
@@ -181,10 +176,10 @@ public class WordAspect {
                     }
                 }
             }
-            case "getWordsFromPages" -> log.
-                    info("Method get pages from search {} ");
-            case "getWordBySearch" -> log.
-                    info("All words by search are get");
+            case "getWordsFromPages" ->
+                    log.info("Method get pages from search {} ");
+            case "getWordBySearch" ->
+                    log.info("All words by search are get");
             default -> {
                 break;
             }
@@ -195,7 +190,6 @@ public class WordAspect {
     public Object aroundGetAdvice(final ProceedingJoinPoint joinPoint) {
         MethodSignature methodSignature =
                 (MethodSignature) joinPoint.getSignature();
-        String informations;
         Object[] arguments = joinPoint.getArgs();
         checkStartMethod(methodSignature.getName(), arguments);
         Object result;

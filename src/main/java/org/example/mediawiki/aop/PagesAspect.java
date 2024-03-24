@@ -71,13 +71,7 @@ public class PagesAspect {
         MethodSignature methodSignature =
                 (MethodSignature) joinPoint.getSignature();
         if (methodSignature.getName().equals("update")) {
-            Object[] arguments = joinPoint.getArgs();
-            for (Object arg : arguments) {
-                if (arg instanceof Pages page) {
                     log.info("Try change page");
-                    break;
-                }
-            }
         }
         Object result;
         try {
@@ -152,7 +146,6 @@ public class PagesAspect {
     public Object aroundGetAdvice(final ProceedingJoinPoint joinPoint) {
         MethodSignature methodSignature =
                 (MethodSignature) joinPoint.getSignature();
-        String informations;
         Object[] arguments = joinPoint.getArgs();
         checkStartMethod(methodSignature.getName(), arguments);
         Object result;

@@ -5,13 +5,9 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.example.mediawiki.modal.DescriptionGetApiSearchResponse;
-import org.example.mediawiki.modal.Word;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-
-import java.net.HttpURLConnection;
 
 @Component
 @Aspect
@@ -23,26 +19,15 @@ public class WikiApiRequestAspect {
         MethodSignature methodSignature =
                 (MethodSignature) joinPoint.getSignature();
         if (methodSignature.getName().equals("mapResponseToModel")) {
-            Object[] arguments = joinPoint.getArgs();
-            for (Object arg : arguments) {
-                if (arg instanceof DescriptionGetApiSearchResponse
-                        descriptionGetApiSearchResponse) {
-                    log.info("Try map descriptionGetApiSearchResponse to word");
-                    break;
-                }
-            }
-            try {
-                result = joinPoint.proceed();
-            } catch (Throwable e) {
-                log.error(e.getMessage(), e);
-                result = new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-            for (Object arg : arguments) {
-                if (arg instanceof Word word) {
-                    log.info("Method map to word");
-                }
-            }
+            log.info("Try map descriptionGetApiSearchResponse to word");
         }
+        try {
+            result = joinPoint.proceed();
+        } catch (Throwable e) {
+            log.error(e.getMessage(), e);
+            result = new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        log.info("Method map to word");
         return result;
     }
 
@@ -56,20 +41,9 @@ public class WikiApiRequestAspect {
                     }
                 }
             }
-            case "getResponse" -> {
-                for (Object arg : arguments) {
-                    if (arg instanceof HttpURLConnection connection) {
-                        log.info("Try get response");
-                    }
-                }
-            }
-            case "getApiSearchResponsesWords" -> {
-                for (Object arg : arguments) {
-                    if (arg instanceof String response) {
-                        log.info("Try get API search responses");
-                    }
-                }
-            }
+            case "getResponse" -> log.info("Try get response");
+            case "getApiSearchResponsesWords" -> log.
+                    info("Try get API search responses");
             case "getDescriptionByPageId" -> {
                 for (Object arg : arguments) {
                     if (arg instanceof Long pageId) {
@@ -83,29 +57,16 @@ public class WikiApiRequestAspect {
         }
     }
 
-    public void checkEndMethod(final String method,
-                               final Object[] arguments) {
+    public void checkEndMethod(final String method) {
         switch (method) {
-            case "getDescriptionByTitle" -> {
-                        log.info("Method get all pages");
-            }
-            case "getResponse" -> {
-                for (Object arg : arguments) {
-                    if (arg instanceof String str) {
+            case "getDescriptionByTitle" ->
+                    log.info("Method get all pages");
+            case "getResponse" ->
                         log.info("Method get response");
-                    }
-                }
-            }
-            case "getApiSearchResponsesWords" -> {
+            case "getApiSearchResponsesWords" ->
                         log.info("Method get all API search responses");
-            }
-            case "getDescriptionByPageId" -> {
-                for (Object arg : arguments) {
-                    if (arg instanceof Word word) {
+            case "getDescriptionByPageId" ->
                         log.info("Method get description by pageId");
-                    }
-                }
-            }
             default -> {
                 break;
             }
@@ -125,7 +86,7 @@ public class WikiApiRequestAspect {
             log.error(e.getMessage(), e);
             result = new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        checkEndMethod(methodSignature.getName(), arguments);
+        checkEndMethod(methodSignature.getName());
         return result;
     }
 }

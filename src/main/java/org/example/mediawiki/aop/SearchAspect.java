@@ -83,13 +83,7 @@ public class SearchAspect {
         MethodSignature methodSignature =
                 (MethodSignature) joinPoint.getSignature();
         if (methodSignature.getName().equals("update")) {
-            Object[] arguments = joinPoint.getArgs();
-            for (Object arg : arguments) {
-                if (arg instanceof Search search) {
                     log.info("Try change search");
-                    break;
-                }
-            }
         }
         Object result;
         try {
@@ -120,72 +114,73 @@ public class SearchAspect {
         return result;
     }
 
-    public void checkStartMethod(final String method,
-                                 final Object[] arguments) {
+    public void checkStartMethod(final String method, final Object[] arguments) {
         switch (method) {
-            case "getSearchById" -> {
-                for (Object arg : arguments) {
-                    if (arg instanceof Long id) {
-                        log.info("Try find search by id {}", id);
-                    }
-                }
-            }
-            case "getSearchExistingById" -> {
-                for (Object arg : arguments) {
-                    if (arg instanceof Long id) {
-                        log.info("Try find existing search by id {}", id);
-                    }
-                }
-            }
-            case "getSearchByTitle" -> {
-                for (Object arg : arguments) {
-                    if (arg instanceof String title) {
-                        log.info("Try find search by title {}", title);
-                    }
-                }
-            }
+            case "getSearchById" -> checkSearchById(arguments);
+            case "getSearchExistingById" -> checkSearchExistingById(arguments);
+            case "getSearchByTitle" -> checkSearchByTitle(arguments);
             default -> {
                 break;
             }
         }
     }
 
-    public void checkEndMethod(final String method,
-                               final Object[] arguments) {
+    private void checkSearchById(final Object[] arguments) {
+        for (Object arg : arguments) {
+            if (arg instanceof Long id) {
+                log.info("Try find search by id {}", id);
+            }
+        }
+    }
+
+    private void checkSearchExistingById(final Object[] arguments) {
+        for (Object arg : arguments) {
+            if (arg instanceof Long id) {
+                log.info("Try find existing search by id {}", id);
+            }
+        }
+    }
+
+    private void checkSearchByTitle(final Object[] arguments) {
+        for (Object arg : arguments) {
+            if (arg instanceof String title) {
+                log.info("Try find search by title {}", title);
+            }
+        }
+    }
+
+    public void checkEndMethod(final String method, final Object[] arguments) {
         switch (method) {
-            case "getSearchById" -> {
-                for (Object arg : arguments) {
-                    if (arg instanceof Search search) {
-                        log.info("Method find search by id {}", search.getId());
-                    }
-                }
-            }
-            case "getSearchExistingById" -> {
-                for (Object arg : arguments) {
-                    if (arg instanceof Boolean search) {
-                        log.info("Method find existing search");
-                    }
-                }
-            }
-            case "getSearchByTitle" -> {
-                for (Object arg : arguments) {
-                    if (arg instanceof Search search) {
-                        log.info("Method find search by title {}",
-                                search.getTitle());
-                    }
-                }
-            }
+            case "getSearchById" -> checkEndSearchById(arguments);
+            case "getSearchExistingById" ->  log.info("Method find existing search");
+            case "getSearchByTitle" -> checkEndSearchByTitle(arguments);
             default -> {
                 break;
             }
         }
     }
+
+    private void checkEndSearchById(final Object[] arguments) {
+        for (Object arg : arguments) {
+            if (arg instanceof Search search) {
+                log.info("Method find search by id {}", search.getId());
+            }
+        }
+    }
+
+    private void checkEndSearchByTitle(final Object[] arguments) {
+        for (Object arg : arguments) {
+            if (arg instanceof Search search) {
+                log.info("Method find search by title {}", search.getTitle());
+            }
+        }
+    }
+
 
     @Around("PointCuts.getMethodsPages()")
     public Object aroundGetAdvice(final ProceedingJoinPoint joinPoint) {
         MethodSignature methodSignature =
                 (MethodSignature) joinPoint.getSignature();
-        String informations;
         Object[] arguments = joinPoint.getArgs();
         checkStartMethod(methodSignature.getName(), arguments);
         Object result;
