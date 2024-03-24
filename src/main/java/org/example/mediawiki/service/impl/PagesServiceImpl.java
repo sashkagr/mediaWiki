@@ -19,7 +19,7 @@ public class PagesServiceImpl implements Service<Pages> {
 
     private Cache cache = new Cache();
 
-    public Pages existingByPageId(final Long pageId) {
+    public Pages getPageByPageId(final Long pageId) {
         for (String key : cache.getCache().keySet()) {
             for (Pages element : (List<Pages>) cache.getCache().get(key)) {
                 if (element.getPageId() == pageId) {
@@ -90,8 +90,7 @@ public class PagesServiceImpl implements Service<Pages> {
 
     }
 
-
-    public List<Pages> existingBySearch(final Search search) {
+    public List<Pages> getPagesBySearch(final Search search) {
         List<Pages> result = new ArrayList<>();
         List<Pages> pages = new ArrayList<>();
         for (String key : cache.getCache().keySet()) {
@@ -111,8 +110,8 @@ public class PagesServiceImpl implements Service<Pages> {
                         get(Long.toString(page.getId()));
                 if (pagesList == null) {
                     pagesList = new ArrayList<>();
-                    cache.remove(Long.toString(page.getId()));
                 }
+                cache.remove(Long.toString(page.getId()));
                 pagesList.add(page);
                 cache.put(Long.toString(page.getId()), pagesList);
             }

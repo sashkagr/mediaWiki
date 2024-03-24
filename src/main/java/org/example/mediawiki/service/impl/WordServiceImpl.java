@@ -1,6 +1,7 @@
 package org.example.mediawiki.service.impl;
 
 import org.example.mediawiki.cache.Cache;
+import org.example.mediawiki.modal.Pages;
 import org.example.mediawiki.modal.Search;
 import org.example.mediawiki.modal.Word;
 import org.example.mediawiki.repository.WordRepository;
@@ -17,10 +18,13 @@ public class WordServiceImpl implements Service<Word> {
     @Autowired
     private WordRepository wordRepository;
 
+    @Autowired
+    private PagesServiceImpl pagesService;
+
     private Cache cache = new Cache();
 
     @Transactional
-    public boolean existingById(final Long id) {
+    public boolean getExistingById(final Long id) {
         for (String key : cache.getCache().keySet()) {
             for (Word element : (List<Word>) cache.getCache().get(key)) {
                 if (element.getId() == id) {
@@ -33,7 +37,7 @@ public class WordServiceImpl implements Service<Word> {
 
     }
 
-    public List<Word> existingBySearch(final Search search) {
+    public List<Word> getWordBySearch(final Search search) {
         String cacheKey = Long.toString(search.getId());
         Object cachedData = cache.get(cacheKey);
         if (cachedData != null) {
@@ -109,7 +113,6 @@ public class WordServiceImpl implements Service<Word> {
         wordRepository.save(entity);
     }
 
-
     @Override
     @Transactional
     public List<Word> read() {
@@ -129,7 +132,7 @@ public class WordServiceImpl implements Service<Word> {
     }
 
     @Transactional
-    public List<Word> findWordByTitle(final String title) {
+    public List<Word> getWordByTitle(final String title) {
         List<Word> words = new ArrayList<>();
         for (String key : cache.getCache().keySet()) {
             for (Word element : (List<Word>) cache.getCache().get(key)) {
@@ -158,5 +161,18 @@ public class WordServiceImpl implements Service<Word> {
         }
     }
 
+
+    public List<Word> getWordsFromPages(final Search search) {
+        List<Word> words = new ArrayList<>();
+        List<Pages> pages = pagesService.getPagesBySearch(search);
+        for (Pages page : pages) {
+            Word word = new Word();
+            word.setId(page.getPageId());
+            word.setTitle(page.getTitle());
+            word.setSearch(search);
+            words.add(word);
+        }
+        return words;
+    }
 
 }

@@ -5,6 +5,7 @@ import org.example.mediawiki.modal.DescriptionGetApiResponse;
 import org.example.mediawiki.modal.DescriptionGetApiSearchResponse;
 import org.example.mediawiki.modal.Word;
 import org.json.JSONObject;
+import org.springframework.http.HttpStatus;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,9 +15,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
-public class WikiApiRequest {
+public final class WikiApiRequest {
     private WikiApiRequest() {
     }
 
@@ -29,19 +29,21 @@ public class WikiApiRequest {
         String jsonResponse = "";
         try {
             String apiUrl =
-                    "https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch="
+                    "https://en.wikipedia.org/w/api.php?action"
+                            + "=query&list=search&srsearch="
                             + title + "&srwhat=text&format=json";
             URL url = new URL(apiUrl);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("GET");
             int responseCode = conn.getResponseCode();
-            if (responseCode == 200) {
-                jsonResponse = readResponse(conn);
+            if (responseCode == HttpStatus.OK.value()) {
+                jsonResponse = getResponse(conn);
                 List<DescriptionGetApiSearchResponse> words =
-                        extractValidWords(jsonResponse, objectMapper);
+                        getApiSearchResponsesWords(jsonResponse, objectMapper);
                 result = words.stream()
                         .map(WikiApiRequest::mapResponseToModel)
-                        .collect(Collectors.toList());
+                        .toList();
+
             } else {
                 LOGGER.info("Error with response code");
             }
@@ -52,7 +54,7 @@ public class WikiApiRequest {
         return result;
     }
 
-    private static String readResponse(final HttpURLConnection conn)
+    private static String getResponse(final HttpURLConnection conn)
             throws IOException {
         try (BufferedReader reader =
                      new BufferedReader(new InputStreamReader(conn.
@@ -67,8 +69,9 @@ public class WikiApiRequest {
     }
 
     private static List<DescriptionGetApiSearchResponse>
-    extractValidWords(final String jsonResponse,
-                      final ObjectMapper objectMapper) throws IOException {
+    getApiSearchResponsesWords(final String jsonResponse,
+                               final ObjectMapper
+                                       objectMapper) throws IOException {
         DescriptionGetApiResponse responses = objectMapper.
                 readValue(jsonResponse, DescriptionGetApiResponse.class);
         List<DescriptionGetApiSearchResponse> words = new ArrayList<>();
@@ -101,7 +104,8 @@ public class WikiApiRequest {
     getDescriptionByPageId(final long id) throws IOException {
         String id1 = Long.toString(id);
         String apiUrl =
-                "https://en.wikipedia.org/w/api.php?action=query&prop=extracts&format=json&pageids="
+                "https://en.wikipedia.org/w/api.php?action"
+                        + "=query&prop=extracts&format=json&pageids="
                         + id1;
         URL url = new URL(apiUrl);
         HttpURLConnection con = (HttpURLConnection) url.openConnection();

@@ -1,5 +1,6 @@
 package org.example.mediawiki.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.example.mediawiki.modal.Pages;
 import org.example.mediawiki.modal.Search;
 import org.example.mediawiki.modal.Word;
@@ -7,22 +8,26 @@ import org.example.mediawiki.service.impl.PagesServiceImpl;
 import org.example.mediawiki.service.impl.SearchServiceImpl;
 import org.example.mediawiki.service.impl.WordServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
+@Slf4j
+@ControllerAdvice
 @RestController
 @RequestMapping("/search")
 public class RequestManager {
@@ -41,76 +46,64 @@ public class RequestManager {
 
     private Search currentSearch = new Search();
 
-    @GetMapping("/useful")
-    public List<Word> getUsefulData(@RequestParam("title") final String title) {
-        return wordService.findWordByTitle(title);
+    @GetMapping("/findByTitle")
+    public List<Word> getWordByTitle(@RequestParam("title")
+                                         final String title) {
+        return wordService.getWordByTitle(title);
     }
 
 
     @GetMapping
-    public List<Word> getDefinition(@RequestParam final String name) {
-        Search search = searchService.existingByTitle(name);
-        List<Word> words = new ArrayList<>();
-        if (search != null) {
-            words = wordService.existingBySearch(search);
-            if (words.isEmpty()) {
-                words = getWordsFromPages(search);
+    public ResponseEntity<List<Word>> getDefinition(@RequestParam
+                                                        final String name) {
+        try {
+            if (name == null || name == "") {
+                log.error("An error occurred while processing the bad request");
+                return ResponseEntity.badRequest().build();
             }
-            currentSearch = search;
-        } else {
-            words = createSearchAndWords(name);
-        }
+            log.info("Received request to get definition for: {}", name);
 
-        return words;
-    }
+            Search search = searchService.getSearchByTitle(name);
+            List<Word> words = new ArrayList<>();
 
-    private List<Word> getWordsFromPages(final Search search) {
-        List<Word> words = new ArrayList<>();
-        List<Pages> pages = pagesService.existingBySearch(search);
-        for (Pages page : pages) {
-            Word word = new Word();
-            word.setId(page.getPageId());
-            word.setTitle(page.getTitle());
-            word.setSearch(search);
-            words.add(word);
-        }
+            if (search != null) {
+                log.info("Search found for '{}'. Retrieving words", name);
+                words = wordService.getWordBySearch(search);
 
-        return words;
-    }
+                if (words.isEmpty()) {
+                    log.info("No words found for '{}'."
+                            + " Attempting to retrieve from pages", name);
+                    words = wordService.getWordsFromPages(search);
+                }
 
-    private List<Word> createSearchAndWords(final String name) {
-        List<Word> words = WikiApiRequest.getDescriptionByTitle(name);
-        Search search = new Search();
-        search.setTitle(name);
-        searchService.create(search);
-        for (Word word : words) {
-            Pages page = new Pages();
-            word.setSearch(search);
-            word.setDescription(word.getDescription().
-                    replaceAll("\\<[^\\\\>]*+\\>", ""));
-            page.setPageId(word.getId());
-            page.setTitle(word.getTitle());
-            Pages existingPage = pagesService.
-                    existingByPageId(page.getPageId());
-            if (existingPage != null) {
-                existingPage.getSearches().add(search);
-                pagesService.update(existingPage);
+                currentSearch = search;
             } else {
-                page.getSearches().add(search);
-                pagesService.create(page);
+                log.info("No search found for '{}'."
+                        + " Creating search and pages", name);
+                words = searchService.createSearchAndPages(name);
+                currentSearch = searchService.getSearchByTitle(name);
             }
+
+            log.info("Returning {} words for '{}'", words.size(), name);
+            return ResponseEntity.ok(words);
+        } catch (Exception e) {
+            log.error("An error occurred while processing the request "
+                    + "for '{}'", name, e);
+            return ResponseEntity.badRequest().build();
         }
-        currentSearch = search;
-        return words;
     }
 
     @GetMapping("/{id}")
-    public Word definitionController(@PathVariable final Long id) {
+    public ResponseEntity<Word>
+    createWordBySearch(@PathVariable final Long id) {
         try {
+            if (id == null) {
+                return ResponseEntity.badRequest().build();
+            }
             Word retrievedWord = WikiApiRequest.getDescriptionByPageId(id);
             retrievedWord.setSearch(currentSearch);
             wordService.create(retrievedWord);
-            Pages page = pagesService.existingByPageId(id);
+            Pages page = pagesService.getPageByPageId(id);
             if (page != null) {
                 for (Search search : page.getSearches()) {
                     search.getPages().remove(page);
@@ -119,23 +112,36 @@ public class RequestManager {
                 pagesService.update(page);
                 pagesService.delete(page.getId());
             }
-            return retrievedWord;
+
+            return ResponseEntity.ok().body(retrievedWord);
         } catch (NumberFormatException | IOException e) {
-            LOGGER.info("Invalid input!");
-            return null;
+            log.error("Invalid input!", e);
+            return ResponseEntity.badRequest().build();
         }
     }
 
     @PatchMapping("/{id}")
-    public String updateSearch(@PathVariable final Long id,
-                               @RequestBody final Search newSearch) {
-        Search existingSearch = searchService.getSearchById(id);
-        if (existingSearch != null && newSearch.getTitle() != null) {
-            existingSearch.setTitle(newSearch.getTitle());
-            searchService.update(existingSearch);
-            return "Search was updated";
+    public ResponseEntity<String>
+    updateSearch(@PathVariable final Long id,
+                 @RequestBody final Search newSearch) {
+        try {
+            log.info("Received request to update search with id: {}", id);
+            Search existingSearch = searchService.getSearchById(id);
+            if (existingSearch != null && newSearch.getTitle() != null) {
+                existingSearch.setTitle(newSearch.getTitle());
+                searchService.update(existingSearch);
+                log.info("Search with id {} was successfully updated", id);
+                return ResponseEntity.ok().body("Search was updated");
+            } else {
+                log.info("Invalid input or search not found for id: {}", id);
+                return ResponseEntity.badRequest().body("Invalid input!");
+            }
+        } catch (Exception e) {
+            log.error("An error occurred while updating search "
+                    + "with id: {}", id, e);
+            return ResponseEntity.badRequest().
+                    body("An error occurred while updating search.");
         }
-        return "Invalid input!";
     }
 
     @GetMapping("/showSearches")
@@ -148,64 +154,116 @@ public class RequestManager {
         return pagesService.read();
     }
 
+    @GetMapping("/showWords")
+    public List<Word> showAllWords() {
+        return wordService.read();
+    }
+
     @PostMapping("/add/{id}")
-    public Word create(@RequestBody final Word word,
-                       @PathVariable final Long id) {
-        if (word.getTitle() != null && word.getDescription() != null) {
-            if (id != null) {
-                Search search = searchService.getSearchById(id);
-                word.setSearch(search);
+    public ResponseEntity<Word> createWord(@RequestBody final Word word,
+                                           @PathVariable final Long id) {
+        try {
+            log.info("Received request to create word with id: {}", id);
+
+            if (word.getTitle() != null && word.getDescription() != null) {
+                if (id != null) {
+                    Search search = searchService.getSearchById(id);
+                    word.setSearch(search);
+                }
+                wordService.create(word);
+                log.info("Word successfully created");
+                return ResponseEntity.ok().body(word);
+            } else {
+                log.info("Error! You entered incorrect data!");
+                return ResponseEntity.badRequest().build();
             }
-            wordService.create(word);
-        } else {
-            LOGGER.info("Error! You entered incorrect data!");
+        } catch (Exception e) {
+            log.error("An error occurred while creating word", e);
+            return ResponseEntity.badRequest().build();
         }
-        return word;
     }
 
     @DeleteMapping("/delete/{id}")
-    public String delete(@PathVariable final Long id) {
-        String message = "";
-        if (wordService.existingById(id)) {
-            wordService.delete(id);
-            message = "Word was deleted";
-        } else {
-            message = "Error! Word does not exist!";
+    public ResponseEntity<String> deleteWord(@PathVariable final Long id) {
+        try {
+            log.info("Received request to delete word with id: {}", id);
+
+            if (wordService.getExistingById(id)) {
+                wordService.delete(id);
+                log.info("Word with id {} was successfully deleted", id);
+                return ResponseEntity.ok().
+                        body("Word was deleted");
+            } else {
+                log.info("Error! Word with id {} does not exist!", id);
+                return ResponseEntity.badRequest().
+                        body("Error! Word does not exist!");
+            }
+        } catch (Exception e) {
+            log.error("An error occurred while deleting word with id: {}",
+                    id, e);
+            return ResponseEntity.badRequest().
+                    body("An error occurred while deleting word.");
         }
-        return message;
     }
 
     @DeleteMapping("/delete-search/{id}")
-    public String deleteSearch(@PathVariable final Long id) {
-        String message = "";
-        if (searchService.existingById(id)) {
-            searchService.delete(id);
-            message = "Search was deleted";
-        } else {
-            message = "Error! Word does not exist!";
+    public ResponseEntity<String>
+    deleteSearch(@PathVariable final Long id) {
+        try {
+            log.info("Received request to delete search with id: {}", id);
+
+            if (searchService.getSearchExistingById(id)) {
+                searchService.delete(id);
+                log.info("Search with id {} was successfully deleted", id);
+                return ResponseEntity.ok().
+                        body("Search was deleted");
+            } else {
+                log.info("Error! Search with id {} does not exist!", id);
+                return ResponseEntity.badRequest().
+                        body("Error! Search does not exist!");
+            }
+        } catch (Exception e) {
+            log.error("An error occurred while deleting search with id: {}",
+                    id, e);
+            return ResponseEntity.badRequest().
+                    body("An error occurred while deleting search.");
         }
-        return message;
     }
 
     @PutMapping("/update/{id}")
-    public String update(@RequestBody final Word word,
-                         @PathVariable final Long id) {
-        String message = "Error! You entered incorrect data!";
-        Word word1 = wordService.getWordById(id);
-        if (word.getTitle() != null && word.getDescription() != null) {
-            word1.setTitle(word.getTitle());
-            word1.setDescription(word.getDescription());
-            if (word.getSearch() != null) {
-                Search searchCurrent = searchService.
-                        existingByTitle(word.getSearch().getTitle());
-                if (searchCurrent != null) {
-                    word1.setSearch(word.getSearch());
+    public ResponseEntity<String> updateWord(@RequestBody final Word word,
+                                             @PathVariable final Long id) {
+        try {
+            log.info("Received request to update word with id: {}", id);
+
+            Word word1 = wordService.getWordById(id);
+            if (word1 != null && word.getTitle() != null
+                    && word.getDescription() != null) {
+                word1.setTitle(word.getTitle());
+                word1.setDescription(word.getDescription());
+                if (word.getSearch() != null) {
+                    Search searchCurrent = searchService.
+                            getSearchByTitle(word.getSearch().getTitle());
+                    if (searchCurrent != null) {
+                        word1.setSearch(word.getSearch());
+                    }
                 }
+                wordService.update(word1);
+                log.info("Word with id {} was successfully updated", id);
+                return ResponseEntity.ok().body("Word was updated");
+            } else {
+                log.info("Error! You entered incorrect data or word "
+                       + "with id {} does not exist!", id);
+                return ResponseEntity.badRequest().
+                        body("Error! You entered incorrect data"
+                                + " or word does not exist!");
             }
-            wordService.update(word1);
-            message = "Word was update";
+        } catch (Exception e) {
+            log.error("An error occurred while updating"
+                    + " word with id: {}", id, e);
+            return ResponseEntity.badRequest().
+                    body("An error occurred while updating word.");
         }
-        return message;
     }
 
 }

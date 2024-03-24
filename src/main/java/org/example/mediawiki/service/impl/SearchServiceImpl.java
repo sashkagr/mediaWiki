@@ -1,7 +1,10 @@
 package org.example.mediawiki.service.impl;
 
 import org.example.mediawiki.cache.Cache;
+import org.example.mediawiki.controller.WikiApiRequest;
+import org.example.mediawiki.modal.Pages;
 import org.example.mediawiki.modal.Search;
+import org.example.mediawiki.modal.Word;
 import org.example.mediawiki.repository.SearchRepository;
 import org.example.mediawiki.service.Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +21,11 @@ public class SearchServiceImpl implements Service<Search> {
     @Autowired
     private SearchRepository searchRepository;
 
+    @Autowired
+    private PagesServiceImpl pagesService;
+
     @Transactional
-    public boolean existingById(final Long id) {
+    public boolean getSearchExistingById(final Long id) {
         for (String key : cache.getCache().keySet()) {
             for (Search element : (List<Search>) cache.getCache().get(key)) {
                 if (element.getId() == id) {
@@ -31,8 +37,8 @@ public class SearchServiceImpl implements Service<Search> {
         return search != null;
 
     }
-
-    public Search existingByTitle(final String title) {
+    @Transactional
+    public Search getSearchByTitle(final String title) {
         for (String key : cache.getCache().keySet()) {
             for (Search element : (List<Search>) cache.getCache().get(key)) {
                 if (element.getTitle() == title) {
@@ -131,5 +137,32 @@ public class SearchServiceImpl implements Service<Search> {
         return searches;
 
     }
+
+    public List<Word> createSearchAndPages(final String name) {
+        List<Word> words = WikiApiRequest.getDescriptionByTitle(name);
+        Search search = new Search();
+        search.setTitle(name);
+        this.create(search);
+        for (Word word : words) {
+            Pages page = new Pages();
+            word.setSearch(search);
+            word.setDescription(word.getDescription().
+                    replaceAll("\\<[^\\\\>]*+\\>", ""));
+            page.setPageId(word.getId());
+            page.setTitle(word.getTitle());
+            Pages existingPage = pagesService.
+                    getPageByPageId(page.getPageId());
+            if (existingPage != null) {
+                existingPage.getSearches().add(search);
+                pagesService.update(existingPage);
+            } else {
+                page.getSearches().add(search);
+                pagesService.create(page);
+            }
+        }
+        return words;
+    }
+
+
 
 }

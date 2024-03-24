@@ -15,7 +15,7 @@ sonar {
 
 group 'org.example'
 version '1.0-SNAPSHOT'
-sourceCompatibility = '19'
+sourceCompatibility= '19'
 
 repositories {
     mavenCentral()
@@ -29,8 +29,15 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     implementation 'mysql:mysql-connector-java:8.0.27'
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.15.3'
-    implementation "io.springfox:springfox-swagger2:2.9.2"
-    implementation "io.springfox:springfox-swagger-ui:2.9.2"
+    implementation 'org.springdoc:springdoc-openapi-ui:1.5.12'
+    implementation 'com.fasterxml.jackson.core:jackson-core:2.15.3'
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
+
+    implementation 'org.slf4j:slf4j-api:1.7.32'
+    implementation 'org.apache.logging.log4j:log4j-api:2.6.1'
+    implementation 'org.apache.logging.log4j:log4j-core:2.6.1'
+    implementation 'org.apache.tomcat.embed:tomcat-embed-core:9.0.87'
+    implementation 'ch.qos.logback:logback-classic:1.2.3'
 
 }
 
