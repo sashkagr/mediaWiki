@@ -17,9 +17,10 @@ public class PagesServiceImpl implements Service<Pages> {
     private final PagesRepository pagesRepository;
 
     @Autowired
-    public PagesServiceImpl(PagesRepository pagesRepository) {
-        this.pagesRepository = pagesRepository;
+    public PagesServiceImpl(final PagesRepository repository) {
+        this.pagesRepository = repository;
     }
+
     private Cache cache = new Cache();
 
     public Pages getPageByPageId(final Long pageId) {

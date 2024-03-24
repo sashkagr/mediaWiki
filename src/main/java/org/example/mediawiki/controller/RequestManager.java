@@ -4,7 +4,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.example.mediawiki.modal.Pages;
 import org.example.mediawiki.modal.Search;
 import org.example.mediawiki.modal.Word;
-import org.example.mediawiki.repository.PagesRepository;
 import org.example.mediawiki.service.impl.PagesServiceImpl;
 import org.example.mediawiki.service.impl.SearchServiceImpl;
 import org.example.mediawiki.service.impl.WordServiceImpl;
@@ -25,7 +24,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
 
 @Slf4j
 @ControllerAdvice
@@ -41,24 +39,26 @@ public class RequestManager {
     private final SearchServiceImpl searchService;
 
     @Autowired
-    public RequestManager(WordServiceImpl wordService, PagesServiceImpl pagesService,SearchServiceImpl searchService) {
-        this.wordService = wordService;
-        this.pagesService = pagesService;
-        this.searchService = searchService;
+    public RequestManager(final WordServiceImpl word,
+                          final PagesServiceImpl pages,
+                          final SearchServiceImpl search) {
+        this.wordService = word;
+        this.pagesService = pages;
+        this.searchService = search;
     }
 
     private Search currentSearch = new Search();
 
     @GetMapping("/findByTitle")
-    public List<Word> getWordByTitle(@RequestParam("title")
-                                         final String title) {
+    public List<Word>
+    getWordByTitle(@RequestParam("title")final String title) {
         return wordService.getWordByTitle(title);
     }
 
 
     @GetMapping
-    public ResponseEntity<List<Word>> getDefinition(@RequestParam
-                                                        final String name) {
+    public ResponseEntity<List<Word>>
+    getDefinition(@RequestParam final String name) {
         try {
             if (name == null || name.equals("")) {
                 log.error("An error occurred while processing the bad request");
@@ -256,7 +256,7 @@ public class RequestManager {
                 return ResponseEntity.ok().body("Word was updated");
             } else {
                 log.info("Error! You entered incorrect data or word "
-                       + "with id {} does not exist!", id);
+                        + "with id {} does not exist!", id);
                 return ResponseEntity.badRequest().
                         body("Error! You entered incorrect data"
                                 + " or word does not exist!");

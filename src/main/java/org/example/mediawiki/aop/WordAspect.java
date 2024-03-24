@@ -72,7 +72,7 @@ public class WordAspect {
         MethodSignature methodSignature =
                 (MethodSignature) joinPoint.getSignature();
         if (methodSignature.getName().equals("update")) {
-                    log.info("Try change word");
+            log.info("Try change word");
         }
         Object result;
         try {
@@ -103,14 +103,17 @@ public class WordAspect {
         return result;
     }
 
-    public void checkStartMethod(final String method, final Object[] arguments) {
+    public void checkStartMethod(final String method,
+                                 final Object[] arguments) {
         switch (method) {
             case "getWordByTitle" -> checkWordByTitle(arguments);
             case "getWordById" -> checkWordById(arguments);
             case "getExistingById" -> checkExistingById(arguments);
             case "getWordBySearch" -> checkWordBySearch(arguments);
             case "getWordsFromPages" -> checkWordsFromPages(arguments);
-            default -> {}
+            default -> {
+                break;
+            }
         }
     }
 
@@ -159,9 +162,13 @@ public class WordAspect {
             case "getWordByTitle" -> checkEndWordByTitle(arguments);
             case "getWordById" -> checkEndWordById(arguments);
             case "getExistingById" -> checkEndExistingById(arguments);
-            case "getWordsFromPages" -> log.info("Method get pages from search");
-            case "getWordBySearch" -> log.info("All words by search are get");
-            default -> {}
+            case "getWordsFromPages" ->
+                    log.info("Method get pages from search");
+            case "getWordBySearch" ->
+                    log.info("All words by search are get");
+            default -> {
+                break;
+            }
         }
     }
 

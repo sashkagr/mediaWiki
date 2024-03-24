@@ -59,14 +59,12 @@ public class WikiApiRequestAspect {
 
     public void checkEndMethod(final String method) {
         switch (method) {
-            case "getDescriptionByTitle" ->
-                    log.info("Method get all pages");
-            case "getResponse" ->
-                        log.info("Method get response");
+            case "getDescriptionByTitle" -> log.info("Method get all pages");
+            case "getResponse" -> log.info("Method get response");
             case "getApiSearchResponsesWords" ->
-                        log.info("Method get all API search responses");
+                    log.info("Method get all API search responses");
             case "getDescriptionByPageId" ->
-                        log.info("Method get description by pageId");
+                    log.info("Method get description by pageId");
             default -> {
                 break;
             }

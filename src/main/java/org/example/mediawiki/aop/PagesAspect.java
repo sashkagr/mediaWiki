@@ -62,7 +62,7 @@ public class PagesAspect {
             log.error(e.getMessage(), e);
             result = new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-            log.info("Page {} add", pages.getTitle());
+        log.info("Page {} add", pages.getTitle());
         return result;
     }
 
@@ -71,7 +71,7 @@ public class PagesAspect {
         MethodSignature methodSignature =
                 (MethodSignature) joinPoint.getSignature();
         if (methodSignature.getName().equals("update")) {
-                    log.info("Try change page");
+            log.info("Try change page");
         }
         Object result;
         try {
@@ -83,6 +83,7 @@ public class PagesAspect {
         log.info("Method change page");
         return result;
     }
+
     @Around("PointCuts.readMethodsPages()")
     public Object aroundReadAdvice(final ProceedingJoinPoint joinPoint) {
         MethodSignature methodSignature =
@@ -100,8 +101,9 @@ public class PagesAspect {
         log.info("Method read all pages");
         return result;
     }
+
     public void checkStartMethod(final String method,
-                                   final Object[] arguments) {
+                                 final Object[] arguments) {
         switch (method) {
             case "getPageByPageId" -> {
                 for (Object arg : arguments) {

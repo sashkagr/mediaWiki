@@ -5,7 +5,6 @@ import org.example.mediawiki.controller.WikiApiRequest;
 import org.example.mediawiki.modal.Pages;
 import org.example.mediawiki.modal.Search;
 import org.example.mediawiki.modal.Word;
-import org.example.mediawiki.repository.PagesRepository;
 import org.example.mediawiki.repository.SearchRepository;
 import org.example.mediawiki.service.Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,11 +22,13 @@ public class SearchServiceImpl implements Service<Search> {
     private final PagesServiceImpl pagesService;
 
     @Autowired
-    public SearchServiceImpl(PagesServiceImpl pagesService, SearchRepository searchRepository) {
-        this.pagesService = pagesService;
-        this.searchRepository = searchRepository;
+    public SearchServiceImpl(final PagesServiceImpl pages,
+                             final SearchRepository search) {
+        this.pagesService = pages;
+        this.searchRepository = search;
 
     }
+
     @Transactional
     public boolean getSearchExistingById(final Long id) {
         for (String key : cache.getCache().keySet()) {
@@ -41,6 +42,7 @@ public class SearchServiceImpl implements Service<Search> {
         return search != null;
 
     }
+
     @Transactional
     public Search getSearchByTitle(final String title) {
         for (String key : cache.getCache().keySet()) {
@@ -166,7 +168,6 @@ public class SearchServiceImpl implements Service<Search> {
         }
         return words;
     }
-
 
 
 }

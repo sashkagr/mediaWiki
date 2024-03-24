@@ -83,7 +83,7 @@ public class SearchAspect {
         MethodSignature methodSignature =
                 (MethodSignature) joinPoint.getSignature();
         if (methodSignature.getName().equals("update")) {
-                    log.info("Try change search");
+            log.info("Try change search");
         }
         Object result;
         try {
@@ -114,7 +114,8 @@ public class SearchAspect {
         return result;
     }
 
-    public void checkStartMethod(final String method, final Object[] arguments) {
+    public void checkStartMethod(final String method,
+                                 final Object[] arguments) {
         switch (method) {
             case "getSearchById" -> checkSearchById(arguments);
             case "getSearchExistingById" -> checkSearchExistingById(arguments);
@@ -152,7 +153,8 @@ public class SearchAspect {
     public void checkEndMethod(final String method, final Object[] arguments) {
         switch (method) {
             case "getSearchById" -> checkEndSearchById(arguments);
-            case "getSearchExistingById" ->  log.info("Method find existing search");
+            case "getSearchExistingById" ->
+                    log.info("Method find existing search");
             case "getSearchByTitle" -> checkEndSearchByTitle(arguments);
             default -> {
                 break;
