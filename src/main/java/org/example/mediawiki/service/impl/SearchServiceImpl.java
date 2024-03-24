@@ -5,6 +5,7 @@ import org.example.mediawiki.controller.WikiApiRequest;
 import org.example.mediawiki.modal.Pages;
 import org.example.mediawiki.modal.Search;
 import org.example.mediawiki.modal.Word;
+import org.example.mediawiki.repository.PagesRepository;
 import org.example.mediawiki.repository.SearchRepository;
 import org.example.mediawiki.service.Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +19,15 @@ public class SearchServiceImpl implements Service<Search> {
 
     private Cache cache = new Cache();
 
-    @Autowired
-    private SearchRepository searchRepository;
+    private final SearchRepository searchRepository;
+    private final PagesServiceImpl pagesService;
 
     @Autowired
-    private PagesServiceImpl pagesService;
+    public SearchServiceImpl(PagesServiceImpl pagesService, SearchRepository searchRepository) {
+        this.pagesService = pagesService;
+        this.searchRepository = searchRepository;
 
+    }
     @Transactional
     public boolean getSearchExistingById(final Long id) {
         for (String key : cache.getCache().keySet()) {

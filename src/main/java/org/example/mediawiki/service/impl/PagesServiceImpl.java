@@ -14,9 +14,12 @@ import java.util.List;
 @org.springframework.stereotype.Service
 public class PagesServiceImpl implements Service<Pages> {
 
-    @Autowired
-    private PagesRepository pagesRepository;
+    private final PagesRepository pagesRepository;
 
+    @Autowired
+    public PagesServiceImpl(PagesRepository pagesRepository) {
+        this.pagesRepository = pagesRepository;
+    }
     private Cache cache = new Cache();
 
     public Pages getPageByPageId(final Long pageId) {

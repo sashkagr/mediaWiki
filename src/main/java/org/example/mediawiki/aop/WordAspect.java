@@ -72,7 +72,6 @@ public class WordAspect {
         MethodSignature methodSignature =
                 (MethodSignature) joinPoint.getSignature();
         if (methodSignature.getName().equals("update")) {
-            Object[] arguments = joinPoint.getArgs();
                     log.info("Try change word");
         }
         Object result;
@@ -104,87 +103,92 @@ public class WordAspect {
         return result;
     }
 
-    public void checkStartMethod(final String method,
-                                 final Object[] arguments) {
+    public void checkStartMethod(final String method, final Object[] arguments) {
         switch (method) {
-            case "getWordByTitle" -> {
-                for (Object arg : arguments) {
-                    if (arg instanceof String title) {
-                        log.info("Try find word by title {}",
-                                title);
-                    }
-                }
-            }
-            case "getWordById" -> {
-                for (Object arg : arguments) {
-                    if (arg instanceof Long id) {
-                        log.info("Try find word by id {}", id);
-                    }
-                }
-            }
-            case "getExistingById" -> {
-                for (Object arg : arguments) {
-                    if (arg instanceof Long id) {
-                        log.info("Try find existing word by id {}", id);
-                    }
-                }
-            }
-            case "getWordBySearch" -> {
-                for (Object arg : arguments) {
-                    if (arg instanceof Search search) {
-                        log.info("Try find word by search {}",
-                                search.getTitle());
-                    }
-                }
-            }
-            case "getWordsFromPages" -> {
-                for (Object arg : arguments) {
-                    if (arg instanceof Search search) {
-                        log.info("Try get pages from search {} ",
-                                search.getTitle());
-                    }
-                }
-            }
-            default -> {
-                break;
+            case "getWordByTitle" -> checkWordByTitle(arguments);
+            case "getWordById" -> checkWordById(arguments);
+            case "getExistingById" -> checkExistingById(arguments);
+            case "getWordBySearch" -> checkWordBySearch(arguments);
+            case "getWordsFromPages" -> checkWordsFromPages(arguments);
+            default -> {}
+        }
+    }
+
+    private void checkWordByTitle(final Object[] arguments) {
+        for (Object arg : arguments) {
+            if (arg instanceof String title) {
+                log.info("Try find word by title {}", title);
             }
         }
     }
 
-    public void checkEndMethod(final String method,
-                               final Object[] arguments) {
-        switch (method) {
-            case "getWordByTitle" -> {
-                for (Object arg : arguments) {
-                    if (arg instanceof Word word) {
-                        log.info("Method find word "
-                                + "by title {}", word.getTitle());
-                    }
-                }
-            }
-            case "getWordById" -> {
-                for (Object arg : arguments) {
-                    if (arg instanceof Word word) {
-                        log.info("Method find word by id {} ", word.getId());
-                    }
-                }
-            }
-            case "getExistingById" -> {
-                for (Object arg : arguments) {
-                    if (arg instanceof Boolean flag) {
-                        log.info("Method find existing word by id : {}", flag);
-                    }
-                }
-            }
-            case "getWordsFromPages" ->
-                    log.info("Method get pages from search {} ");
-            case "getWordBySearch" ->
-                    log.info("All words by search are get");
-            default -> {
-                break;
+    private void checkWordById(final Object[] arguments) {
+        for (Object arg : arguments) {
+            if (arg instanceof Long id) {
+                log.info("Try find word by id {}", id);
             }
         }
     }
+
+    private void checkExistingById(final Object[] arguments) {
+        for (Object arg : arguments) {
+            if (arg instanceof Long id) {
+                log.info("Try find existing word by id {}", id);
+            }
+        }
+    }
+
+    private void checkWordBySearch(final Object[] arguments) {
+        for (Object arg : arguments) {
+            if (arg instanceof Search search) {
+                log.info("Try find word by search {}", search.getTitle());
+            }
+        }
+    }
+
+    private void checkWordsFromPages(final Object[] arguments) {
+        for (Object arg : arguments) {
+            if (arg instanceof Search search) {
+                log.info("Try get pages from search {}", search.getTitle());
+            }
+        }
+    }
+
+    public void checkEndMethod(final String method, final Object[] arguments) {
+        switch (method) {
+            case "getWordByTitle" -> checkEndWordByTitle(arguments);
+            case "getWordById" -> checkEndWordById(arguments);
+            case "getExistingById" -> checkEndExistingById(arguments);
+            case "getWordsFromPages" -> log.info("Method get pages from search");
+            case "getWordBySearch" -> log.info("All words by search are get");
+            default -> {}
+        }
+    }
+
+    private void checkEndWordByTitle(final Object[] arguments) {
+        for (Object arg : arguments) {
+            if (arg instanceof Word word) {
+                log.info("Method find word by title {}", word.getTitle());
+            }
+        }
+    }
+
+    private void checkEndWordById(final Object[] arguments) {
+        for (Object arg : arguments) {
+            if (arg instanceof Word word) {
+                log.info("Method find word by id {}", word.getId());
+            }
+        }
+    }
+
+    private void checkEndExistingById(final Object[] arguments) {
+        for (Object arg : arguments) {
+            if (arg instanceof Boolean flag) {
+                log.info("Method find existing word by id: {}", flag);
+            }
+        }
+    }
+
 
     @Around("PointCuts.getMethodsWord()")
     public Object aroundGetAdvice(final ProceedingJoinPoint joinPoint) {

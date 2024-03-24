@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.example.mediawiki.modal.Pages;
 import org.example.mediawiki.modal.Search;
 import org.example.mediawiki.modal.Word;
+import org.example.mediawiki.repository.PagesRepository;
 import org.example.mediawiki.service.impl.PagesServiceImpl;
 import org.example.mediawiki.service.impl.SearchServiceImpl;
 import org.example.mediawiki.service.impl.WordServiceImpl;
@@ -32,17 +33,19 @@ import java.util.logging.Logger;
 @RequestMapping("/search")
 public class RequestManager {
 
-    private static final Logger LOGGER = Logger.
-            getLogger(RequestManager.class.getName());
+
+    private final WordServiceImpl wordService;
+
+    private final PagesServiceImpl pagesService;
+
+    private final SearchServiceImpl searchService;
 
     @Autowired
-    private WordServiceImpl wordService;
-
-    @Autowired
-    private PagesServiceImpl pagesService;
-
-    @Autowired
-    private SearchServiceImpl searchService;
+    public RequestManager(WordServiceImpl wordService, PagesServiceImpl pagesService,SearchServiceImpl searchService) {
+        this.wordService = wordService;
+        this.pagesService = pagesService;
+        this.searchService = searchService;
+    }
 
     private Search currentSearch = new Search();
 
@@ -57,7 +60,7 @@ public class RequestManager {
     public ResponseEntity<List<Word>> getDefinition(@RequestParam
                                                         final String name) {
         try {
-            if (name == null || name == "") {
+            if (name == null || name.equals("")) {
                 log.error("An error occurred while processing the bad request");
                 return ResponseEntity.badRequest().build();
             }

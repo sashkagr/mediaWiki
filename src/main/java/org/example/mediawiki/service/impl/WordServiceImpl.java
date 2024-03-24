@@ -4,6 +4,8 @@ import org.example.mediawiki.cache.Cache;
 import org.example.mediawiki.modal.Pages;
 import org.example.mediawiki.modal.Search;
 import org.example.mediawiki.modal.Word;
+import org.example.mediawiki.repository.PagesRepository;
+import org.example.mediawiki.repository.SearchRepository;
 import org.example.mediawiki.repository.WordRepository;
 import org.example.mediawiki.service.Service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +17,15 @@ import java.util.List;
 @org.springframework.stereotype.Service
 public class WordServiceImpl implements Service<Word> {
 
-    @Autowired
-    private WordRepository wordRepository;
+    private final WordRepository wordRepository;
+    private final PagesServiceImpl pagesService;
 
     @Autowired
-    private PagesServiceImpl pagesService;
+    public WordServiceImpl(PagesServiceImpl pagesService, WordRepository wordRepository) {
+        this.pagesService = pagesService;
+        this.wordRepository = wordRepository;
+
+    }
 
     private Cache cache = new Cache();
 
