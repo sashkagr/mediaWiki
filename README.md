@@ -88,4 +88,5 @@ Each page has its own ```pageId```. To request data from this page later, use th
 https://en.wikipedia.org/w/api.php?action=query&prop=extracts&format=json&pageids=18978754.
 Replace ```18978754``` with the required ```pageId```.
 
-
+## Swager
+* http://localhost:8080/swagger-ui/index.html?configUrl=/v3/api-docs/swagger-config#/request-manager/definitionController

@@ -7,11 +7,14 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Component
 public class Cache {
-
+    private static final int MAXSIZE = 200;
     private final Map<String, Object> wikiCache = new ConcurrentHashMap<>();
 
     public void put(final String key, final Object value) {
         wikiCache.put(key, value);
+        if (wikiCache.size() >= MAXSIZE) {
+            wikiCache.clear();
+        }
     }
 
     public Object get(final String key) {
