@@ -24,7 +24,8 @@ public class Search {
     private long id;
     private String title;
 
-    @ManyToMany(mappedBy = "searches", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "searches", cascade = CascadeType.ALL,
+            fetch = FetchType.EAGER)
     @JsonIgnore
     private List<Pages> pages = new ArrayList<>();
 

@@ -22,9 +22,8 @@ public class ArgumentLogger {
         for (Object arg : arguments) {
             if (filter.test(arg)) {
                 log.info(message, mapper.apply(arg));
-            }
-            else {
-                log.info(message,arg);
+            } else {
+                log.info(message, arg);
             }
         }
     }
