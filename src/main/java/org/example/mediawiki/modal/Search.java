@@ -24,12 +24,12 @@ public class Search {
     private long id;
     private String title;
 
-    @ManyToMany(mappedBy = "searches", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "searches", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JsonIgnore
     private List<Pages> pages = new ArrayList<>();
 
     @OneToMany(mappedBy = "search", cascade = CascadeType.ALL,
-            orphanRemoval = true, fetch = FetchType.EAGER)
+            orphanRemoval = true)
     private List<Word> words = new ArrayList<>();
 
     @Override

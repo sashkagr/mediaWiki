@@ -5,6 +5,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -13,78 +14,53 @@ import org.springframework.stereotype.Component;
 @Aspect
 @Slf4j
 public class WikiApiRequestAspect {
+
+    private final ArgumentLogger argumentLogger;
+
+    @Autowired
+    public WikiApiRequestAspect(final ArgumentLogger argumentLogger) {
+        this.argumentLogger = argumentLogger;
+    }
+
     @Around("PointCuts.mapMethodsWikiApi()")
     public Object aroundMapAdvice(final ProceedingJoinPoint joinPoint) {
-        Object result = null;
-        MethodSignature methodSignature =
-                (MethodSignature) joinPoint.getSignature();
-        if (methodSignature.getName().equals("mapResponseToModel")) {
-            log.info("Try map descriptionGetApiSearchResponse to word");
-        }
-        try {
-            result = joinPoint.proceed();
-        } catch (Throwable e) {
-            log.error(e.getMessage(), e);
-            result = new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-        log.info("Method map to word");
-        return result;
+        return argumentLogger.processMethod(joinPoint, "mapResponseToModel",
+                arguments -> log.info("Try map descriptionGetApiSearchResponse to word"),
+                arguments -> log.info("Method map to word"));
     }
 
-    public void checkStartMethod(final String method,
-                                 final Object[] arguments) {
-        switch (method) {
-            case "getDescriptionByTitle" -> {
-                for (Object arg : arguments) {
-                    if (arg instanceof String title) {
-                        log.info("Try get pages by title {}", title);
-                    }
-                }
-            }
-            case "getResponse" -> log.info("Try get response");
-            case "getApiSearchResponsesWords" -> log.
-                    info("Try get API search responses");
-            case "getDescriptionByPageId" -> {
-                for (Object arg : arguments) {
-                    if (arg instanceof Long pageId) {
-                        log.info("Try get description by pageId {}", pageId);
-                    }
-                }
-            }
-            default -> {
-                break;
-            }
-        }
-    }
-
-    public void checkEndMethod(final String method) {
-        switch (method) {
-            case "getDescriptionByTitle" -> log.info("Method get all pages");
-            case "getResponse" -> log.info("Method get response");
-            case "getApiSearchResponsesWords" ->
-                    log.info("Method get all API search responses");
-            case "getDescriptionByPageId" ->
-                    log.info("Method get description by pageId");
-            default -> {
-                break;
-            }
-        }
-    }
 
     @Around("PointCuts.getMethodsWikiApi()")
     public Object aroundGetAdvice(final ProceedingJoinPoint joinPoint) {
         MethodSignature methodSignature =
                 (MethodSignature) joinPoint.getSignature();
-        Object[] arguments = joinPoint.getArgs();
-        checkStartMethod(methodSignature.getName(), arguments);
-        Object result;
-        try {
-            result = joinPoint.proceed();
-        } catch (Throwable e) {
-            log.error(e.getMessage(), e);
-            result = new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        String method = methodSignature.getName();
+        switch (method) {
+            case "getDescriptionByTitle" -> {
+                return argumentLogger.processMethod(joinPoint, "getDescriptionByTitle",
+                        arguments -> argumentLogger.logStringArguments(arguments, "Try get pages by title {}"),
+                        arguments -> argumentLogger.logString("Method get all pages"));
+            }
+            case "getDescriptionByPageId" -> {
+                return argumentLogger.processMethod(joinPoint, "getDescriptionByPageId",
+                        arguments -> argumentLogger.logLongArguments(arguments, "Try get description by pageId {}"),
+                        arguments -> argumentLogger.logString("Method get description by pageId"));
+            }
+            case "getResponse" -> {
+                return argumentLogger.processMethod(joinPoint, "getResponse",
+                        arguments -> argumentLogger.logString("Try get response"),
+                        arguments -> argumentLogger.logString("Method get response"));
+            }
+            case "getApiSearchResponsesWords" -> {
+                return argumentLogger.processMethod(joinPoint, "getApiSearchResponsesWords",
+                        arguments -> argumentLogger.logString("Try get API search responses"),
+                        arguments -> argumentLogger.logString("Method get description by pageId"));
+            }
+
+            default -> {
+                return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            }
         }
-        checkEndMethod(methodSignature.getName());
-        return result;
     }
+
 }
