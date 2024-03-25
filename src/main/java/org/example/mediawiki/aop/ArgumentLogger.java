@@ -45,7 +45,7 @@ public class ArgumentLogger {
     }
 
 
-    public Object processMethod(ProceedingJoinPoint joinPoint, String methodName, Consumer<Object[]> startLogger, Consumer<Object[]> endLogger) {
+    public Object processMethod(ProceedingJoinPoint joinPoint, Consumer<Object[]> startLogger, Consumer<Object[]> endLogger) {
         Object[] arguments = joinPoint.getArgs();
 
         startLogger.accept(arguments);

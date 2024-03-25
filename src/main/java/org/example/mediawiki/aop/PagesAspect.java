@@ -25,28 +25,28 @@ public class PagesAspect {
 
     @Around("PointCuts.deleteMethodsPages()")
     public Object aroundDeleteAdvice(ProceedingJoinPoint joinPoint) {
-        return argumentLogger.processMethod(joinPoint, "delete",
+        return argumentLogger.processMethod(joinPoint,
                 arguments -> argumentLogger.logLongArguments(arguments, "Try delete page with id {}"),
                 arguments -> argumentLogger.logLongArguments(arguments, "Page with id {} delete"));
     }
 
     @Around("PointCuts.createMethodsPages()")
     public Object aroundCreateAdvice(ProceedingJoinPoint joinPoint) {
-        return argumentLogger.processMethod(joinPoint, "create",
+        return argumentLogger.processMethod(joinPoint,
                 arguments -> argumentLogger.logArguments(arguments, "Try add page", arg -> arg instanceof Pages, arg -> ((Pages) arg).getTitle()),
                 arguments -> argumentLogger.logArguments(arguments, "Page {} add", arg -> arg instanceof Pages, arg -> ((Pages) arg).getTitle()));
     }
 
     @Around("PointCuts.updateMethodsPages()")
     public Object aroundUpdateAdvice(ProceedingJoinPoint joinPoint) {
-        return argumentLogger.processMethod(joinPoint, "update",
+        return argumentLogger.processMethod(joinPoint,
                 arguments -> argumentLogger.logArguments(arguments, "Try change page", arg -> true, arg -> ""),
                 arguments -> log.info("Method change page"));
     }
 
     @Around("PointCuts.readMethodsPages()")
     public Object aroundReadAdvice(ProceedingJoinPoint joinPoint) {
-        return argumentLogger.processMethod(joinPoint, "read",
+        return argumentLogger.processMethod(joinPoint,
                 arguments -> log.info("Try read all pages"),
                 arguments -> log.info("Method read all pages"));
     }
@@ -57,18 +57,16 @@ public class PagesAspect {
         MethodSignature methodSignature =
                 (MethodSignature) joinPoint.getSignature();
         String method = methodSignature.getName();
-        switch (method) {
-            case "getPageByPageId" -> {
-                return argumentLogger.processMethod(joinPoint, "delete",
-                        arguments -> argumentLogger.logLongArguments(arguments, "Try find page with pageId {}"),
-                        arguments -> argumentLogger.logArguments(arguments, "Page with id {} delete", arg -> arg instanceof Pages, arg -> Long.toString(((Pages) arg).getPageId())));
-            }
-            case "getPagesBySearch" -> {
-                return argumentLogger.processMethod(joinPoint, "delete",
+       if(method.equals("getPageByPageId")) {
+           return argumentLogger.processMethod(joinPoint,
+                   arguments -> argumentLogger.logLongArguments(arguments, "Try find page with pageId {}"),
+                   arguments -> argumentLogger.logArguments(arguments, "Page with id {} delete", arg -> arg instanceof Pages, arg -> Long.toString(((Pages) arg).getPageId())));
+       }
+       if(method.equals("getPagesBySearch")){
+                return argumentLogger.processMethod(joinPoint,
                         arguments -> argumentLogger.logSearchArguments(arguments, "Try find page by search {}"),
                         arguments -> log.info("All pages by search are get"));
             }
-        }
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 

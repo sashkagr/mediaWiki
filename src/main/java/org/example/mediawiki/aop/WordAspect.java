@@ -26,14 +26,14 @@ public class WordAspect {
 
         @Around("PointCuts.deleteMethodsWord()")
         public Object aroundDeleteAdvice(final ProceedingJoinPoint joinPoint) {
-            return argumentLogger.processMethod(joinPoint, "delete",
+            return argumentLogger.processMethod(joinPoint,
                     arguments -> argumentLogger.logLongArguments(arguments, "Try delete word with id {}"),
                     arguments -> argumentLogger.logLongArguments(arguments, "Word with id {} delete"));
         }
 
         @Around("PointCuts.createMethodsWord()")
         public Object aroundCreateAdvice(final ProceedingJoinPoint joinPoint) {
-            return argumentLogger.processMethod(joinPoint, "create",
+            return argumentLogger.processMethod(joinPoint,
                     arguments -> argumentLogger.logArguments(arguments, "Try add word",
                             arg -> arg instanceof Word, arg -> ((Word) arg).getTitle()),
                     arguments -> argumentLogger.logArguments(arguments, "Word {} add",
@@ -42,7 +42,7 @@ public class WordAspect {
 
         @Around("PointCuts.updateMethodsWord()")
         public Object aroundUpdateAdvice(final ProceedingJoinPoint joinPoint) {
-            return argumentLogger.processMethod(joinPoint, "update",
+            return argumentLogger.processMethod(joinPoint,
                     arguments -> argumentLogger.logArguments(arguments, "Try change word",
                             arg -> true, arg -> ""),
                     arguments -> log.info("Method change word"));
@@ -50,7 +50,7 @@ public class WordAspect {
 
         @Around("PointCuts.readMethodsWord()")
         public Object aroundReadAdvice(final ProceedingJoinPoint joinPoint) {
-            return argumentLogger.processMethod(joinPoint, "read",
+            return argumentLogger.processMethod(joinPoint,
                     arguments -> log.info("Try read all words"),
                     arguments -> log.info("Method read all words"));
         }
@@ -61,27 +61,27 @@ public class WordAspect {
             String method = methodSignature.getName();
             switch (method) {
                 case "getWordByTitle" -> {
-                    return argumentLogger.processMethod(joinPoint, "getWordByTitle",
+                    return argumentLogger.processMethod(joinPoint,
                             arguments -> argumentLogger.logStringArguments(arguments, "Try find word by title {}"),
                             arguments -> argumentLogger.logWordArguments(arguments, "Word by title {} found"));
                 }
                 case "getWordById" -> {
-                    return argumentLogger.processMethod(joinPoint, "getWordById",
+                    return argumentLogger.processMethod(joinPoint,
                             arguments -> argumentLogger.logLongArguments(arguments, "Try find word by id {}"),
                             arguments -> argumentLogger.logWordArguments(arguments, "Word by id {} found"));
                 }
                 case "getExistingById" -> {
-                    return argumentLogger.processMethod(joinPoint, "getExistingById",
+                    return argumentLogger.processMethod(joinPoint,
                             arguments -> argumentLogger.logLongArguments(arguments, "Try find existing word by id {}"),
                             arguments -> argumentLogger.logString("Existing word found"));
                 }
                 case "getWordBySearch" -> {
-                    return argumentLogger.processMethod(joinPoint, "getWordBySearch",
+                    return argumentLogger.processMethod(joinPoint,
                             arguments -> argumentLogger.logSearchArguments(arguments, "Try find word by search {}"),
                             arguments -> argumentLogger.logString("Word by search found"));
                 }
                 case "getWordsFromPages" -> {
-                    return argumentLogger.processMethod(joinPoint, "getWordsFromPages",
+                    return argumentLogger.processMethod(joinPoint,
                             arguments -> argumentLogger.logSearchArguments(arguments, "Try get pages from search {}"),
                             arguments -> argumentLogger.logString("Word from pages get"));
                 }
