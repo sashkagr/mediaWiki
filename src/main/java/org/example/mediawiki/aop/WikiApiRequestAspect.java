@@ -18,14 +18,15 @@ public class WikiApiRequestAspect {
     private final ArgumentLogger argumentLogger;
 
     @Autowired
-    public WikiApiRequestAspect(final ArgumentLogger argumentLogger) {
-        this.argumentLogger = argumentLogger;
+    public WikiApiRequestAspect(final ArgumentLogger argument) {
+        this.argumentLogger = argument;
     }
 
     @Around("PointCuts.mapMethodsWikiApi()")
     public Object aroundMapAdvice(final ProceedingJoinPoint joinPoint) {
         return argumentLogger.processMethod(joinPoint,
-                arguments -> log.info("Try map descriptionGetApiSearchResponse to word"),
+                arguments -> log.
+                        info("Try map descriptionGetApiSearchResponse to word"),
                 arguments -> log.info("Method map to word"));
     }
 
@@ -38,23 +39,32 @@ public class WikiApiRequestAspect {
         switch (method) {
             case "getDescriptionByTitle" -> {
                 return argumentLogger.processMethod(joinPoint,
-                        arguments -> argumentLogger.logStringArguments(arguments, "Try get pages by title {}"),
-                        arguments -> argumentLogger.logString("Method get all pages"));
+                        arguments -> argumentLogger.
+                                logStringArguments(arguments,
+                                "Try get pages by title {}"),
+                        arguments -> argumentLogger.
+                                logString("Method get all pages"));
             }
             case "getDescriptionByPageId" -> {
                 return argumentLogger.processMethod(joinPoint,
-                        arguments -> argumentLogger.logLongArguments(arguments, "Try get description by pageId {}"),
-                        arguments -> argumentLogger.logString("Method get description by pageId"));
+                        arguments -> argumentLogger.logLongArguments(arguments,
+                                "Try get description by pageId {}"),
+                        arguments -> argumentLogger.
+                                logString("Method get description by pageId"));
             }
             case "getResponse" -> {
                 return argumentLogger.processMethod(joinPoint,
-                        arguments -> argumentLogger.logString("Try get response"),
-                        arguments -> argumentLogger.logString("Method get response"));
+                        arguments -> argumentLogger.
+                                logString("Try get response"),
+                        arguments -> argumentLogger.
+                                logString("Method get response"));
             }
             case "getApiSearchResponsesWords" -> {
                 return argumentLogger.processMethod(joinPoint,
-                        arguments -> argumentLogger.logString("Try get API search responses"),
-                        arguments -> argumentLogger.logString("Method get description by pageId"));
+                        arguments -> argumentLogger.
+                                logString("Try get API search responses"),
+                        arguments -> argumentLogger.
+                                logString("Method get description by pageId"));
             }
 
             default -> {

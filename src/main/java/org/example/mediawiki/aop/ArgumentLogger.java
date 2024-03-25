@@ -15,7 +15,10 @@ import java.util.function.Predicate;
 @Component
 @Slf4j
 public class ArgumentLogger {
-    public void logArguments(Object[] arguments, String message, Predicate<Object> filter, Function<Object, String> mapper) {
+    public void logArguments(final Object[] arguments,
+                             final String message,
+                             final Predicate<Object> filter,
+                             final Function<Object, String> mapper) {
         for (Object arg : arguments) {
             if (filter.test(arg)) {
                 log.info(message, mapper.apply(arg));
@@ -23,29 +26,40 @@ public class ArgumentLogger {
         }
     }
 
-    public void logLongArguments(Object[] arguments, String message) {
-        logArguments(arguments, message, arg -> arg instanceof Long, arg -> arg.toString());
+    public void logLongArguments(final Object[] arguments,
+                                 final String message) {
+        logArguments(arguments, message, arg -> arg instanceof Long,
+                arg -> arg.toString());
     }
 
-    public void logStringArguments(Object[] arguments, String message) {
-        logArguments(arguments, message, arg -> arg instanceof String, arg -> (String) arg);
+    public void logStringArguments(final Object[] arguments,
+                                   final String message) {
+        logArguments(arguments, message, arg -> arg instanceof String,
+                arg -> (String) arg);
     }
 
-    public void logSearchArguments(Object[] arguments, String message) {
-        logArguments(arguments, message, arg -> arg instanceof Search, arg -> ((Search) arg).getTitle());
+    public void logSearchArguments(final Object[] arguments,
+                                   final String message) {
+        logArguments(arguments, message, arg -> arg instanceof Search,
+                arg -> ((Search) arg).getTitle());
     }
 
-    public void logString(String message) {
+    public void logString(final String message) {
         log.info(message);
     }
 
 
-    public void logWordArguments(Object[] arguments, String message) {
-        logArguments(arguments, message, arg -> arg instanceof Word, arg -> ((Word) arg).getTitle());
+    public void logWordArguments(final Object[] arguments,
+                                 final String message) {
+        logArguments(arguments, message,
+                arg -> arg instanceof Word,
+                arg -> ((Word) arg).getTitle());
     }
 
 
-    public Object processMethod(ProceedingJoinPoint joinPoint, Consumer<Object[]> startLogger, Consumer<Object[]> endLogger) {
+    public Object processMethod(final ProceedingJoinPoint joinPoint,
+                                final Consumer<Object[]> startLogger,
+                                final Consumer<Object[]> endLogger) {
         Object[] arguments = joinPoint.getArgs();
 
         startLogger.accept(arguments);
