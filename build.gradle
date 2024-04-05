@@ -5,7 +5,6 @@ plugins {
     id "org.sonarqube" version "4.4.1.3373"
     id "jacoco"
 }
-
 sonar {
     properties {
         property "sonar.projectKey", "sashkagr_MediaWiki"
@@ -13,6 +12,7 @@ sonar {
         property "sonar.host.url", "https://sonarcloud.io"
     }
 }
+
 
 
 jacocoTestReport {
@@ -50,9 +50,6 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
     testImplementation 'org.mockito:mockito-core:4.0.0'
-    testImplementation 'org.powermock:powermock-module-junit4:2.0.9'
-    testImplementation 'org.powermock:powermock-api-mockito2:2.0.9'
-    testImplementation 'org.slf4j:slf4j-api:1.7.32'
     testImplementation 'org.mockito:mockito-junit-jupiter:3.6.0'
 
 
