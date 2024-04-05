@@ -9,7 +9,8 @@ gradlew.bat
 settings.gradle
 LICENSE
 application.log
-src/main/resources
+src/main/resources/application.properties
+src/main/resources/logback.xml
 ### IntelliJ IDEA ###
 **/.idea
 .idea
