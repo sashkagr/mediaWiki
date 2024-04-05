@@ -28,6 +28,7 @@ out/
 !**/src/test/**/out/
 !**/workflows/gradlew.bat
 !**/workflows/gradlew
+sonar-project.properties
 ### Eclipse ###
 .apt_generated
 .classpath
