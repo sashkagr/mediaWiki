@@ -49,8 +49,8 @@ public class RequestManager {
 
     private Search currentSearch = new Search();
 
-    private final static String redirect = "redirect:/definition/showWords";
-    private final static String error = "error";
+    private static final String redirect = "redirect:/definition/showWords";
+    private static final String error = "error";
 
     @PostMapping
     public ResponseEntity<List<Word>> addWords(@Valid @RequestParam final List<Long> params, @Valid @RequestBody final List<Word> words) {
@@ -299,7 +299,7 @@ public class RequestManager {
         } catch (Exception e) {
             log.error("An error occurred while updating"
                     + " word with id: {}", id, e);
-            return "error";
+            return error;
 
         }
     }
