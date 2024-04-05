@@ -5,6 +5,7 @@ plugins {
     id "org.sonarqube" version "4.4.1.3373"
     id "jacoco"
 }
+
 sonar {
     properties {
         property "sonar.projectKey", "sashkagr_MediaWiki"
@@ -12,8 +13,6 @@ sonar {
         property "sonar.host.url", "https://sonarcloud.io"
     }
 }
-
-
 
 jacocoTestReport {
     reports {
@@ -33,6 +32,7 @@ dependencies {
     implementation 'org.json:json:20211205'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    testImplementation 'junit:junit:4.13.1'
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     implementation 'mysql:mysql-connector-java:8.0.27'
