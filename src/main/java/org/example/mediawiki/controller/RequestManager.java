@@ -49,8 +49,8 @@ public class RequestManager {
 
     private Search currentSearch = new Search();
 
-    private static final String redirect = "redirect:/definition/showWords";
-    private static final String error = "error";
+    private static final String REDIRECT = "redirect:/definition/showWords";
+    private static final String ERROR = "error";
 
     @PostMapping
     public ResponseEntity<List<Word>> addWords(@Valid @RequestParam final List<Long> params, @Valid @RequestBody final List<Word> words) {
@@ -91,7 +91,7 @@ public class RequestManager {
         try {
             if (name == null || name.equals("")) {
                 log.error("An error occurred while processing the bad request");
-                return error;
+                return ERROR;
             }
             log.info("Received request to get definition for: {}", name);
 
@@ -119,7 +119,7 @@ public class RequestManager {
             return "pages";
         } catch (Exception e) {
             log.error("An error occurred while processing the request for '{}'", name, e);
-            return error;
+            return ERROR;
         }
     }
 
@@ -128,7 +128,7 @@ public class RequestManager {
     createWordBySearch(@PathVariable final Long id) {
         try {
             if (id == null) {
-                return error;
+                return ERROR;
             }
             Word retrievedWord = WikiApiRequest.getDescriptionByPageId(id);
             retrievedWord.setSearch(currentSearch);
@@ -142,10 +142,10 @@ public class RequestManager {
                 pagesService.update(page);
                 pagesService.delete(page.getId());
             }
-            return redirect;
+            return REDIRECT;
         } catch (NumberFormatException | IOException e) {
             log.error("Invalid input!", e);
-            return error;
+            return ERROR;
         }
     }
 
@@ -217,14 +217,14 @@ public class RequestManager {
                 }
                 wordService.create(word);
                 log.info("Word successfully created");
-                return redirect;
+                return REDIRECT;
             } else {
                 log.info("Error! You entered incorrect data!");
-                return error;
+                return ERROR;
             }
         } catch (Exception e) {
             log.error("An error occurred while creating word", e);
-            return error;
+            return ERROR;
 
         }
     }
@@ -237,16 +237,16 @@ public class RequestManager {
             if (wordService.getExistingById(id)) {
                 wordService.delete(id);
                 log.info("Word with id {} was successfully deleted", id);
-                return redirect;
+                return REDIRECT;
             } else {
                 log.info("Error! Word with id {} does not exist!", id);
-                return error;
+                return ERROR;
 
             }
         } catch (Exception e) {
             log.error("An error occurred while deleting word with id: {}",
                     id, e);
-            return error;
+            return ERROR;
 
         }
     }
@@ -259,16 +259,16 @@ public class RequestManager {
             if (searchService.getSearchExistingById(id)) {
                 searchService.delete(id);
                 log.info("Search with id {} was successfully deleted", id);
-                return redirect;
+                return REDIRECT;
             } else {
                 log.info("Error! Search with id {} does not exist!", id);
-                return error;
+                return ERROR;
 
             }
         } catch (Exception e) {
             log.error("An error occurred while deleting search with id: {}",
                     id, e);
-            return error;
+            return ERROR;
 
         }
     }
@@ -289,17 +289,17 @@ public class RequestManager {
                 }
                 wordService.update(word1);
                 log.info("Word with id {} was successfully updated", id);
-                return redirect;
+                return REDIRECT;
             } else {
                 log.info("Error! You entered incorrect data or word "
                         + "with id {} does not exist!", id);
-                return error;
+                return ERROR;
 
             }
         } catch (Exception e) {
             log.error("An error occurred while updating"
                     + " word with id: {}", id, e);
-            return error;
+            return ERROR;
 
         }
     }
