@@ -15,7 +15,8 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
-public class PagesServiceImplTest {
+
+class PagesServiceImplTest {
     @Mock
     private PagesRepository pagesRepository;
 
@@ -23,12 +24,12 @@ public class PagesServiceImplTest {
     private PagesServiceImpl pagesService;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         MockitoAnnotations.openMocks(this);
     }
 
     @Test
-    public void testCreate() {
+    void testCreate() {
         Pages page = new Pages();
 
         pagesService.create(page);
@@ -37,7 +38,7 @@ public class PagesServiceImplTest {
     }
 
     @Test
-    public void testDelete() {
+    void testDelete() {
         long idToDelete = 1L;
 
         pagesService.delete(idToDelete);
@@ -46,7 +47,7 @@ public class PagesServiceImplTest {
     }
 
     @Test
-    public void testUpdate() {
+    void testUpdate() {
         Pages page = new Pages();
 
         pagesService.update(page);
@@ -55,7 +56,7 @@ public class PagesServiceImplTest {
     }
 
     @Test
-    public void testRead() {
+    void testRead() {
         when(pagesRepository.findAll()).thenReturn(new ArrayList<>());
 
         List<Pages> pages = pagesService.read();
@@ -64,7 +65,7 @@ public class PagesServiceImplTest {
     }
 
     @Test
-    public void testGetPagesBySearch() {
+    void testGetPagesBySearch() {
         Search search = new Search();
         when(pagesRepository.existingBySearch(search)).thenReturn(new ArrayList<>());
 

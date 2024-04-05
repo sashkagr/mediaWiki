@@ -16,13 +16,13 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class PagesRepositoryTest {
+ class PagesRepositoryTest {
 
     @Mock
     private PagesRepository pagesRepository;
 
     @Test
-    public void testExistingByPageId() {
+     void testExistingByPageId() {
         Long pageId = 1L;
         Pages page = new Pages();
         when(pagesRepository.existingByPageId(anyLong())).thenReturn(page);
@@ -34,7 +34,7 @@ public class PagesRepositoryTest {
     }
 
     @Test
-    public void testExistingBySearch() {
+     void testExistingBySearch() {
         Search search = new Search();
         List<Pages> pages = new ArrayList<>();
         when(pagesRepository.existingBySearch(any(Search.class))).thenReturn(pages);

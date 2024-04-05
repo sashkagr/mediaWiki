@@ -18,7 +18,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class WordServiceImplTest {
+class WordServiceImplTest {
     @Mock
     private WordRepository wordRepository;
 
@@ -32,12 +32,12 @@ public class WordServiceImplTest {
     private WordServiceImpl wordService;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         MockitoAnnotations.openMocks(this);
     }
 
     @Test
-    public void testCreateWords() {
+    void testCreateWords() {
         List<Word> words = new ArrayList<>();
 
         Word word = new Word();
@@ -64,7 +64,7 @@ public class WordServiceImplTest {
     }
 
     @Test
-    public void testGetExistingById() {
+    void testGetExistingById() {
         when(wordRepository.existingById(anyLong())).thenReturn(new Word());
 
         boolean existing = wordService.getExistingById(1L);
@@ -73,7 +73,7 @@ public class WordServiceImplTest {
     }
 
     @Test
-    public void testGetWordBySearch() {
+    void testGetWordBySearch() {
         Search search = new Search();
         when(wordRepository.existingBySearch(any(Search.class))).thenReturn(new ArrayList<>());
 
@@ -83,7 +83,7 @@ public class WordServiceImplTest {
     }
 
     @Test
-    public void testGetWordById() {
+    void testGetWordById() {
         Word word = mock(Word.class);
         when(word.getId()).thenReturn(1L);
         Search search = mock(Search.class);
@@ -97,7 +97,7 @@ public class WordServiceImplTest {
     }
 
     @Test
-    public void testCreate() {
+    void testCreate() {
         Word word = new Word();
 
         wordService.create(word);
@@ -106,7 +106,7 @@ public class WordServiceImplTest {
     }
 
     @Test
-    public void testDelete() {
+    void testDelete() {
         long idToDelete = 1L;
 
         wordService.delete(idToDelete);
@@ -115,7 +115,7 @@ public class WordServiceImplTest {
     }
 
     @Test
-    public void testUpdate() {
+    void testUpdate() {
         Word word = new Word();
 
         wordService.update(word);
@@ -124,7 +124,7 @@ public class WordServiceImplTest {
     }
 
     @Test
-    public void testRead() {
+    void testRead() {
         when(wordRepository.findAll()).thenReturn(new ArrayList<>());
 
         List<Word> words = wordService.read();
@@ -133,7 +133,7 @@ public class WordServiceImplTest {
     }
 
     @Test
-    public void testGetWordByTitle() {
+    void testGetWordByTitle() {
         String title = "TestTitle";
         when(wordRepository.findWordByTitle(title)).thenReturn(new ArrayList<>());
 
@@ -143,7 +143,7 @@ public class WordServiceImplTest {
     }
 
     @Test
-    public void testGetWordsFromPages() {
+    void testGetWordsFromPages() {
         Search search = new Search();
         when(pagesService.getPagesBySearch(search)).thenReturn(new ArrayList<>());
 

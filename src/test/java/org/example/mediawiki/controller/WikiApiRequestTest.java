@@ -8,10 +8,10 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class WikiApiRequestTest {
+ class WikiApiRequestTest {
 
     @Test
-    public void testGetDescriptionByTitle() {
+     void testGetDescriptionByTitle() {
         String title = "Computer";
 
         List<Word> words = WikiApiRequest.getDescriptionByTitle(title);
@@ -21,7 +21,7 @@ public class WikiApiRequestTest {
     }
 
     @Test
-    public void testGetDescriptionByPageId() throws IOException {
+     void testGetDescriptionByPageId() throws IOException {
         long id = 12345;
 
         Word word = WikiApiRequest.getDescriptionByPageId(id);

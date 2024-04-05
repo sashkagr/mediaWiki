@@ -17,7 +17,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
-public class SearchServiceImplTest {
+class SearchServiceImplTest {
 
     @Mock
     private SearchRepository searchRepository;
@@ -29,12 +29,12 @@ public class SearchServiceImplTest {
     private PagesServiceImpl pagesService;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         MockitoAnnotations.openMocks(this);
     }
 
     @Test
-    public void testGetSearchExistingById() {
+    void testGetSearchExistingById() {
         Long id = 1L;
         when(searchRepository.existingById(id)).thenReturn(new Search());
 
@@ -44,7 +44,7 @@ public class SearchServiceImplTest {
     }
 
     @Test
-    public void testGetSearchByTitle() {
+    void testGetSearchByTitle() {
         String title = "TestTitle";
         when(searchRepository.existingByTitle(title)).thenReturn(new Search());
 
@@ -54,7 +54,7 @@ public class SearchServiceImplTest {
     }
 
     @Test
-    public void testGetSearchById() {
+    void testGetSearchById() {
         Long id = 1L;
         when(searchRepository.existingById(id)).thenReturn(new Search());
 
@@ -64,7 +64,7 @@ public class SearchServiceImplTest {
     }
 
     @Test
-    public void testCreate() {
+    void testCreate() {
         Search search = new Search();
 
         searchService.create(search);
@@ -73,7 +73,7 @@ public class SearchServiceImplTest {
     }
 
     @Test
-    public void testDelete() {
+    void testDelete() {
         Long idToDelete = 1L;
 
         searchService.delete(idToDelete);
@@ -82,7 +82,7 @@ public class SearchServiceImplTest {
     }
 
     @Test
-    public void testUpdate() {
+    void testUpdate() {
         Search search = new Search();
 
         searchService.update(search);
@@ -91,7 +91,7 @@ public class SearchServiceImplTest {
     }
 
     @Test
-    public void testRead() {
+    void testRead() {
         List<Search> expectedSearches = new ArrayList<>();
         when(searchRepository.findAll()).thenReturn(expectedSearches);
 
@@ -101,7 +101,7 @@ public class SearchServiceImplTest {
     }
 
     @Test
-    public void testCreateSearchAndPages() {
+    void testCreateSearchAndPages() {
         String name = "TestName";
 
         List<Word> words = searchService.createSearchAndPages(name);

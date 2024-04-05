@@ -48,11 +48,10 @@ public class WordServiceImpl implements Service<Word> {
                 word.setSearch(search);
             }
         }
-        List<Word> createdWords = words.stream()
+        return words.stream()
                 .filter(word -> word.getTitle() != null && word.getDescription() != null)
                 .map(wordRepository::save)
                 .collect(Collectors.toList());
-        return createdWords;
     }
 
     @Transactional

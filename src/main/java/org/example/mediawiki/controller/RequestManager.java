@@ -32,8 +32,6 @@ import java.util.List;
 @Controller
 @RequestMapping("/definition")
 public class RequestManager {
-
-
     private final WordServiceImpl wordService;
 
     private final PagesServiceImpl pagesService;
@@ -50,6 +48,9 @@ public class RequestManager {
     }
 
     private Search currentSearch = new Search();
+
+    private final String REDIRECT = "redirect:/definition/showWords";
+    private final String ERROR = "error";
 
     @PostMapping
     public ResponseEntity<List<Word>> addWords(@Valid @RequestParam final List<Long> params, @Valid @RequestBody final List<Word> words) {
@@ -77,7 +78,6 @@ public class RequestManager {
     @GetMapping("/findById/{id}")
     public String
     getWordById(@PathVariable final Long id, Model model) {
-        log.info("start");
         CounterServiceImpl.incrementCount();
         int requestCount = CounterServiceImpl.getCount();
         log.info("Current count of requests findById: {}", requestCount);
@@ -88,11 +88,10 @@ public class RequestManager {
 
     @GetMapping
     public String getDefinition(@RequestParam final String name, Model model) {
-        log.info("start");
         try {
             if (name == null || name.equals("")) {
                 log.error("An error occurred while processing the bad request");
-                return "error";
+                return ERROR;
             }
             log.info("Received request to get definition for: {}", name);
 
@@ -120,7 +119,7 @@ public class RequestManager {
             return "pages";
         } catch (Exception e) {
             log.error("An error occurred while processing the request for '{}'", name, e);
-            return "error";
+            return ERROR;
         }
     }
 
@@ -129,7 +128,7 @@ public class RequestManager {
     createWordBySearch(@PathVariable final Long id) {
         try {
             if (id == null) {
-                return "error";
+                return ERROR;
             }
             Word retrievedWord = WikiApiRequest.getDescriptionByPageId(id);
             retrievedWord.setSearch(currentSearch);
@@ -143,10 +142,10 @@ public class RequestManager {
                 pagesService.update(page);
                 pagesService.delete(page.getId());
             }
-            return "redirect:/definition/showWords";
+            return REDIRECT;
         } catch (NumberFormatException | IOException e) {
             log.error("Invalid input!", e);
-            return "error";
+            return ERROR;
         }
     }
 
@@ -198,7 +197,6 @@ public class RequestManager {
         int requestCount = CounterServiceImpl.getCount();
         log.info("Current count of requests showWords: {}", requestCount);
         List<Word> words = wordService.read();
-        ;
         model.addAttribute("words", words);
         return "definition";
     }
@@ -219,37 +217,36 @@ public class RequestManager {
                 }
                 wordService.create(word);
                 log.info("Word successfully created");
-                return "redirect:/definition/showWords";
+                return REDIRECT;
             } else {
                 log.info("Error! You entered incorrect data!");
-                return "error";
+                return ERROR;
             }
         } catch (Exception e) {
             log.error("An error occurred while creating word", e);
-            return "error";
+            return ERROR;
 
         }
     }
 
     @DeleteMapping("/delete/{id}")
     public String deleteWord(@PathVariable final Long id) {
-        log.info("start delete");
         try {
             log.info("Received request to delete word with id: {}", id);
 
             if (wordService.getExistingById(id)) {
                 wordService.delete(id);
                 log.info("Word with id {} was successfully deleted", id);
-                return "redirect:/definition/showWords";
+                return REDIRECT;
             } else {
                 log.info("Error! Word with id {} does not exist!", id);
-                return "error";
+                return ERROR;
 
             }
         } catch (Exception e) {
             log.error("An error occurred while deleting word with id: {}",
                     id, e);
-            return "error";
+            return ERROR;
 
         }
     }
@@ -259,20 +256,19 @@ public class RequestManager {
     deleteSearch(@PathVariable final Long id) {
         try {
             log.info("Received request to delete search with id: {}", id);
-
             if (searchService.getSearchExistingById(id)) {
                 searchService.delete(id);
                 log.info("Search with id {} was successfully deleted", id);
-                return "redirect:/definition/showSearches";
+                return REDIRECT;
             } else {
                 log.info("Error! Search with id {} does not exist!", id);
-                return "error";
+                return ERROR;
 
             }
         } catch (Exception e) {
             log.error("An error occurred while deleting search with id: {}",
                     id, e);
-            return "error";
+            return ERROR;
 
         }
     }
@@ -281,10 +277,8 @@ public class RequestManager {
     public String updateWord(@RequestParam final String title,
                              @RequestParam final String description,
                              @PathVariable final Long id) {
-        log.info("start");
         try {
             log.info("Received request to update word with id: {}", id);
-
             Word word1 = wordService.getWordById(id);
             if (word1 != null) {
                 if (!title.equals("")) {
@@ -295,11 +289,11 @@ public class RequestManager {
                 }
                 wordService.update(word1);
                 log.info("Word with id {} was successfully updated", id);
-                return "redirect:/definition/showWords";
+                return REDIRECT;
             } else {
                 log.info("Error! You entered incorrect data or word "
                         + "with id {} does not exist!", id);
-                return "error";
+                return ERROR;
 
             }
         } catch (Exception e) {
