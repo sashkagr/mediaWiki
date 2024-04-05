@@ -3,13 +3,11 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 !gradle/wrapper
-gradlew
 gradlew.bat
 settings.gradle
 LICENSE
 application.log
 src/main/resources/logback.xml
-gradlew
 ### IntelliJ IDEA ###
 **/.idea
 .idea
