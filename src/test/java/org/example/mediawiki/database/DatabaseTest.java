@@ -9,11 +9,11 @@ import java.sql.DriverManager;
 
 import static org.junit.Assert.assertNotNull;
 
- class DatabaseTest {
+ public class DatabaseTest {
     private Connection connection;
 
     @Before
-     void setUp() throws Exception {
+   public  void setUp() throws Exception {
         String jdbcUrl = "jdbc:mysql://localhost:3306/mediawiki";
         String user = "root";
         String password = "root";
@@ -21,14 +21,14 @@ import static org.junit.Assert.assertNotNull;
     }
 
     @After
-     void tearDown() throws Exception {
+    public void tearDown() throws Exception {
         if (connection != null) {
             connection.close();
         }
     }
 
     @Test
-     void testConnection() {
+   public  void testConnection() {
         assertNotNull("Connection should not be null", connection);
     }
 
