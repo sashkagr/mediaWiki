@@ -15,6 +15,7 @@ import java.util.function.Predicate;
 @Component
 @Slf4j
 public class ArgumentLogger {
+
     public void logArguments(final Object[] arguments,
                              final String message,
                              final Predicate<Object> filter,
@@ -27,6 +28,7 @@ public class ArgumentLogger {
             }
         }
     }
+
 
     public void logLongArguments(final Object[] arguments,
                                  final String message) {

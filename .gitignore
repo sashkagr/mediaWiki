@@ -10,7 +10,6 @@ settings.gradle
 LICENSE
 application.log
 src/main/resources
-src/test
 ### IntelliJ IDEA ###
 **/.idea
 .idea

@@ -36,15 +36,21 @@ public class WordAspect {
 
     @Around("PointCuts.createMethodsWord()")
     public Object aroundCreateAdvice(final ProceedingJoinPoint joinPoint) {
-        return argumentLogger.processMethod(joinPoint,
-                arguments -> argumentLogger.logArguments(arguments,
-                        "Try add word",
-                        arg -> arg instanceof Word,
-                        arg -> ((Word) arg).getTitle()),
-                arguments -> argumentLogger.logArguments(arguments,
-                        "Word {} add",
-                        arg -> arg instanceof Word,
-                        arg -> ((Word) arg).getTitle()));
+        if (joinPoint.getSignature().getName().equals("create")) {
+            return argumentLogger.processMethod(joinPoint,
+                    arguments -> argumentLogger.logArguments(arguments,
+                            "Try add word",
+                            arg -> arg instanceof Word,
+                            arg -> ((Word) arg).getTitle()),
+                    arguments -> argumentLogger.logArguments(arguments,
+                            "Word {} add",
+                            arg -> arg instanceof Word,
+                            arg -> ((Word) arg).getTitle()));
+        } else {
+            return argumentLogger.processMethod(joinPoint,
+                    arguments -> argumentLogger.logString("Try add words"),
+                    arguments -> argumentLogger.logString("Words add"));
+        }
     }
 
     @Around("PointCuts.updateMethodsWord()")
@@ -73,10 +79,10 @@ public class WordAspect {
                 return argumentLogger.processMethod(joinPoint,
                         arguments -> argumentLogger.
                                 logStringArguments(arguments,
-                                "Try find word by title {}"),
+                                        "Try find word by title {}"),
                         arguments -> argumentLogger.
                                 logWordArguments(arguments,
-                                "Word by title {} found"));
+                                        "Word by title {} found"));
             }
             case "getWordById" -> {
                 return argumentLogger.processMethod(joinPoint,

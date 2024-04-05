@@ -18,6 +18,7 @@ public class SearchServiceImpl implements Service<Search> {
 
     private Cache cache = new Cache();
 
+
     private final SearchRepository searchRepository;
     private final PagesServiceImpl pagesService;
 
@@ -39,8 +40,19 @@ public class SearchServiceImpl implements Service<Search> {
             }
         }
         Search search = searchRepository.existingById(id);
-        return search != null;
-
+        if (search != null) {
+            List<Search> searches = (List<Search>) cache.get(Long.toString(search.getId()));
+            if (searches != null) {
+                searches.add(search);
+                cache.put(Long.toString(search.getId()), searches);
+            } else {
+                searches = new ArrayList<>();
+                searches.add(search);
+                cache.put(Long.toString(search.getId()), searches);
+            }
+            return true;
+        }
+        return false;
     }
 
     @Transactional
@@ -73,15 +85,17 @@ public class SearchServiceImpl implements Service<Search> {
             }
         }
         Search search = searchRepository.existingById(id);
-        List<Search> searches = new ArrayList<>();
-        Object cachedData = cache.get(Long.toString((search.getId())));
-        if (cachedData != null) {
-            cache.remove(Long.toString((search.getId())));
-            searches = (List<Search>) cachedData;
-        }
-        searches.add(search);
-        cache.put((Long.toString((search.getId()))), searches);
+        if (search != null) {
+            List<Search> searches = new ArrayList<>();
+            Object cachedData = cache.get(Long.toString((search.getId())));
+            if (cachedData != null) {
+                cache.remove(Long.toString((search.getId())));
+                searches = (List<Search>) cachedData;
+            }
+            searches.add(search);
+            cache.put((Long.toString((search.getId()))), searches);
 
+        }
         return search;
     }
 
@@ -129,20 +143,18 @@ public class SearchServiceImpl implements Service<Search> {
     @Transactional
     public List<Search> read() {
         cache.clear();
-        List<Search> searches = new ArrayList<>();
-        searches = searchRepository.findAll();
+        List<Search> searches = searchRepository.findAll();
         for (Search search : searches) {
-            List<Search> searchList = (List<Search>) cache.
-                    get((Long.toString(search.getId())));
-            if (searchList != null) {
-                cache.remove((Long.toString(search.getId())));
+            List<Search> searchList = (List<Search>) cache.get(Long.toString(search.getId()));
+            if (searchList == null) { // Если элемент отсутствует в кэше, добавляем его
+                searchList = new ArrayList<>();
                 searchList.add(search);
+                cache.put(Long.toString(search.getId()), searchList);
             }
-            cache.put((Long.toString(search.getId())), searches);
         }
         return searches;
-
     }
+
 
     public List<Word> createSearchAndPages(final String name) {
         List<Word> words = WikiApiRequest.getDescriptionByTitle(name);

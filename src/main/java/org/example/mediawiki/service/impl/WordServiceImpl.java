@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @org.springframework.stereotype.Service
 public class WordServiceImpl implements Service<Word> {
@@ -18,15 +20,40 @@ public class WordServiceImpl implements Service<Word> {
     private final WordRepository wordRepository;
     private final PagesServiceImpl pagesService;
 
+    private final SearchServiceImpl searchService;
+
     @Autowired
     public WordServiceImpl(final PagesServiceImpl pages,
-                           final WordRepository word) {
+                           final WordRepository word,
+                           final SearchServiceImpl search) {
         this.pagesService = pages;
         this.wordRepository = word;
-
+        this.searchService = search;
     }
 
     private Cache cache = new Cache();
+
+
+    @Transactional
+    public List<Word> createWords(final List<Word> words, final List<Long> params) {
+        Iterator<Word> listIterator = words.iterator();
+        Iterator<Long> idIterator = params.iterator();
+
+        while (listIterator.hasNext() && idIterator.hasNext()) {
+            Word word = listIterator.next();
+            Long id = idIterator.next();
+
+            Search search = searchService.getSearchById(id);
+            if (search != null) {
+                word.setSearch(search);
+            }
+        }
+        List<Word> createdWords = words.stream()
+                .filter(word -> word.getTitle() != null && word.getDescription() != null)
+                .map(wordRepository::save)
+                .collect(Collectors.toList());
+        return createdWords;
+    }
 
     @Transactional
     public boolean getExistingById(final Long id) {
@@ -124,16 +151,25 @@ public class WordServiceImpl implements Service<Word> {
         cache.clear();
         List<Word> words = wordRepository.findAll();
         for (Word word : words) {
-            List<Word> wordsList = (List<Word>) cache.
-                    get((Long.toString(word.getSearch().getId())));
-            if (wordsList != null) {
-                cache.remove((Long.toString(word.getId())));
-                wordsList.add(word);
+            Long searchId;
+            if (word.getSearch() == null) {
+                searchId = -1L;
+            } else {
+                searchId = word.getSearch().getId();
             }
-            cache.put((Long.toString(word.getId())), words);
+
+            List<Word> wordsList = (List<Word>) cache.
+                    get(Long.toString(searchId));
+            if (wordsList != null) {
+                cache.remove(Long.toString(word.getId()));
+                wordsList.add(word);
+            } else {
+                wordsList = new ArrayList<>();
+                wordsList.add(word);
+                cache.put(Long.toString(searchId), wordsList);
+            }
         }
         return words;
-
     }
 
     @Transactional

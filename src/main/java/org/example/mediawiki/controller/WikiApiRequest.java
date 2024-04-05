@@ -100,8 +100,7 @@ public final class WikiApiRequest {
         return word;
     }
 
-    public static Word
-    getDescriptionByPageId(final long id) throws IOException {
+    public static Word getDescriptionByPageId(final long id) throws IOException {
         String id1 = Long.toString(id);
         String apiUrl =
                 "https://en.wikipedia.org/w/api.php?action"
@@ -120,20 +119,27 @@ public final class WikiApiRequest {
         in.close();
         con.disconnect();
         JSONObject response = new JSONObject(content.toString());
-        JSONObject pages = response.getJSONObject("query").
-                getJSONObject("pages");
+        JSONObject pages = response.getJSONObject("query").getJSONObject("pages");
         JSONObject page = pages.getJSONObject(id1);
-        String title = page.getString("title");
-        String extract = page.getString("extract");
-        int index = extract.indexOf("<h2>");
-        if (index != -1) {
-            extract = extract.substring(0, index);
+
+        String title = page.has("title") ? page.getString("title") : null;
+
+        String extract = page.has("extract") ? page.getString("extract") : null;
+
+        if (extract != null) {
+            int index = extract.indexOf("<h2>");
+            if (index != -1) {
+                extract = extract.substring(0, index);
+            }
+            extract = extract.replaceAll("<[^>]*>", "");
+            extract = extract.replace("\n", "");
         }
-        extract = extract.replaceAll("<[^>]*>", "");
-        extract = extract.replace("\n", "");
+
         Word word = new Word();
         word.setTitle(title);
-        word.setDescription(extract.trim());
+        word.setDescription(extract != null ? extract.trim() : null);
         return word;
     }
+
+
 }

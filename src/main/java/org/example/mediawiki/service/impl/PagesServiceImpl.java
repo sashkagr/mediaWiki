@@ -79,19 +79,19 @@ public class PagesServiceImpl implements Service<Pages> {
     @Transactional
     public List<Pages> read() {
         cache.clear();
-        List<Pages> pages = new ArrayList<>();
-        pages = pagesRepository.findAll();
+        List<Pages> pages = pagesRepository.findAll();
         for (Pages page : pages) {
-            List<Pages> pagesList = (List<Pages>) cache.
-                    get((Long.toString(page.getId())));
+            List<Pages> pagesList = (List<Pages>) cache.get(Long.toString(page.getId()));
             if (pagesList != null) {
-                cache.remove((Long.toString(page.getId())));
+                cache.remove(Long.toString(page.getId()));
                 pagesList.add(page);
+            } else {
+                pagesList = new ArrayList<>();
+                pagesList.add(page);
+                cache.put(Long.toString(page.getId()), pagesList);
             }
-            cache.put((Long.toString(page.getId())), page);
         }
         return pages;
-
     }
 
     public List<Pages> getPagesBySearch(final Search search) {
