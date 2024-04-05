@@ -4,7 +4,6 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 gradle/wrapper
-gradlew
 gradlew.bat
 settings.gradle
 LICENSE
