@@ -10,6 +10,7 @@ settings.gradle
 LICENSE
 application.log
 src/main/resources/logback.xml
+gradlew
 ### IntelliJ IDEA ###
 **/.idea
 .idea
