@@ -25,7 +25,7 @@ jacocoTestReport {
 
 group 'org.example'
 version '1.0-SNAPSHOT'
-sourceCompatibility= '22'
+sourceCompatibility= '21.0.2'
 
 repositories {
     mavenCentral()
