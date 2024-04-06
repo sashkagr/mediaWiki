@@ -7,6 +7,9 @@ gradlew.bat
 settings.gradle
 LICENSE
 application.log
+**/src/test
+!**/src/test/service
+!**/src/test/MediaWikiApplicationTests
 src/main/resources/logback.xml
 ### IntelliJ IDEA ###
 **/.idea
