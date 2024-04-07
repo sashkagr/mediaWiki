@@ -122,6 +122,8 @@ public class RequestManager {
             return PAGES;
         } catch (Exception e) {
             log.error("An error occurred while processing the request for '{}'", name, e);
+            Thread.currentThread().interrupt(); // или throw e; в зависимости от требований приложения
+
             return ERROR;
         }
     }
@@ -150,6 +152,7 @@ public class RequestManager {
             return ERROR;
         } catch (InterruptedException e) {
             log.error("Runtime error", e);
+            Thread.currentThread().interrupt(); // или throw e; в зависимости от требований приложения
             return ERROR;
         }
     }
