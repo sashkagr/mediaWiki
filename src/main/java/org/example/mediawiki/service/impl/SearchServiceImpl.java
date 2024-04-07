@@ -160,7 +160,7 @@ public class SearchServiceImpl implements Service<Search> {
         List<Word> words = WikiApiRequest.getDescriptionByTitle(name);
         Search search = new Search();
         search.setTitle(name);
-        this.create(search);
+        create(search);
         for (Word word : words) {
             Pages page = new Pages();
             word.setSearch(search);

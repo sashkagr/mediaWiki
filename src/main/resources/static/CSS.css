@@ -27,10 +27,6 @@ body {
     background-color: #a63278;
     color: #ffffff;
 }
-.table-striped tbody tr:nth-of-type(odd) {
-    background-color: #a63278;
-
-}
 .mt-3 a {
     margin-right: 10px;
 }
