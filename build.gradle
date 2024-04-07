@@ -19,7 +19,7 @@ jacocoTestReport {
 }
 
 
-sonar {
+sonarqube {
     properties {
         property "sonar.projectKey", "sashkagr_MediaWiki"
         property "sonar.organization", "sashkagr-1"
@@ -29,6 +29,7 @@ sonar {
         property "sonar.jacoco.report","target/jacoco.exec"
     }
 }
+tasks.check.dependsOn test // Добавляем выполнение тестов в цель check
 
 group = 'org.example'
 version = '1.0-SNAPSHOT'
