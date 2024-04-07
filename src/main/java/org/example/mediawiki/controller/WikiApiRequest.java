@@ -5,15 +5,12 @@ import org.example.mediawiki.modal.DescriptionGetApiResponse;
 import org.example.mediawiki.modal.DescriptionGetApiSearchResponse;
 import org.example.mediawiki.modal.Word;
 import org.json.JSONObject;
-import org.springframework.http.HttpStatus;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -28,38 +25,7 @@ public final class WikiApiRequest {
     private static final Logger LOGGER = Logger.
             getLogger(WikiApiRequest.class.getName());
 
-//    public static List<Word> getDescriptionByTitle(final String title) {
-//        ObjectMapper objectMapper = new ObjectMapper();
-//        List<Word> result = new ArrayList<>();
-//        String jsonResponse = "";
-//        try {
-//            String apiUrl =
-//                    "https://en.wikipedia.org/w/api.php?action"
-//                            + "=query&list=search&srsearch="
-//                            + title + "&srwhat=text&format=json";
-//            URI url = new URI(apiUrl);
-//            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-//            conn.setRequestMethod("GET");
-//            int responseCode = conn.getResponseCode();
-//            if (responseCode == HttpStatus.OK.value()) {
-//                jsonResponse = getResponse(conn);
-//                List<DescriptionGetApiSearchResponse> words =
-//                        getApiSearchResponsesWords(jsonResponse, objectMapper);
-//                result = words.stream()
-//                        .map(WikiApiRequest::mapResponseToModel)
-//                        .toList();
-//
-//            } else {
-//                LOGGER.info("Error with response code");
-//            }
-//            conn.disconnect();
-//        } catch (Exception e) {
-//            LOGGER.info(e.getMessage());
-//        }
-//        return result;
-//    }
-
-    public static List<Word> getDescriptionByTitle(final String title) {
+    public static List<Word> getDescriptionByTitle(final String title) throws InterruptedException {
         ObjectMapper objectMapper = new ObjectMapper();
 
         List<Word> result = new ArrayList<>();
@@ -72,7 +38,11 @@ public final class WikiApiRequest {
                     .GET()
                     .build();
 
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            HttpResponse<String> response;
+            try (client) {
+                response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            }
+
             if (response.statusCode() == 200) {
                 String jsonResponse = response.body();
                 List<DescriptionGetApiSearchResponse> words = getApiSearchResponsesWords(jsonResponse, objectMapper);
@@ -80,26 +50,20 @@ public final class WikiApiRequest {
                         .map(WikiApiRequest::mapResponseToModel)
                         .toList();
             } else {
-                LOGGER.info("Error with response code: " + response.statusCode());
+                LOGGER.info("Error with response code");
             }
-        } catch (IOException | InterruptedException e) {
-            LOGGER.info("Error: " + e.getMessage());
-        }
+        } catch (IOException e) {
+        LOGGER.info("IOException");
+    } catch (InterruptedException e) {
+        LOGGER.info("InterruptedException");
+        Thread.currentThread().interrupt(); // повторное прерывание потока
+        throw e; // повторная генерация InterruptedException для обработки в другом месте
+    }
+
         return result;
     }
-    private static String getResponse(final HttpURLConnection conn)
-            throws IOException {
-        try (BufferedReader reader =
-                     new BufferedReader(new InputStreamReader(conn.
-                             getInputStream()))) {
-            StringBuilder response = new StringBuilder();
-            String line;
-            while ((line = reader.readLine()) != null) {
-                response.append(line);
-            }
-            return response.toString();
-        }
-    }
+
+
 
     private static List<DescriptionGetApiSearchResponse>
     getApiSearchResponsesWords(final String jsonResponse,
@@ -133,19 +97,23 @@ public final class WikiApiRequest {
         return word;
     }
 
-    public static Word getDescriptionByPageId(final long id) {
-        try {
-            String id1 = Long.toString(id);
-            String apiUrl = "https://en.wikipedia.org/w/api.php?action=query&prop=extracts&format=json&pageids=" + id1;
-            URI uri = URI.create(apiUrl);
+    public static Word getDescriptionByPageId(final long id) throws InterruptedException {
+        String id1 = Long.toString(id);
+        String apiUrl = "https://en.wikipedia.org/w/api.php?action=query&prop=extracts&format=json&pageids=" + id1;
+        URI uri = URI.create(apiUrl);
 
+        try {
             HttpClient client = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(uri)
                     .GET()
                     .build();
 
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            HttpResponse<String> response;
+            try (client) {
+                response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            }
+
             JSONObject jsonResponse = new JSONObject(response.body());
             JSONObject pages = jsonResponse.getJSONObject("query").getJSONObject("pages");
             JSONObject page = pages.getJSONObject(id1);
@@ -166,13 +134,16 @@ public final class WikiApiRequest {
             word.setTitle(title);
             word.setDescription(extract != null ? extract.trim() : null);
             return word;
-        } catch (IOException | InterruptedException e) {
-            // Обработка исключений
-            e.printStackTrace();
-            // Можно выбросить исключение или вернуть null, в зависимости от требований вашего приложения
-            return null;
+        } catch (IOException e) {
+            LOGGER.info("IOException");
+        } catch (InterruptedException e) {
+            LOGGER.info("InterruptedException");
+            Thread.currentThread().interrupt(); // повторное прерывание потока
+            throw e; // повторная генерация InterruptedException для обработки в другом месте
         }
+            return null;
     }
+
 
 
 }

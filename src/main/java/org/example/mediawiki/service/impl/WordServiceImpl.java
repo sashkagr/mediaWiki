@@ -51,7 +51,8 @@ public class WordServiceImpl implements Service<Word> {
         return words.stream()
                 .filter(word -> word.getTitle() != null && word.getDescription() != null)
                 .map(wordRepository::save)
-                .collect(Collectors.toList());
+                .toList(); // использование метода toList() вместо collect(Collectors.toList())
+
     }
 
     @Transactional

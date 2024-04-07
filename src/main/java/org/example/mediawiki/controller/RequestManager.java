@@ -22,10 +22,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestBody;
-
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -51,6 +47,9 @@ public class RequestManager {
 
     private static final String REDIRECT = "redirect:/definition/showWords";
     private static final String ERROR = "error";
+    private static final String PAGES = "pages";
+    private static final String WORDS = "words";
+
 
     @PostMapping
     public ResponseEntity<List<Word>> addWords(@RequestParam final List<Long> params, @RequestBody final List<Word> words) {
@@ -105,13 +104,13 @@ public class RequestManager {
                 if (words.isEmpty()) {
                     log.info("No words found for '{}'. Attempting to retrieve from pages", name);
                     words = wordService.getWordsFromPages(search);
-                    model.addAttribute("pages", words);
-                    return "pages";
+                    model.addAttribute(PAGES, words);
+                    return PAGES;
                 }
-                model.addAttribute("words", words);
+                model.addAttribute(WORDS, words);
                 currentSearch = search;
 
-                return "words";
+                return WORDS;
             } else {
                 log.info("No search found for '{}'. Creating search and pages", name);
                 words = searchService.createSearchAndPages(name);
@@ -119,8 +118,8 @@ public class RequestManager {
             }
 
             log.info("Returning {} words for '{}'", words.size(), name);
-            model.addAttribute("pages", words);
-            return "pages";
+            model.addAttribute(PAGES, words);
+            return PAGES;
         } catch (Exception e) {
             log.error("An error occurred while processing the request for '{}'", name, e);
             return ERROR;
@@ -148,6 +147,9 @@ public class RequestManager {
             return REDIRECT;
         } catch (NumberFormatException e ) {
             log.error("Invalid input!", e);
+            return ERROR;
+        } catch (InterruptedException e) {
+            log.error("Runtime error", e);
             return ERROR;
         }
     }
@@ -201,7 +203,7 @@ public class RequestManager {
         int requestCount = CounterServiceImpl.getCount();
         log.info("Current count of requests showWords: {}", requestCount);
         List<Word> words = wordService.read();
-        model.addAttribute("words", words);
+        model.addAttribute(WORDS, words);
         return "definition";
     }
 

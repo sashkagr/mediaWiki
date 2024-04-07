@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
  class WikiApiRequestTest {
 
     @Test
-     void testGetDescriptionByTitle() {
+     void testGetDescriptionByTitle() throws InterruptedException {
         String title = "Computer";
 
         List<Word> words = WikiApiRequest.getDescriptionByTitle(title);
@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
     }
 
     @Test
-     void testGetDescriptionByPageId() throws IOException {
+     void testGetDescriptionByPageId() throws IOException, InterruptedException {
         long id = 12345;
 
         Word word = WikiApiRequest.getDescriptionByPageId(id);

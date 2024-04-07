@@ -96,7 +96,7 @@ public class PagesServiceImpl implements Service<Pages> {
 
     public List<Pages> getPagesBySearch(final Search search) {
         List<Pages> result = new ArrayList<>();
-        List<Pages> pages = new ArrayList<>();
+        List<Pages> pages;
         for (String key : cache.getCache().keySet()) {
             pages = (List<Pages>) cache.getCache().get(key);
             for (Pages page : pages) {
