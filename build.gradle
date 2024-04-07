@@ -10,13 +10,13 @@ plugins {
 //    toolVersion = "0.8.11"
 //}
 
-//jacocoTestReport {
-//        reports {
-//            xml.required = true
-//            html.required = true
-//            csv.required = true
-//    }
-//}
+jacocoTestReport {
+        reports {
+            xml.required = true
+            html.required = true
+            csv.required = true
+    }
+}
 
 
 sonar {
@@ -86,12 +86,12 @@ dependencies {
 
 
 jacoco {
-    toolVersion = "0.8.10"
+    toolVersion = "0.8.11"
 }
 
-jacocoTestReport {
-    dependsOn test
-}
+//jacocoTestReport {
+//    dependsOn test
+//}
 
 
 
