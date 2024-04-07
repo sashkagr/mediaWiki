@@ -4,68 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8d59b2a3-be69-423c-a526-af112fe8072b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.github/workflows/build.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradlew" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gradlew.bat" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/settings.gradle" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/sonar-project.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/MediaWikiApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/aop/ArgumentLogger.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/aop/ControllerLoggingAspect.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/aop/PagesAspect.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/aop/PointCuts.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/aop/SearchAspect.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/aop/WikiApiRequestAspect.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/aop/WordAspect.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/cache/Cache.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/config/WebConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/controller/RequestManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/controller/WikiApiRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/exception/ExceptionGlobal.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/modal/DescriptionGetApiQueryResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/modal/DescriptionGetApiResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/modal/DescriptionGetApiSearchResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/modal/Pages.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/modal/Search.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/modal/ServiceCounter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/modal/Word.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/repository/PagesRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/repository/SearchRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/repository/WordRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/service/Service.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/service/impl/CounterServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/service/impl/PagesServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/service/impl/SearchServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/service/impl/WordServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/logback.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/CSS.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/definition.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/error.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/pages.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/searches.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/templates/update.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/mediawiki/MediaWikiApplicationTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/mediawiki/cache/CacheTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/mediawiki/controller/WikiApiRequestTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/mediawiki/exeption/ExceptionGlobalTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/mediawiki/repository/PagesRepositoryTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/mediawiki/repository/SearchRepositoryTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/mediawiki/repository/WordRepositoryTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/mediawiki/service/PagesServiceImplTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/mediawiki/service/SearchServiceImplTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/mediawiki/service/WordServiceImplTest.java" afterDir="false" />
-    </list>
+    <list default="true" id="8d59b2a3-be69-423c-a526-af112fe8072b" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -272,7 +211,7 @@
       <option name="presentableId" value="Default" />
       <updated>1712486626000</updated>
       <workItem from="1712486627176" duration="7620000" />
-      <workItem from="1712494865111" duration="2608000" />
+      <workItem from="1712494865111" duration="2935000" />
     </task>
     <servers />
   </component>
