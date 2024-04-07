@@ -1,0 +1,61 @@
+.gradle
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+!gradle/wrapper
+gradlew.bat
+settings.gradle
+!build.gradle
+!gradlew
+
+LICENSE
+application.log
+!**/src/test
+!**/src/test/service
+!**/src/test/MediaWikiApplicationTests
+!MediaWiki/src/main/resources/logback.xml
+### IntelliJ IDEA ###
+**/.idea
+.idea
+.idea/modules.xml
+.idea/jarRepositories.xml
+.idea/compiler.xml
+.idea/libraries/
+*.iws
+*.iml
+*.ipr
+*.img
+*.png
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
+!**/workflows/gradlew.bat
+!**/workflows/gradlew
+!../sonar-project.properties
+### Eclipse ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+bin/
+!**/src/main/**/bin/
+!**/src/test/**/bin/
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+### VS Code ###
+.vscode/
+
+### Mac OS ###
+.DS_Store
+
+
+.idea
