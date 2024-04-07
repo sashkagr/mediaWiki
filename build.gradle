@@ -104,10 +104,23 @@ jacoco {
 //    dependsOn test
 //}
 
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            limit {
+                // минимальное покрытие тестами в процентах
+                minimum = 0.50
+            }
+        }
+    }
+}
+
+check.dependsOn jacocoTestCoverageVerification
 
 
 test {
-        testClassesDirs = fileTree(dir: 'build/classes/java/test')
+    finalizedBy jacocoTestReport
+    testClassesDirs = fileTree(dir: 'build/classes/java/test')
         sourceSets.test.java.srcDirs = ['src/test/java']
         testLogging {
             events "passed", "skipped", "failed"
