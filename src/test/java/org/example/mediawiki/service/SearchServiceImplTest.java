@@ -101,7 +101,7 @@ class SearchServiceImplTest {
     }
 
     @Test
-    void testCreateSearchAndPages() {
+    void testCreateSearchAndPages() throws InterruptedException {
         String name = "TestName";
 
         List<Word> words = searchService.createSearchAndPages(name);

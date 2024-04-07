@@ -152,7 +152,7 @@ public class SearchServiceImpl implements Service<Search> {
     }
 
     @Transactional
-    public List<Word> createSearchAndPages(final String name) {
+    public List<Word> createSearchAndPages(final String name) throws InterruptedException {
         List<Word> words = WikiApiRequest.getDescriptionByTitle(name);
         Search search = new Search();
         search.setTitle(name);
