@@ -29,6 +29,16 @@ sonarqube {
         property "sonar.jacoco.report","target/jacoco.exec"
     }
 }
+sonar {
+    properties {
+        property "sonar.projectKey", "sashkagr_MediaWiki"
+        property "sonar.organization", "sashkagr-1"
+        property "sonar.host.url", "https://sonarcloud.io"
+        property "sonar.java.coveragePlugin", "jacococ"
+        property "sonar.dynamicAnalysis", "reuseReports"
+        property "sonar.jacoco.report","target/jacoco.exec"
+    }
+}
 tasks.check.dependsOn test // Добавляем выполнение тестов в цель check
 
 group = 'org.example'
@@ -96,12 +106,12 @@ jacoco {
 
 
 
-//test {
-//        testClassesDirs = fileTree(dir: 'build/classes/java/test')
-//        sourceSets.test.java.srcDirs = ['src/test/java']
-//        testLogging {
-//            events "passed", "skipped", "failed"
-//        }
-//        useJUnitPlatform()
-//
-//}
+test {
+        testClassesDirs = fileTree(dir: 'build/classes/java/test')
+        sourceSets.test.java.srcDirs = ['src/test/java']
+        testLogging {
+            events "passed", "skipped", "failed"
+        }
+        useJUnitPlatform()
+
+}
