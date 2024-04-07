@@ -6,14 +6,17 @@ plugins {
     id "jacoco"
 }
 
-//jacoco {
-//    toolVersion = "0.8.11"
-//}
-//jacocoTestReport {
-//    reports {
-//        xml.required = true
-//    }
-//}
+jacoco {
+    toolVersion = "0.8.11"
+}
+
+jacocoTestReport {
+        reports {
+            xml.required = true
+            html.required = true
+            csv.required = true
+    }
+}
 
 
 sonar {
@@ -71,10 +74,14 @@ dependencies {
 }
 
 test {
-    testClassesDirs = fileTree(dir: 'build/classes/java/test')
-    sourceSets.test.java.srcDirs = ['src/test/java']
-    testLogging {
-        events "passed", "skipped", "failed"
+    jacoco {
+        enabled = true
+
+        testClassesDirs = fileTree(dir: 'build/classes/java/test')
+        sourceSets.test.java.srcDirs = ['src/test/java']
+        testLogging {
+            events "passed", "skipped", "failed"
+        }
+        useJUnitPlatform()
     }
-    useJUnitPlatform()
 }
