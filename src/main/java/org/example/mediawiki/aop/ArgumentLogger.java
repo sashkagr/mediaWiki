@@ -32,8 +32,8 @@ public class ArgumentLogger {
 
     public void logLongArguments(final Object[] arguments,
                                  final String message) {
-        logArguments(arguments, message, arg -> arg instanceof Long,
-                arg -> arg.toString());
+        logArguments(arguments, message, Long.class::isInstance,
+                Object::toString);
     }
 
     public void logStringArguments(final Object[] arguments,
