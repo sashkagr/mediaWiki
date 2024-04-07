@@ -8,17 +8,16 @@
 <body>
 <div class="container mt-5">
   <table class="table table-striped">
-    <caption>Your dictionary</caption>
+    <caption>Wiki Pages</caption>
     <thead class="thead-dark">
     <tr>
       <th>Title</th>
-      <th>Description</th>
+      <th></th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="page : ${pages}">
       <td th:text="${page.title}"></td>
-      <td th:text="${page.description}"></td>
       <td>
         <form th:action="@{'/definition/' + ${page.id}}" method="GET">
           <button class="btn">Add</button>

@@ -36,10 +36,10 @@ public class PagesAspect {
     public Object aroundCreateAdvice(final ProceedingJoinPoint joinPoint) {
         return argumentLogger.processMethod(joinPoint,
                 arguments -> argumentLogger.logArguments(arguments,
-                        "Try add page", arg -> arg instanceof Pages,
+                        "Try add page", Pages.class::isInstance,
                         arg -> ((Pages) arg).getTitle()),
                 arguments -> argumentLogger.logArguments(arguments,
-                        "Page {} add", arg -> arg instanceof Pages,
+                        "Page {} add", Pages.class::isInstance,
                         arg -> ((Pages) arg).getTitle()));
     }
 
@@ -69,7 +69,7 @@ public class PagesAspect {
                    arguments -> argumentLogger.logLongArguments(arguments,
                            "Try find page with pageId {}"),
                    arguments -> argumentLogger.logArguments(arguments,
-                           "Page by id {} delete", arg -> arg instanceof Pages,
+                           "Page by id {} delete", Pages.class::isInstance,
                            arg -> Long.toString(((Pages) arg).getPageId())));
        }
        if (method.equals("getPagesBySearch")) {

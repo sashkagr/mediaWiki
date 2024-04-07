@@ -40,11 +40,11 @@ public class WordAspect {
             return argumentLogger.processMethod(joinPoint,
                     arguments -> argumentLogger.logArguments(arguments,
                             "Try add word",
-                            arg -> arg instanceof Word,
+                            Word.class::isInstance,
                             arg -> ((Word) arg).getTitle()),
                     arguments -> argumentLogger.logArguments(arguments,
                             "Word {} add",
-                            arg -> arg instanceof Word,
+                            Word.class::isInstance,
                             arg -> ((Word) arg).getTitle()));
         } else {
             return argumentLogger.processMethod(joinPoint,

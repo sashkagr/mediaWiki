@@ -41,10 +41,10 @@ public class SearchAspect {
         if (methodSignature.getName().equals("create")) {
                 return argumentLogger.processMethod(joinPoint,
                         arguments -> argumentLogger.logArguments(arguments,
-                                "Try add search", arg -> arg instanceof Pages,
+                                "Try add search", Pages.class::isInstance,
                                 arg -> ((Search) arg).getTitle()),
                         arguments -> argumentLogger.logArguments(arguments,
-                                "Search {} add", arg -> arg instanceof Pages,
+                                "Search {} add", Pages.class::isInstance,
                                 arg -> ((Search) arg).getTitle()));
 
         }
@@ -86,7 +86,7 @@ public class SearchAspect {
                                 "Try find search by id {}"),
                         arguments -> argumentLogger.logArguments(arguments,
                                 "Search with id {} found",
-                                arg -> arg instanceof Search, arg -> Long.
+                                Search.class::isInstance, arg -> Long.
                                         toString(((Search) arg).getId())));
             }
             case "getSearchByTitle" -> {
@@ -96,7 +96,7 @@ public class SearchAspect {
                                 "Try find search by title {}"),
                         arguments -> argumentLogger.logArguments(arguments,
                                 "Search with title {} found",
-                                arg -> arg instanceof Search,
+                                Search.class::isInstance,
                                 arg -> ((Search) arg).getTitle()));
             }
             case "getSearchExistingById" -> {

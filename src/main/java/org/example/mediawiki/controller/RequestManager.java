@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -95,7 +96,7 @@ public class RequestManager {
             log.info("Received request to get definition for: {}", name);
 
             Search search = searchService.getSearchByTitle(name);
-            List<Word> words = new ArrayList<>();
+            List<Word> words;
 
             if (search != null) {
                 log.info("Search found for '{}'. Retrieving words", name);
@@ -104,9 +105,13 @@ public class RequestManager {
                 if (words.isEmpty()) {
                     log.info("No words found for '{}'. Attempting to retrieve from pages", name);
                     words = wordService.getWordsFromPages(search);
+                    model.addAttribute("pages", words);
+                    return "pages";
                 }
-
+                model.addAttribute("words", words);
                 currentSearch = search;
+
+                return "words";
             } else {
                 log.info("No search found for '{}'. Creating search and pages", name);
                 words = searchService.createSearchAndPages(name);
@@ -145,6 +150,8 @@ public class RequestManager {
         } catch (NumberFormatException | IOException e) {
             log.error("Invalid input!", e);
             return ERROR;
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
         }
     }
 

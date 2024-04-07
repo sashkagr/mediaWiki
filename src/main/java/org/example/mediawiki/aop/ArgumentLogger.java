@@ -38,13 +38,13 @@ public class ArgumentLogger {
 
     public void logStringArguments(final Object[] arguments,
                                    final String message) {
-        logArguments(arguments, message, arg -> arg instanceof String,
-                arg -> (String) arg);
+        logArguments(arguments, message, String.class::isInstance,
+                String.class::cast);
     }
 
     public void logSearchArguments(final Object[] arguments,
                                    final String message) {
-        logArguments(arguments, message, arg -> arg instanceof Search,
+        logArguments(arguments, message, Search.class::isInstance,
                 arg -> ((Search) arg).getTitle());
     }
 
@@ -56,7 +56,7 @@ public class ArgumentLogger {
     public void logWordArguments(final Object[] arguments,
                                  final String message) {
         logArguments(arguments, message,
-                arg -> arg instanceof Word,
+                Word.class::isInstance,
                 arg -> ((Word) arg).getTitle());
     }
 
