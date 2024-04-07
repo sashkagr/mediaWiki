@@ -230,7 +230,9 @@ public class RequestManager {
             }
         } catch (Exception e) {
             log.error("An error occurred while creating word", e);
-            return ERROR;
+            // Перезапуск потока
+            Thread.currentThread().interrupt(); // или throw e; в зависимости от требований приложения
+        return ERROR;
 
         }
     }
@@ -252,7 +254,10 @@ public class RequestManager {
         } catch (Exception e) {
             log.error("An error occurred while deleting word with id: {}",
                     id, e);
-            return ERROR;
+            // Перезапуск потока
+            Thread.currentThread().interrupt(); // или throw e; в зависимости от требований приложения
+
+        return ERROR;
 
         }
     }
