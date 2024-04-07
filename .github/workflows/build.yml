@@ -30,6 +30,10 @@ jobs:
           path: ~/.gradle/caches
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
           restore-keys: ${{ runner.os }}-gradle
+      - name: Setup MySQL
+        uses: mirromutth/mysql-action@v1.1
+      - name: actions-setup-mysql
+        uses: shogo82148/actions-setup-mysql@v1.32.0
       - name : Chmod
         run: chmod +x gradlew
       - name: Build and analyze
