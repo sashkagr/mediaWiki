@@ -83,3 +83,4 @@ test {
         useJUnitPlatform()
 
 }
+// Настройка Jacoco для тестового исходного набора
