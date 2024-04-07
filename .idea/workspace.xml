@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8d59b2a3-be69-423c-a526-af112fe8072b" name="Changes" comment="" />
+    <list default="true" id="8d59b2a3-be69-423c-a526-af112fe8072b" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.github/workflows/build.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.github/workflows/build.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -216,7 +220,7 @@
       <option name="presentableId" value="Default" />
       <updated>1712486626000</updated>
       <workItem from="1712486627176" duration="7620000" />
-      <workItem from="1712494865111" duration="5076000" />
+      <workItem from="1712494865111" duration="6346000" />
     </task>
     <servers />
   </component>

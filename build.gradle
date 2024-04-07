@@ -15,6 +15,7 @@ jacocoTestReport {
     }
 }
 
+
 sonar {
     properties {
         property "sonar.projectKey", "sashkagr_MediaWiki"
