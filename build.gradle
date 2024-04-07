@@ -6,17 +6,17 @@ plugins {
     id "jacoco"
 }
 
-jacoco {
-    toolVersion = "0.8.11"
-}
+//jacoco {
+//    toolVersion = "0.8.11"
+//}
 
-jacocoTestReport {
-        reports {
-            xml.required = true
-            html.required = true
-            csv.required = true
-    }
-}
+//jacocoTestReport {
+//        reports {
+//            xml.required = true
+//            html.required = true
+//            csv.required = true
+//    }
+//}
 
 
 sonar {
@@ -63,6 +63,14 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-aop'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'io.springfox:springfox-swagger2:3.0.0'
+    implementation 'io.springfox:springfox-swagger-ui:3.0.0'
+    implementation 'org.springframework.boot:spring-boot-starter-cache'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.hibernate.orm:hibernate-core:6.4.4.Final'
+
+
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
@@ -73,14 +81,23 @@ dependencies {
     testImplementation 'org.mockito:mockito-junit-jupiter:3.6.0'
 }
 
-test {
-//        enabled = true
-        testClassesDirs = fileTree(dir: 'build/classes/java/test')
-        sourceSets.test.java.srcDirs = ['src/test/java']
-        testLogging {
-            events "passed", "skipped", "failed"
-        }
-        useJUnitPlatform()
 
+jacoco {
+    toolVersion = "0.8.10"
 }
-// Настройка Jacoco для тестового исходного набора
+
+jacocoTestReport {
+    dependsOn test
+}
+
+
+
+//test {
+//        testClassesDirs = fileTree(dir: 'build/classes/java/test')
+//        sourceSets.test.java.srcDirs = ['src/test/java']
+//        testLogging {
+//            events "passed", "skipped", "failed"
+//        }
+//        useJUnitPlatform()
+//
+//}
