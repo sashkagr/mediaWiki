@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import javax.validation.Valid;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +52,7 @@ public class RequestManager {
     private static final String ERROR = "error";
 
     @PostMapping
-    public ResponseEntity<List<Word>> addWords(@Valid @RequestParam final List<Long> params, @Valid @RequestBody final List<Word> words) {
+    public ResponseEntity<List<Word>> addWords(@RequestParam final List<Long> params, @RequestBody final List<Word> words) {
         List<Word> createdWords = wordService.createWords(words, params);
         if (createdWords == null || createdWords.isEmpty()) {
             log.error("Bad request");
