@@ -6,6 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="8d59b2a3-be69-423c-a526-af112fe8072b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,6 +61,7 @@
     "Gradle.Build MediaWiki.executor": "Run",
     "Gradle.MediaWiki [jacocoTestReport].executor": "Run",
     "Gradle.MediaWiki [sonar].executor": "Run",
+    "Gradle.MediaWiki [test].executor": "Run",
     "JUnit.CacheTest.executor": "Run",
     "JUnit.ExceptionGlobalTest.executor": "Run",
     "JUnit.MediaWikiApplicationTests.executor": "Run",
@@ -110,7 +112,7 @@
       <recent name="C:\Users\sashk\OneDrive\Pulpit\MediaWiki" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.MediaWiki [jacocoTestReport]">
+  <component name="RunManager" selected="Gradle.MediaWiki [test]">
     <configuration name="MediaWiki [jacocoTestReport]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -155,20 +157,27 @@
       <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
-    <configuration name="PagesServiceImplTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="MediaWiki.test" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.example.mediawiki.service.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="org.example.mediawiki.service" />
-      <option name="MAIN_CLASS_NAME" value="org.example.mediawiki.service.PagesServiceImplTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
+    <configuration name="MediaWiki [test]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="test" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
     </configuration>
     <configuration name="SearchServiceImplTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="MediaWiki.test" />
@@ -209,11 +218,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.MediaWiki [test]" />
         <item itemvalue="Gradle.MediaWiki [jacocoTestReport]" />
         <item itemvalue="Gradle.MediaWiki [sonar]" />
         <item itemvalue="JUnit.WordServiceImplTest" />
         <item itemvalue="JUnit.SearchServiceImplTest" />
-        <item itemvalue="JUnit.PagesServiceImplTest" />
       </list>
     </recent_temporary>
   </component>
@@ -234,7 +243,7 @@
       <option name="presentableId" value="Default" />
       <updated>1712486626000</updated>
       <workItem from="1712486627176" duration="7620000" />
-      <workItem from="1712494865111" duration="11711000" />
+      <workItem from="1712494865111" duration="12249000" />
     </task>
     <servers />
   </component>
