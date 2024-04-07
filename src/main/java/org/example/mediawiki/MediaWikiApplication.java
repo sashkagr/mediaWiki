@@ -2,6 +2,7 @@ package org.example.mediawiki;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+
 /**
  * The main class for starting the Java MediaWiki application.
  */

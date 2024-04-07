@@ -15,7 +15,7 @@ settings.gradle
 build.gradle
 gradlew
 >>>>>>> e2251895408f67a2f8274e2834c620b8e2528e51
-src/test
+!src/test
 LICENSE
 application.log
 !**/src/test
