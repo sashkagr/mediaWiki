@@ -10,10 +10,10 @@ gradlew
 
 LICENSE
 application.log
-**/src/test
+!**/src/test
 !**/src/test/service
 !**/src/test/MediaWikiApplicationTests
-src/main/resources/logback.xml
+!src/main/resources/logback.xml
 ### IntelliJ IDEA ###
 **/.idea
 .idea
@@ -31,7 +31,7 @@ out/
 !**/src/test/**/out/
 !**/workflows/gradlew.bat
 !**/workflows/gradlew
-sonar-project.properties
+!sonar-project.properties
 ### Eclipse ###
 .apt_generated
 .classpath
