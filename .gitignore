@@ -2,18 +2,30 @@
 build/
 !**/src/main/**/build/
 !**/src/test/**/build/
+<<<<<<< HEAD
 !gradle/wrapper
 gradlew.bat
 settings.gradle
 !build.gradle
 !gradlew
+=======
+gradle/wrapper
+gradlew.bat
+settings.gradle
+build.gradle
+gradlew
+>>>>>>> e2251895408f67a2f8274e2834c620b8e2528e51
 
 LICENSE
 application.log
 !**/src/test
 !**/src/test/service
 !**/src/test/MediaWikiApplicationTests
+<<<<<<< HEAD
 !MediaWiki/src/main/resources/logback.xml
+=======
+!src/main/resources/logback.xml
+>>>>>>> e2251895408f67a2f8274e2834c620b8e2528e51
 ### IntelliJ IDEA ###
 **/.idea
 .idea
@@ -31,7 +43,11 @@ out/
 !**/src/test/**/out/
 !**/workflows/gradlew.bat
 !**/workflows/gradlew
+<<<<<<< HEAD
 !../sonar-project.properties
+=======
+!sonar-project.properties
+>>>>>>> e2251895408f67a2f8274e2834c620b8e2528e51
 ### Eclipse ###
 .apt_generated
 .classpath

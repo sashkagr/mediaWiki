@@ -20,11 +20,19 @@ body {
     padding: 15px;
 }
 .table thead th {
+<<<<<<< HEAD
     background-color: #a63278;
     color: #ffffff;
 }
 .table-striped tbody tr:nth-of-type(odd) {
     background-color: #a63278;
+=======
+    background-color: #c767b6;
+    color: #ffffff;
+}
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #f6b6ed;
+>>>>>>> e2251895408f67a2f8274e2834c620b8e2528e51
 }
 .mt-3 a {
     margin-right: 10px;
@@ -40,7 +48,11 @@ caption {
 button {
     display: block;
     width: 100%;
+<<<<<<< HEAD
     background-color: #a63278;
+=======
+    background-color: #d29ec9;
+>>>>>>> e2251895408f67a2f8274e2834c620b8e2528e51
     color: #fff7f7;
     border: none;
     border-radius: 3px;
@@ -64,7 +76,11 @@ a {
 .btn {
     display: block;
     width: 100%;
+<<<<<<< HEAD
     background-color: #a63278;
+=======
+    background-color: #d29ec9;
+>>>>>>> e2251895408f67a2f8274e2834c620b8e2528e51
     color: #fff7f7;
     border: none;
     border-radius: 3px;

@@ -286,9 +286,12 @@ public class RequestManager {
                 if (!description.equals("")) {
                     word1.setDescription(description);
                 }
+<<<<<<< HEAD
                 if(title.equals("")&&description.equals("")){
                     return ERROR;
                 }
+=======
+>>>>>>> e2251895408f67a2f8274e2834c620b8e2528e51
                 wordService.update(word1);
                 log.info("Word with id {} was successfully updated", id);
                 return REDIRECT;
