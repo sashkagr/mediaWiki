@@ -128,8 +128,7 @@ public class RequestManager {
     }
 
     @GetMapping("/{id}")
-    public String
-    createWordBySearch(@PathVariable final Long id) {
+    public String createWordBySearch(@PathVariable final Long id) {
         try {
             if (id == null) {
                 return ERROR;
@@ -147,13 +146,12 @@ public class RequestManager {
                 pagesService.delete(page.getId());
             }
             return REDIRECT;
-        } catch (NumberFormatException | IOException e) {
+        } catch (NumberFormatException e ) {
             log.error("Invalid input!", e);
             return ERROR;
-        } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
         }
     }
+
 
     @PatchMapping("/{id}")
     public ResponseEntity<String>

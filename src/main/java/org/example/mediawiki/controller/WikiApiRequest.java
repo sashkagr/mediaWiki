@@ -133,57 +133,18 @@ public final class WikiApiRequest {
         return word;
     }
 
-    public static Word getDescriptionByPageId(final long id) throws IOException, URISyntaxException {
-//        String id1 = Long.toString(id);
-//        String apiUrl =
-//                "https://en.wikipedia.org/w/api.php?action"
-//                        + "=query&prop=extracts&format=json&pageids="
-//                        + id1;
-//        URI url = new URI(apiUrl);
-//        HttpURLConnection con = (HttpURLConnection) url.openConnection();
-//        con.setRequestMethod("GET");
-//        BufferedReader in =
-//                new BufferedReader(new InputStreamReader(con.getInputStream()));
-//        String inputLine;
-//        StringBuilder content = new StringBuilder();
-//        while ((inputLine = in.readLine()) != null) {
-//            content.append(inputLine);
-//        }
-//        in.close();
-//        con.disconnect();
-//        JSONObject response = new JSONObject(content.toString());
-//        JSONObject pages = response.getJSONObject("query").getJSONObject("pages");
-//        JSONObject page = pages.getJSONObject(id1);
-//
-//        String title = page.has("title") ? page.getString("title") : null;
-//
-//        String extract = page.has("extract") ? page.getString("extract") : null;
-//
-//        if (extract != null) {
-//            int index = extract.indexOf("<h2>");
-//            if (index != -1) {
-//                extract = extract.substring(0, index);
-//            }
-//            extract = extract.replaceAll("<[^>]*>", "");
-//            extract = extract.replace("\n", "");
-//        }
-//
-//        Word word = new Word();
-//        word.setTitle(title);
-//        word.setDescription(extract != null ? extract.trim() : null);
-//        return word;
-//    }
-        String id1 = Long.toString(id);
-        String apiUrl = "https://en.wikipedia.org/w/api.php?action=query&prop=extracts&format=json&pageids=" + id1;
-        URI uri = URI.create(apiUrl);
-
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(uri)
-                .GET()
-                .build();
-
+    public static Word getDescriptionByPageId(final long id) {
         try {
+            String id1 = Long.toString(id);
+            String apiUrl = "https://en.wikipedia.org/w/api.php?action=query&prop=extracts&format=json&pageids=" + id1;
+            URI uri = URI.create(apiUrl);
+
+            HttpClient client = HttpClient.newHttpClient();
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(uri)
+                    .GET()
+                    .build();
+
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
             JSONObject jsonResponse = new JSONObject(response.body());
             JSONObject pages = jsonResponse.getJSONObject("query").getJSONObject("pages");
@@ -205,12 +166,13 @@ public final class WikiApiRequest {
             word.setTitle(title);
             word.setDescription(extract != null ? extract.trim() : null);
             return word;
-        } catch (InterruptedException e) {
-            // Обработка прерывания
+        } catch (IOException | InterruptedException e) {
+            // Обработка исключений
             e.printStackTrace();
             // Можно выбросить исключение или вернуть null, в зависимости от требований вашего приложения
             return null;
         }
     }
+
 
 }
