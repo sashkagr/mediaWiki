@@ -4,7 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8d59b2a3-be69-423c-a526-af112fe8072b" name="Changes" comment="" />
+    <list default="true" id="8d59b2a3-be69-423c-a526-af112fe8072b" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sonar-project.properties" beforeDir="false" afterPath="$PROJECT_DIR$/sonar-project.properties" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -56,6 +60,7 @@
   "keyToString": {
     "Downloaded.Files.Path.Enabled": "true",
     "Gradle.Build MediaWiki.executor": "Run",
+    "Gradle.MediaWiki [sonar].executor": "Run",
     "JUnit.CacheTest.executor": "Run",
     "JUnit.ExceptionGlobalTest.executor": "Run",
     "JUnit.MediaWikiApplicationTests.executor": "Run",
@@ -106,7 +111,29 @@
       <recent name="C:\Users\sashk\OneDrive\Pulpit\MediaWiki" />
     </key>
   </component>
-  <component name="RunManager" selected="Spring Boot.MediaWikiApplication">
+  <component name="RunManager" selected="Gradle.MediaWiki [sonar]">
+    <configuration name="MediaWiki [sonar]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="sonar" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
     <configuration name="PagesServiceImplTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="MediaWiki.test" />
       <extension name="coverage">
@@ -117,21 +144,6 @@
       </extension>
       <option name="PACKAGE_NAME" value="org.example.mediawiki.service" />
       <option name="MAIN_CLASS_NAME" value="org.example.mediawiki.service.PagesServiceImplTest" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="SearchRepositoryTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="MediaWiki.test" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="org.example.mediawiki.repository.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="org.example.mediawiki.repository" />
-      <option name="MAIN_CLASS_NAME" value="org.example.mediawiki.repository.SearchRepositoryTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -191,11 +203,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.MediaWiki [sonar]" />
         <item itemvalue="JUnit.WordServiceImplTest" />
         <item itemvalue="JUnit.SearchServiceImplTest" />
         <item itemvalue="JUnit.PagesServiceImplTest" />
         <item itemvalue="JUnit.WordRepositoryTest" />
-        <item itemvalue="JUnit.SearchRepositoryTest" />
       </list>
     </recent_temporary>
   </component>
@@ -216,7 +228,7 @@
       <option name="presentableId" value="Default" />
       <updated>1712486626000</updated>
       <workItem from="1712486627176" duration="7620000" />
-      <workItem from="1712494865111" duration="9487000" />
+      <workItem from="1712494865111" duration="10186000" />
     </task>
     <servers />
   </component>
