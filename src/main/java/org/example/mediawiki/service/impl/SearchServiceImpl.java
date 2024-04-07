@@ -59,7 +59,7 @@ public class SearchServiceImpl implements Service<Search> {
     public Search getSearchByTitle(final String title) {
         for (String key : cache.getCache().keySet()) {
             for (Search element : (List<Search>) cache.getCache().get(key)) {
-                if (element.getTitle() == title) {
+                if (element.getTitle().equals(title)) {
                     return element;
                 }
             }
@@ -100,13 +100,11 @@ public class SearchServiceImpl implements Service<Search> {
     }
 
     @Override
-    @Transactional
     public void create(final Search entity) {
         searchRepository.save(entity);
     }
 
     @Override
-    @Transactional
     public void delete(final Long id) {
         for (String key : cache.getCache().keySet()) {
             List<Search> searches = (List<Search>) cache.getCache().get(key);
@@ -123,7 +121,6 @@ public class SearchServiceImpl implements Service<Search> {
     }
 
     @Override
-    @Transactional
     public void update(final Search entity) {
         for (String key : cache.getCache().keySet()) {
             List<Search> searches = (List<Search>) cache.getCache().get(key);
@@ -140,7 +137,6 @@ public class SearchServiceImpl implements Service<Search> {
     }
 
     @Override
-    @Transactional
     public List<Search> read() {
         cache.clear();
         List<Search> searches = searchRepository.findAll();
