@@ -155,7 +155,7 @@ public class SearchServiceImpl implements Service<Search> {
         return searches;
     }
 
-
+    @Transactional
     public List<Word> createSearchAndPages(final String name) {
         List<Word> words = WikiApiRequest.getDescriptionByTitle(name);
         Search search = new Search();

@@ -5,7 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8d59b2a3-be69-423c-a526-af112fe8072b" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/modal/Word.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/modal/Word.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/service/impl/SearchServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/service/impl/SearchServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/definition.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/definition.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -213,7 +215,7 @@
       <option name="presentableId" value="Default" />
       <updated>1712486626000</updated>
       <workItem from="1712486627176" duration="7620000" />
-      <workItem from="1712494865111" duration="3727000" />
+      <workItem from="1712494865111" duration="4406000" />
     </task>
     <servers />
   </component>
