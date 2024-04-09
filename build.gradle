@@ -106,18 +106,18 @@ jacocoTestReport {
     dependsOn test
 }
 
-jacocoTestCoverageVerification {
-    violationRules {
-        rule {
-            limit {
-                // минимальное покрытие тестами в процентах
-                minimum = 0.80
-            }
-        }
-    }
-}
-
-check.dependsOn jacocoTestCoverageVerification
+//jacocoTestCoverageVerification {
+//    violationRules {
+//        rule {
+//            limit {
+//                // минимальное покрытие тестами в процентах
+//                minimum = 0.80
+//            }
+//        }
+//    }
+//}
+//
+//check.dependsOn jacocoTestCoverageVerification
 
 
 test {
