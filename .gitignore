@@ -4,6 +4,7 @@ build/
 !**/src/test/**/build/
 !gradle/wrapper
 gradlew.bat
+
 settings.gradle
 !build.gradle
 !gradlew
@@ -22,6 +23,7 @@ application.log
 !MediaWiki/src/main/resources/logback.xml
 !src/main/resources/logback.xml
 ### IntelliJ IDEA ###
+.lib
 **/.idea
 .idea
 .idea/modules.xml
