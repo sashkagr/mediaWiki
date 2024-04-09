@@ -45,4 +45,37 @@ public class WordTest {
         word.setSearch(search);
         assertEquals(search, word.getSearch());
     }
+    @Test
+    public void testEqualsAndHashCode() {
+        // Create two Word instances with the same attributes
+        Word word1 = new Word();
+        word1.setId(1);
+        word1.setTitle("Test Title");
+        word1.setDescription("Test Description");
+
+        Word word2 = new Word();
+        word2.setId(1);
+        word2.setTitle("Test Title");
+        word2.setDescription("Test Description");
+
+        // Verify that equals() method returns true for equal objects
+        assertTrue(word1.equals(word2));
+
+        // Verify that hashCode() returns the same value for equal objects
+        assertEquals(word1.hashCode(), word2.hashCode());
+    }
+
+    @Test
+    public void testHandlingOfNullValues() {
+        // Create a Word instance with null values
+        Word word = new Word();
+        word.setId(0);
+        word.setTitle(null);
+        word.setDescription(null);
+
+        // Verify that null values are handled properly
+        assertNull(word.getTitle());
+        assertNull(word.getDescription());
+    }
+
 }
