@@ -7,6 +7,7 @@ gradlew.bat
 settings.gradle
 !build.gradle
 !gradlew
+src/test/java/org/example/mediawiki/MediaWikiApplicationTest.java
 !gradle/wrapper
 gradlew.bat
 settings.gradle
