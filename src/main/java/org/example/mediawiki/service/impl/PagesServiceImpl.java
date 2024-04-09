@@ -23,6 +23,10 @@ public class PagesServiceImpl implements Service<Pages> {
 
     private Cache cache = new Cache();
 
+    // Новый метод для установки кэша
+    public void setCache(Cache cache) {
+        this.cache = cache;
+    }
     public Pages getPageByPageId(final Long pageId) {
         for (String key : cache.getCache().keySet()) {
             for (Pages element : (List<Pages>) cache.getCache().get(key)) {
@@ -124,6 +128,7 @@ public class PagesServiceImpl implements Service<Pages> {
         }
         return result;
     }
+
 }
 
 

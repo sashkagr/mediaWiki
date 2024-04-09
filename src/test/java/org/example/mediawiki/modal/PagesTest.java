@@ -99,4 +99,46 @@ public class PagesTest {
         assertEquals(1, pages.getSearches().size());
         assertEquals(search, pages.getSearches().get(0));
     }
+    @Test
+    public void testToString() {
+        pages.setId(1);
+        pages.setTitle("Test Title");
+        assertEquals("Pages(id=1, title=Test Title, pageId=0, searches=[])", pages.toString());
+    }
+
+    @Test
+    public void testJoinTableAnnotation() throws NoSuchFieldException {
+        Field searchesField = Pages.class.getDeclaredField("searches");
+        JoinTable joinTableAnnotation = searchesField.getAnnotation(JoinTable.class);
+        assertNotNull(joinTableAnnotation);
+        assertEquals("pages_search", joinTableAnnotation.name());
+        assertEquals("page_id", joinTableAnnotation.joinColumns()[0].name());
+        assertEquals("search_id", joinTableAnnotation.inverseJoinColumns()[0].name());
+    }
+
+    @Test
+    public void testManyToManyAnnotation() throws NoSuchFieldException {
+        Field searchesField = Pages.class.getDeclaredField("searches");
+        ManyToMany manyToManyAnnotation = searchesField.getAnnotation(ManyToMany.class);
+        assertNotNull(manyToManyAnnotation);
+    }
+
+    @Test
+    public void testJoinColumnAnnotation() throws NoSuchFieldException {
+        Field searchesField = Pages.class.getDeclaredField("searches");
+        JoinColumn joinColumnAnnotation = searchesField.getAnnotation(JoinColumn.class);
+        assertNull(joinColumnAnnotation);
+    }
+
+    @Test
+    public void testSearchesListNotNull() {
+        assertNotNull(pages.getSearches());
+    }
+
+    @Test
+    public void testSearchesListAddition() {
+        Search search = new Search();
+        pages.getSearches().add(search);
+        assertTrue(pages.getSearches().contains(search));
+    }
 }

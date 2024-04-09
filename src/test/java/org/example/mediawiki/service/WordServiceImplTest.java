@@ -1,5 +1,6 @@
 package org.example.mediawiki.service;
 
+import org.example.mediawiki.modal.Pages;
 import org.example.mediawiki.modal.Search;
 import org.example.mediawiki.modal.Word;
 import org.example.mediawiki.repository.WordRepository;
@@ -37,46 +38,6 @@ class WordServiceImplTest {
         MockitoAnnotations.openMocks(this);
     }
 
-    @Test
-    void testCreateWords() {
-        // Arrange
-        WordServiceImpl wordService = new WordServiceImpl(pagesService, wordRepository, searchService);
-
-        List<Word> words = new ArrayList<>();
-        Word word1 = new Word();
-        word1.setTitle("Title1");
-        word1.setDescription("Description1");
-        words.add(word1);
-
-        Word word2 = new Word();
-        word2.setTitle("Title2");
-        word2.setDescription("Description2");
-        words.add(word2);
-
-        List<Long> params = List.of(1L, 2L);
-
-        Search search = new Search();
-        when(searchService.getSearchById(anyLong())).thenReturn(search);
-
-        ArgumentCaptor<Word> wordCaptor = ArgumentCaptor.forClass(Word.class);
-        when(wordRepository.save(wordCaptor.capture())).thenReturn(new Word());
-
-        // Act
-        List<Word> createdWords = wordService.createWords(words, params);
-
-        // Assert
-        assertEquals(2, createdWords.size());
-        verify(wordRepository, times(2)).save(any(Word.class));
-
-        List<Word> capturedWords = wordCaptor.getAllValues();
-        assertEquals("Title1", capturedWords.get(0).getTitle());
-        assertEquals("Description1", capturedWords.get(0).getDescription());
-        assertEquals("Title2", capturedWords.get(1).getTitle());
-        assertEquals("Description2", capturedWords.get(1).getDescription());
-
-        assertEquals(search, capturedWords.get(0).getSearch());
-        assertEquals(search, capturedWords.get(1).getSearch());
-    }
 
     @Test
     void testGetExistingById() {
@@ -93,34 +54,7 @@ class WordServiceImplTest {
         verify(wordRepository, times(1)).existingById(id);
     }
 
-    @Test
-    void testGetWordBySearch() {
-        // Arrange
-        WordServiceImpl wordService = new WordServiceImpl(pagesService, wordRepository, searchService);
-        Search search = new Search();
-        when(wordRepository.existingBySearch(search)).thenReturn(new ArrayList<>());
 
-        // Act
-        List<Word> words = wordService.getWordBySearch(search);
-
-        // Assert
-        assertNotNull(words);
-        verify(wordRepository, times(1)).existingBySearch(search);
-    }
-
-    @Test
-    void testGetWordById() {
-        Word word = mock(Word.class);
-        when(word.getId()).thenReturn(1L);
-        Search search = mock(Search.class);
-        when(word.getSearch()).thenReturn(search);
-        when(wordRepository.existingById(anyLong())).thenReturn(word);
-
-        Word retrievedWord = wordService.getWordById(1L);
-
-        assertNotNull(retrievedWord);
-        assertEquals(1L, retrievedWord.getId());
-    }
 
     @Test
     void testCreate() {
@@ -172,12 +106,119 @@ class WordServiceImplTest {
         assertNotNull(words);
         verify(wordRepository, times(1)).findAll();
     }
+
+
+    @Test
+    void testCreateWords() {
+        // Arrange
+        List<Word> words = new ArrayList<>();
+        Word word1 = new Word();
+        word1.setTitle("Title1");
+        word1.setDescription("Description1");
+        words.add(word1);
+
+        Word word2 = new Word();
+        word2.setTitle("Title2");
+        word2.setDescription("Description2");
+        words.add(word2);
+
+        List<Long> params = List.of(1L, 2L);
+
+        Search search = new Search();
+        when(searchService.getSearchById(anyLong())).thenReturn(search);
+
+        ArgumentCaptor<Word> wordCaptor = ArgumentCaptor.forClass(Word.class);
+        when(wordRepository.save(wordCaptor.capture())).thenReturn(new Word());
+
+        // Act
+        List<Word> createdWords = wordService.createWords(words, params);
+
+        // Assert
+        assertEquals(2, createdWords.size());
+        verify(wordRepository, times(2)).save(any(Word.class));
+
+        List<Word> capturedWords = wordCaptor.getAllValues();
+        assertEquals("Title1", capturedWords.get(0).getTitle());
+        assertEquals("Description1", capturedWords.get(0).getDescription());
+        assertEquals("Title2", capturedWords.get(1).getTitle());
+        assertEquals("Description2", capturedWords.get(1).getDescription());
+
+        assertEquals(search, capturedWords.get(0).getSearch());
+        assertEquals(search, capturedWords.get(1).getSearch());
+    }
+
+    @Test
+    void testGetExistingByIdWhenExists() {
+        // Arrange
+        Long id = 1L;
+        when(wordRepository.existingById(id)).thenReturn(new Word());
+
+        // Act
+        boolean existing = wordService.getExistingById(id);
+
+        // Assert
+        assertTrue(existing);
+        verify(wordRepository, times(1)).existingById(id);
+    }
+
+    @Test
+    void testGetExistingByIdWhenNotExists() {
+        // Arrange
+        Long id = 1L;
+        when(wordRepository.existingById(id)).thenReturn(null);
+
+        // Act
+        boolean existing = wordService.getExistingById(id);
+
+        // Assert
+        assertFalse(existing);
+        verify(wordRepository, times(1)).existingById(id);
+    }
+
+    @Test
+    void testGetWordBySearch() {
+        // Arrange
+        Search search = new Search();
+        List<Word> expectedWords = new ArrayList<>();
+        expectedWords.add(new Word());
+        when(wordRepository.existingBySearch(search)).thenReturn(expectedWords);
+
+        // Act
+        List<Word> actualWords = wordService.getWordBySearch(search);
+
+        // Assert
+        assertEquals(expectedWords, actualWords);
+        verify(wordRepository, times(1)).existingBySearch(search);
+    }
+
+    @Test
+    void testGetWordById() {
+        // Arrange
+        Long id = 1L;
+        Word expectedWord = new Word();
+        Search search = new Search();
+        search.setId(2L); // Устанавливаем идентификатор для объекта Search
+        expectedWord.setSearch(search); // Устанавливаем Search для expectedWord
+        when(wordRepository.existingById(id)).thenReturn(expectedWord);
+
+        // Act
+        Word actualWord = wordService.getWordById(id);
+
+        // Assert
+        assertEquals(expectedWord, actualWord);
+        verify(wordRepository, times(1)).existingById(id);
+    }
+
+
     @Test
     void testGetWordByTitle() {
         // Arrange
         WordServiceImpl wordService = new WordServiceImpl(pagesService, wordRepository, searchService);
         String title = "TestTitle";
+        Search search = new Search();
+        search.setId(1L); // Установка идентификатора для объекта Search
         when(wordRepository.findWordByTitle(title)).thenReturn(new ArrayList<>());
+        when(searchService.getSearchById(anyLong())).thenReturn(search); // Мокирование сервиса для получения объекта Search
 
         // Act
         List<Word> words = wordService.getWordByTitle(title);
@@ -185,17 +226,22 @@ class WordServiceImplTest {
         // Assert
         assertNotNull(words);
     }
+
     @Test
     void testGetWordsFromPages() {
         // Arrange
-        WordServiceImpl wordService = new WordServiceImpl(pagesService, wordRepository, searchService);
         Search search = new Search();
-        when(pagesService.getPagesBySearch(search)).thenReturn(new ArrayList<>());
+        List<Pages> pages = new ArrayList<>();
+        pages.add(new Pages());
+        when(pagesService.getPagesBySearch(search)).thenReturn(pages);
 
         // Act
-        List<Word> words = wordService.getWordsFromPages(search);
+        List<Word> actualWords = wordService.getWordsFromPages(search);
 
         // Assert
-        assertNotNull(words);
+        assertFalse(actualWords.isEmpty());
+        assertEquals(pages.size(), actualWords.size());
+        assertEquals(search, actualWords.get(0).getSearch());
     }
+
 }
