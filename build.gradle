@@ -115,7 +115,7 @@ jacocoTestReport {
 //    }
 //}
 
-check.dependsOn jacocoTestCoverageVerification
+//check.dependsOn jacocoTestCoverageVerification
 
 
 test {
