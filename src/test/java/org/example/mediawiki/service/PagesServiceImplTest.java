@@ -1,6 +1,5 @@
 package org.example.mediawiki.service;
 
-import org.example.mediawiki.cache.Cache;
 import org.example.mediawiki.modal.Pages;
 import org.example.mediawiki.modal.Search;
 import org.example.mediawiki.repository.PagesRepository;
@@ -12,12 +11,14 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class PagesServiceImplTest {
+
     @Mock
     private PagesRepository pagesRepository;
 
@@ -29,17 +30,12 @@ class PagesServiceImplTest {
         MockitoAnnotations.openMocks(this);
     }
 
-    // Other existing tests remain unchanged
-
     @Test
     void testGetPageByPageId() {
         // Create a mock page
         Pages page = new Pages();
         page.setId(1L);
         page.setPageId(100L);
-
-        // Mock cache
-        pagesService.setCache(mock(Cache.class));
 
         // Set up repository to return the mock page
         when(pagesRepository.existingByPageId(100L)).thenReturn(page);
@@ -49,6 +45,16 @@ class PagesServiceImplTest {
         assertNotNull(retrievedPage);
         assertEquals(page.getId(), retrievedPage.getId());
         assertEquals(page.getPageId(), retrievedPage.getPageId());
+    }
+
+    @Test
+    void testGetPageByPageId_NullFromRepository() {
+        // Set up repository to return null
+        when(pagesRepository.existingByPageId(anyLong())).thenReturn(null);
+
+        // Test the method
+        Pages retrievedPage = pagesService.getPageByPageId(100L);
+        assertNull(retrievedPage);
     }
 
     @Test
