@@ -182,6 +182,7 @@ public class RequestManager {
         }
     }
 
+
     @GetMapping("/showSearches")
     public String showAllSearches(Model model) {
         CounterServiceImpl.incrementCount();

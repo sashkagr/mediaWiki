@@ -3,9 +3,7 @@ package org.example.mediawiki.service.impl;
 import lombok.Data;
 import org.example.mediawiki.modal.ServiceCounter;
 
-
 import java.util.concurrent.atomic.AtomicInteger;
-
 
 @Data
 public final class CounterServiceImpl {
@@ -13,21 +11,34 @@ public final class CounterServiceImpl {
     private CounterServiceImpl() {
     }
 
-    private static ServiceCounter serviceCounter = new ServiceCounter();
+    private static final Object lock = new Object();
 
+    private static ServiceCounter serviceCounter = new ServiceCounter();
     private static AtomicInteger newEnhanceCounter = new AtomicInteger(0);
 
-
-    public static synchronized void incrementCount() {
-        if (serviceCounter.getCounterRequest() != null) {
-            newEnhanceCounter = serviceCounter.getCounterRequest();
+    public static void incrementCount() {
+        synchronized (lock) {
+            if (serviceCounter.getCounterRequest() != null) {
+                newEnhanceCounter = serviceCounter.getCounterRequest();
+            }
+            newEnhanceCounter.incrementAndGet();
+            serviceCounter.setCounterRequest(newEnhanceCounter);
         }
-        newEnhanceCounter.incrementAndGet();
-        serviceCounter.setCounterRequest(newEnhanceCounter);
     }
 
-    public static synchronized int getCount() {
-        AtomicInteger newCounter = serviceCounter.getCounterRequest();
-        return newCounter.get();
+    public static int getCount() {
+        synchronized (lock) {
+            AtomicInteger newCounter = serviceCounter.getCounterRequest();
+            if (newCounter != null) {
+                return newCounter.get();
+            } else {
+                return 0;
+            }
+        }
+    }
+
+    public static void resetCount() {
+        AtomicInteger newCounter = new AtomicInteger(0);
+        serviceCounter.setCounterRequest(newCounter);
     }
 }

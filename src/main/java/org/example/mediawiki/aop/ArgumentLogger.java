@@ -1,9 +1,11 @@
 package org.example.mediawiki.aop;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.Data;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.example.mediawiki.modal.Search;
 import org.example.mediawiki.modal.Word;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -13,8 +15,16 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 @Component
-@Slf4j
+@Data
 public class ArgumentLogger {
+
+    private String MESSAGE;
+    private Logger log = LoggerFactory.getLogger(this.getClass());
+
+
+    public void setLogger(Logger logger) {
+        this.log = logger;
+    }
 
     public void logArguments(final Object[] arguments,
                              final String message,
@@ -25,6 +35,7 @@ public class ArgumentLogger {
                 log.info(message, mapper.apply(arg));
             } else {
                 log.info(message, arg);
+                MESSAGE = message;
             }
         }
     }
@@ -50,6 +61,7 @@ public class ArgumentLogger {
 
     public void logString(final String message) {
         log.info(message);
+        MESSAGE = message;
     }
 
 

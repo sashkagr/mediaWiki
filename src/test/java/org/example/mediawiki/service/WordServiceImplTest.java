@@ -8,6 +8,7 @@ import org.example.mediawiki.service.impl.SearchServiceImpl;
 import org.example.mediawiki.service.impl.WordServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -38,48 +39,73 @@ class WordServiceImplTest {
 
     @Test
     void testCreateWords() {
+        // Arrange
+        WordServiceImpl wordService = new WordServiceImpl(pagesService, wordRepository, searchService);
+
         List<Word> words = new ArrayList<>();
+        Word word1 = new Word();
+        word1.setTitle("Title1");
+        word1.setDescription("Description1");
+        words.add(word1);
 
-        Word word = new Word();
-        word.setTitle("Title1");
-        word.setDescription("Description1");
-        words.add(word);
-        word.setTitle("Title2");
-        word.setDescription("Description2");
-        words.add(word);
+        Word word2 = new Word();
+        word2.setTitle("Title2");
+        word2.setDescription("Description2");
+        words.add(word2);
 
-
-        List<Long> params = new ArrayList<>();
-        params.add(1L);
-        params.add(2L);
+        List<Long> params = List.of(1L, 2L);
 
         Search search = new Search();
         when(searchService.getSearchById(anyLong())).thenReturn(search);
-        when(wordRepository.save(any(Word.class))).thenReturn(new Word());
 
+        ArgumentCaptor<Word> wordCaptor = ArgumentCaptor.forClass(Word.class);
+        when(wordRepository.save(wordCaptor.capture())).thenReturn(new Word());
+
+        // Act
         List<Word> createdWords = wordService.createWords(words, params);
 
+        // Assert
         assertEquals(2, createdWords.size());
         verify(wordRepository, times(2)).save(any(Word.class));
+
+        List<Word> capturedWords = wordCaptor.getAllValues();
+        assertEquals("Title1", capturedWords.get(0).getTitle());
+        assertEquals("Description1", capturedWords.get(0).getDescription());
+        assertEquals("Title2", capturedWords.get(1).getTitle());
+        assertEquals("Description2", capturedWords.get(1).getDescription());
+
+        assertEquals(search, capturedWords.get(0).getSearch());
+        assertEquals(search, capturedWords.get(1).getSearch());
     }
 
     @Test
     void testGetExistingById() {
-        when(wordRepository.existingById(anyLong())).thenReturn(new Word());
+        // Arrange
+        WordServiceImpl wordService = new WordServiceImpl(pagesService, wordRepository, searchService);
+        Long id = 1L;
+        when(wordRepository.existingById(id)).thenReturn(new Word());
 
-        boolean existing = wordService.getExistingById(1L);
+        // Act
+        boolean existing = wordService.getExistingById(id);
 
+        // Assert
         assertTrue(existing);
+        verify(wordRepository, times(1)).existingById(id);
     }
 
     @Test
     void testGetWordBySearch() {
+        // Arrange
+        WordServiceImpl wordService = new WordServiceImpl(pagesService, wordRepository, searchService);
         Search search = new Search();
-        when(wordRepository.existingBySearch(any(Search.class))).thenReturn(new ArrayList<>());
+        when(wordRepository.existingBySearch(search)).thenReturn(new ArrayList<>());
 
+        // Act
         List<Word> words = wordService.getWordBySearch(search);
 
+        // Assert
         assertNotNull(words);
+        verify(wordRepository, times(1)).existingBySearch(search);
     }
 
     @Test
@@ -98,57 +124,78 @@ class WordServiceImplTest {
 
     @Test
     void testCreate() {
+        // Arrange
+        WordServiceImpl wordService = new WordServiceImpl(pagesService, wordRepository, searchService);
         Word word = new Word();
 
+        // Act
         wordService.create(word);
 
+        // Assert
         verify(wordRepository, times(1)).save(word);
     }
 
     @Test
     void testDelete() {
+        // Arrange
+        WordServiceImpl wordService = new WordServiceImpl(pagesService, wordRepository, searchService);
         long idToDelete = 1L;
 
+        // Act
         wordService.delete(idToDelete);
 
+        // Assert
         verify(wordRepository, times(1)).deleteById(idToDelete);
     }
-
     @Test
     void testUpdate() {
+        // Arrange
+        WordServiceImpl wordService = new WordServiceImpl(pagesService, wordRepository, searchService);
         Word word = new Word();
 
+        // Act
         wordService.update(word);
 
+        // Assert
         verify(wordRepository, times(1)).save(word);
     }
-
     @Test
     void testRead() {
+        // Arrange
+        WordServiceImpl wordService = new WordServiceImpl(pagesService, wordRepository, searchService);
         when(wordRepository.findAll()).thenReturn(new ArrayList<>());
 
+        // Act
         List<Word> words = wordService.read();
 
+        // Assert
         assertNotNull(words);
+        verify(wordRepository, times(1)).findAll();
     }
-
     @Test
     void testGetWordByTitle() {
+        // Arrange
+        WordServiceImpl wordService = new WordServiceImpl(pagesService, wordRepository, searchService);
         String title = "TestTitle";
         when(wordRepository.findWordByTitle(title)).thenReturn(new ArrayList<>());
 
+        // Act
         List<Word> words = wordService.getWordByTitle(title);
 
+        // Assert
         assertNotNull(words);
     }
-
     @Test
     void testGetWordsFromPages() {
+        // Arrange
+        WordServiceImpl wordService = new WordServiceImpl(pagesService, wordRepository, searchService);
         Search search = new Search();
         when(pagesService.getPagesBySearch(search)).thenReturn(new ArrayList<>());
 
+        // Act
         List<Word> words = wordService.getWordsFromPages(search);
 
+        // Assert
         assertNotNull(words);
     }
 }

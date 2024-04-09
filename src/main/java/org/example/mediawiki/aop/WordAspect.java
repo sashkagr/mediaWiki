@@ -1,11 +1,12 @@
 package org.example.mediawiki.aop;
 
-import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.example.mediawiki.modal.Word;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,11 +14,15 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Aspect
-@Slf4j
 public class WordAspect {
 
     private final ArgumentLogger argumentLogger;
+    private Logger log = LoggerFactory.getLogger(this.getClass());
 
+
+    public void setLogger(Logger logger) {
+        this.log = logger;
+    }
     @Autowired
     public WordAspect(final ArgumentLogger argument) {
         this.argumentLogger = argument;

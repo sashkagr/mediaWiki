@@ -100,10 +100,10 @@ jacoco {
     toolVersion = "0.8.11"
 }
 
-//jacocoTestReport {
-//    dependsOn test
-//}
-//
+jacocoTestReport {
+    dependsOn test
+}
+
 //jacocoTestCoverageVerification {
 //    violationRules {
 //        rule {
@@ -114,8 +114,8 @@ jacoco {
 //        }
 //    }
 //}
-//
-//check.dependsOn jacocoTestCoverageVerification
+
+check.dependsOn jacocoTestCoverageVerification
 
 
 test {

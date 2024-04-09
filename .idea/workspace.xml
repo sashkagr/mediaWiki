@@ -5,9 +5,31 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8d59b2a3-be69-423c-a526-af112fe8072b" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/mediawiki/MediaWikiApplicationTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/mediawiki/aop/ArgumentLoggerTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/mediawiki/aop/ControllerLoggingAspectTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/mediawiki/aop/PagesAspectTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/mediawiki/aop/PointCutsTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/mediawiki/aop/SearchAspectTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/mediawiki/aop/WikiApiRequestAspectTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/mediawiki/aop/WordAspectTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/mediawiki/config/WebConfigTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/mediawiki/controller/RequestManagerTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/mediawiki/modal/DescriptionGetApiQueryResponseTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/mediawiki/modal/DescriptionGetApiResponseTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/mediawiki/modal/DescriptionGetApiSearchResponseTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/mediawiki/modal/PagesTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/mediawiki/modal/SearchTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/mediawiki/modal/WordTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/org/example/mediawiki/service/CounterServiceImplTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sonar-project.properties" beforeDir="false" afterPath="$PROJECT_DIR$/sonar-project.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/aop/ArgumentLogger.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/aop/ArgumentLogger.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/aop/ControllerLoggingAspect.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/aop/ControllerLoggingAspect.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/aop/WordAspect.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/aop/WordAspect.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/controller/RequestManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/controller/RequestManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/service/impl/CounterServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/mediawiki/service/impl/CounterServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/org/example/mediawiki/service/WordServiceImplTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/org/example/mediawiki/service/WordServiceImplTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,6 +44,9 @@
   <component name="ExternalProjectsManager">
     <system id="GRADLE">
       <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
         <projects_view>
           <tree_state>
             <expand>
@@ -45,6 +70,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="HTML File" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -58,7 +84,9 @@
   &quot;associatedIndex&quot;: 2
 }</component>
   <component name="ProjectId" id="2elkbLxIdEveq7EMTqc4GB8yJI5" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -68,21 +96,87 @@
     "DefaultHtmlFileTemplate": "HTML File",
     "Downloaded.Files.Path.Enabled": "true",
     "Gradle.Build MediaWiki.executor": "Run",
+    "Gradle.MediaWiki [jacocoTestCoverageVerification].executor": "Run",
     "Gradle.MediaWiki [jacocoTestReport].executor": "Run",
     "Gradle.MediaWiki [sonar].executor": "Run",
     "Gradle.MediaWiki [test].executor": "Run",
+    "Gradle.MediaWikiApplicationTests.executor": "Run",
+    "JUnit.ArgumentLoggerTest.executor": "Run",
+    "JUnit.ArgumentLoggerTest.logLongArguments.executor": "Run",
+    "JUnit.ArgumentLoggerTest.testLogArguments.executor": "Run",
+    "JUnit.ArgumentLoggerTest.testLogLongArguments.executor": "Run",
+    "JUnit.ArgumentLoggerTest.testProcessMethod_Exception.executor": "Run",
     "JUnit.CacheTest.executor": "Run",
+    "JUnit.ControllerLoggingAspectTest.executor": "Run",
+    "JUnit.ControllerLoggingAspectTest.logBefore.executor": "Run",
+    "JUnit.CounterServiceImplTest.executor": "Run",
+    "JUnit.CounterServiceImplTest.incrementCount_existingCounter.executor": "Run",
+    "JUnit.CounterServiceImplTest.incrementCount_firstTime.executor": "Run",
+    "JUnit.CounterServiceImplTest.testGetCount.executor": "Run",
+    "JUnit.CounterServiceImplTest.testIncrementCount.executor": "Run",
+    "JUnit.DescriptionGetApiQueryResponseTest.executor": "Run",
+    "JUnit.DescriptionGetApiQueryResponseTest.testSearchListInitialization.executor": "Run",
+    "JUnit.DescriptionGetApiResponseTest.executor": "Run",
+    "JUnit.DescriptionGetApiSearchResponseTest.executor": "Run",
     "JUnit.ExceptionGlobalTest.executor": "Run",
+    "JUnit.MediaWikiApplicationTest.executor": "Run",
     "JUnit.MediaWikiApplicationTests.executor": "Run",
+    "JUnit.PagesAspectTest.executor": "Run",
     "JUnit.PagesRepositoryTest.executor": "Run",
     "JUnit.PagesServiceImplTest.executor": "Run",
+    "JUnit.PagesTest.executor": "Run",
+    "JUnit.PagesTest.testSearchesFetchType.executor": "Run",
+    "JUnit.PagesTest.testSearchesJoinTable.executor": "Run",
+    "JUnit.PagesTest.testTitleFieldType.executor": "Run",
+    "JUnit.PointCutsTest.executor": "Run",
+    "JUnit.RequestManagerTest.executor": "Run",
+    "JUnit.RequestManagerTest.testAddWords.executor": "Run",
+    "JUnit.RequestManagerTest.testAddWords_PartiallyBadRequests.executor": "Run",
+    "JUnit.RequestManagerTest.testCreateWord_NullTitleOrDescription.executor": "Run",
+    "JUnit.RequestManagerTest.testCreateWord_Success.executor": "Run",
+    "JUnit.RequestManagerTest.testDeleteSearch.executor": "Run",
+    "JUnit.RequestManagerTest.testDeleteSearch_NonExistingId.executor": "Run",
+    "JUnit.RequestManagerTest.testDeleteSearch_Success.executor": "Run",
+    "JUnit.RequestManagerTest.testDeleteWord_NonExistingId.executor": "Run",
+    "JUnit.RequestManagerTest.testDeleteWord_Success.executor": "Run",
+    "JUnit.RequestManagerTest.testShowAllPages.executor": "Run",
+    "JUnit.RequestManagerTest.testShowAllSearches.executor": "Run",
+    "JUnit.RequestManagerTest.testShowAllWords.executor": "Run",
+    "JUnit.RequestManagerTest.testUpdateSearch.executor": "Run",
+    "JUnit.RequestManagerTest.testUpdateSearch_Failure_NoSearchFound.executor": "Run",
+    "JUnit.RequestManagerTest.testUpdateSearch_Failure_NoTitle.executor": "Run",
+    "JUnit.RequestManagerTest.testUpdateSearch_Success.executor": "Run",
+    "JUnit.RequestManagerTest.testUpdateWord.executor": "Run",
+    "JUnit.SearchAspectTest.executor": "Run",
+    "JUnit.SearchAspectTest.testAroundCreateAdvice_CreateMethod.executor": "Run",
+    "JUnit.SearchAspectTest.testAroundCreateAdvice_CreateSearchAndPagesMethod.executor": "Run",
+    "JUnit.SearchAspectTest.testAroundCreateAdvice_OtherMethod.executor": "Run",
     "JUnit.SearchRepositoryTest.executor": "Run",
     "JUnit.SearchServiceImplTest.executor": "Run",
+    "JUnit.SearchTest.executor": "Run",
+    "JUnit.WebConfigTest.executor": "Run",
+    "JUnit.WikiApiRequestAspectTest.executor": "Run",
     "JUnit.WikiApiRequestTest.executor": "Run",
+    "JUnit.WordAspectTest.aroundGetAdvice_ReturnsCorrectResponseFor_getWordByTitle.executor": "Run",
+    "JUnit.WordAspectTest.aroundGetAdvice_getWordByTitle.executor": "Run",
+    "JUnit.WordAspectTest.executor": "Run",
+    "JUnit.WordAspectTest.testAroundGetAdvice_GetWordByTitle.executor": "Run",
     "JUnit.WordRepositoryTest.executor": "Run",
     "JUnit.WordServiceImplTest.executor": "Run",
+    "JUnit.WordServiceImplTest.testCreate.executor": "Run",
+    "JUnit.WordServiceImplTest.testCreateWords.executor": "Run",
+    "JUnit.WordServiceImplTest.testDelete.executor": "Run",
+    "JUnit.WordServiceImplTest.testGetExistingById.executor": "Run",
+    "JUnit.WordServiceImplTest.testGetWordBySearch.executor": "Run",
+    "JUnit.WordServiceImplTest.testGetWordByTitle.executor": "Run",
+    "JUnit.WordServiceImplTest.testGetWordsFromPages.executor": "Run",
+    "JUnit.WordServiceImplTest.testRead.executor": "Run",
+    "JUnit.WordServiceImplTest.testUpdate.executor": "Run",
+    "JUnit.WordTest.executor": "Run",
+    "JUnit.WordTest.testGetterAndSetter.executor": "Run",
+    "JUnit.WordTest.testWordConstructor.executor": "Run",
     "OpenRewrite.UpgradeSpringBoot_3_2.executor": "Run",
-    "Repository.Attach.Annotations": "true",
+    "Repository.Attach.Annotations": "false",
     "Repository.Attach.JavaDocs": "true",
     "Repository.Attach.Sources": "true",
     "RequestMappingsPanelOrder0": "0",
@@ -91,7 +185,10 @@
     "RequestMappingsPanelWidth1": "75",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "Spring Boot.MediaWikiApplication.executor": "Run",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrary": "JUnit5",
+    "com.intellij.testIntegration.createTest.CreateTestDialog.defaultLibrarySuperClass.JUnit5": "",
     "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/sashk/OneDrive/Pulpit/MediaWiki",
     "node.js.detected.package.eslint": "true",
@@ -120,100 +217,89 @@
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\sashk\OneDrive\Pulpit\MediaWiki" />
     </key>
+    <key name="CreateTestDialog.Recents.Supers">
+      <recent name="" />
+    </key>
+    <key name="CreateTestDialog.RecentsKey">
+      <recent name="org.example.mediawiki.aop" />
+    </key>
   </component>
-  <component name="RunManager" selected="Spring Boot.MediaWikiApplication">
-    <configuration name="MediaWiki [jacocoTestReport]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="jacocoTestReport" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>false</RunAsTest>
-      <method v="2" />
-    </configuration>
-    <configuration name="MediaWiki [sonar]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="sonar" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>false</RunAsTest>
-      <method v="2" />
-    </configuration>
-    <configuration name="MediaWiki [test]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="test" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>false</RunAsTest>
-      <method v="2" />
-    </configuration>
-    <configuration name="SearchServiceImplTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+  <component name="RunManager" selected="JUnit.ArgumentLoggerTest">
+    <configuration name="ArgumentLoggerTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="MediaWiki.test" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="org.example.mediawiki.service.*" />
+          <option name="PATTERN" value="org.example.mediawiki.aop.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="org.example.mediawiki.service" />
-      <option name="MAIN_CLASS_NAME" value="org.example.mediawiki.service.SearchServiceImplTest" />
+      <option name="PACKAGE_NAME" value="org.example.mediawiki.aop" />
+      <option name="MAIN_CLASS_NAME" value="org.example.mediawiki.aop.ArgumentLoggerTest" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="WordServiceImplTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="ArgumentLoggerTest.logLongArguments" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="MediaWiki.test" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="org.example.mediawiki.service.*" />
+          <option name="PATTERN" value="org.example.mediawiki.aop.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="org.example.mediawiki.service" />
-      <option name="MAIN_CLASS_NAME" value="org.example.mediawiki.service.WordServiceImplTest" />
-      <option name="TEST_OBJECT" value="class" />
+      <option name="PACKAGE_NAME" value="org.example.mediawiki.aop" />
+      <option name="MAIN_CLASS_NAME" value="org.example.mediawiki.aop.ArgumentLoggerTest" />
+      <option name="METHOD_NAME" value="logLongArguments" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ArgumentLoggerTest.testLogArguments" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="MediaWiki.test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.mediawiki.aop.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.example.mediawiki.aop" />
+      <option name="MAIN_CLASS_NAME" value="org.example.mediawiki.aop.ArgumentLoggerTest" />
+      <option name="METHOD_NAME" value="testLogArguments" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ArgumentLoggerTest.testLogLongArguments" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="MediaWiki.test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.mediawiki.aop.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.example.mediawiki.aop" />
+      <option name="MAIN_CLASS_NAME" value="org.example.mediawiki.aop.ArgumentLoggerTest" />
+      <option name="METHOD_NAME" value="testLogLongArguments" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ArgumentLoggerTest.testProcessMethod_Exception" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="MediaWiki.test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.mediawiki.aop.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="org.example.mediawiki.aop" />
+      <option name="MAIN_CLASS_NAME" value="org.example.mediawiki.aop.ArgumentLoggerTest" />
+      <option name="METHOD_NAME" value="testProcessMethod_Exception" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -227,11 +313,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.MediaWiki [jacocoTestReport]" />
-        <item itemvalue="Gradle.MediaWiki [test]" />
-        <item itemvalue="Gradle.MediaWiki [sonar]" />
-        <item itemvalue="JUnit.WordServiceImplTest" />
-        <item itemvalue="JUnit.SearchServiceImplTest" />
+        <item itemvalue="JUnit.ArgumentLoggerTest" />
+        <item itemvalue="JUnit.ArgumentLoggerTest.testLogArguments" />
+        <item itemvalue="JUnit.ArgumentLoggerTest.logLongArguments" />
+        <item itemvalue="JUnit.ArgumentLoggerTest.testLogLongArguments" />
+        <item itemvalue="JUnit.ArgumentLoggerTest.testProcessMethod_Exception" />
       </list>
     </recent_temporary>
   </component>
@@ -252,7 +338,12 @@
       <option name="presentableId" value="Default" />
       <updated>1712486626000</updated>
       <workItem from="1712486627176" duration="7620000" />
-      <workItem from="1712494865111" duration="22546000" />
+      <workItem from="1712494865111" duration="29090000" />
+      <workItem from="1712556143797" duration="9210000" />
+      <workItem from="1712568297705" duration="4616000" />
+      <workItem from="1712590936294" duration="1405000" />
+      <workItem from="1712594937306" duration="8457000" />
+      <workItem from="1712665431472" duration="5747000" />
     </task>
     <servers />
   </component>
@@ -266,6 +357,11 @@
           <url>file://$PROJECT_DIR$/src/main/java/org/example/mediawiki/service/impl/SearchServiceImpl.java</url>
           <line>155</line>
           <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/test/java/org/example/mediawiki/modal/SearchTest.java</url>
+          <line>7</line>
+          <option name="timeStamp" value="4" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
