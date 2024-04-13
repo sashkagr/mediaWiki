@@ -1,175 +1,175 @@
 package org.example.mediawiki.service;
+import static org.mockito.Mockito.doNothing;
 
-import org.example.mediawiki.cache.Cache;
 import org.example.mediawiki.modal.Pages;
 import org.example.mediawiki.modal.Search;
 import org.example.mediawiki.repository.PagesRepository;
 import org.example.mediawiki.service.impl.PagesServiceImpl;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-
-import java.util.*;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
 
 
-class PagesServiceImplTest {
+import java.util.ArrayList;
+import java.util.List;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+@ExtendWith(MockitoExtension.class)
+public class PagesServiceImplTest {
 
     @Mock
     private PagesRepository pagesRepository;
 
-    @Mock
-    private Cache cache;
-
     @InjectMocks
     private PagesServiceImpl pagesService;
 
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
+    @Test
+    public void testGetPageByPageId() {
+        // Создаем тестовый идентификатор страницы
+        Long pageId = 1L;
+
+        // Создаем фиктивную страницу
+        Pages testPage = new Pages();
+        testPage.setPageId(pageId);
+        testPage.setTitle("Test Page");
+
+        // Устанавливаем ожидаемый результат для mock pagesRepository
+        when(pagesRepository.existingByPageId(pageId)).thenReturn(testPage);
+
+        // Вызываем тестируемый метод
+        Pages result = pagesService.getPageByPageId(pageId);
+
+        // Проверяем, что результат соответствует ожиданиям
+        assertEquals(testPage, result);
     }
 
     @Test
-    void testGetPageByPageId() {
-        // Create a mock page
-        Pages page = new Pages();
-        page.setId(1L);
-        page.setPageId(100L);
+    public void testCreate() {
+        // Создаем тестовую страницу для создания
+        Pages testPage = new Pages();
+        testPage.setTitle("Test Page");
 
-        // Set up repository to return the mock page
-        when(pagesRepository.existingByPageId(100L)).thenReturn(page);
+        // Вызываем метод create
+        pagesService.create(testPage);
 
-        // Test the method
-        Pages retrievedPage = pagesService.getPageByPageId(100L);
-        assertNotNull(retrievedPage);
-        assertEquals(page.getId(), retrievedPage.getId());
-        assertEquals(page.getPageId(), retrievedPage.getPageId());
+        // Проверяем, что метод pagesRepository.save был вызван с тестовой страницей в качестве аргумента
+        verify(pagesRepository).save(testPage);
     }
 
     @Test
-    void testGetPageByPageId_NullFromRepository() {
-        // Set up repository to return null
-        when(pagesRepository.existingByPageId(anyLong())).thenReturn(null);
+    public void testUpdate() {
+        // Создаем тестовую страницу для обновления
+        Pages testPage = new Pages();
+        testPage.setId(1L);
+        testPage.setTitle("Updated Title");
 
-        // Test the method
-        Pages retrievedPage = pagesService.getPageByPageId(100L);
-        assertNull(retrievedPage);
+        // Устанавливаем ожидаемый результат для метода pagesRepository.save
+        when(pagesRepository.save(testPage)).thenReturn(testPage);
+
+        // Вызываем метод update
+        pagesService.update(testPage);
+
+        // Проверяем, что метод pagesRepository.save был вызван с тестовой страницей в качестве аргумента
+        verify(pagesRepository).save(testPage);
     }
 
     @Test
-    void testCreate() {
-        Pages page = new Pages();
+    public void testDelete() {
+        // Создаем тестовую страницу
+        Pages testPage = new Pages();
+        testPage.setId(1L);
 
-        // Test the method
-        pagesService.create(page);
+        // Устанавливаем ожидаемый результат для метода pagesRepository.deleteById
+        doNothing().when(pagesRepository).deleteById(testPage.getId());
 
-        verify(pagesRepository, times(1)).save(page);
+        // Вызываем метод delete
+        pagesService.delete(testPage.getId());
+
+        // Проверяем, что метод pagesRepository.deleteById был вызван с идентификатором тестовой страницы в качестве аргумента
+        verify(pagesRepository).deleteById(testPage.getId());
     }
 
     @Test
-    void testDelete_PageInCache() {
-        long idToDelete = 1L;
-        List<Pages> pagesInCache = new ArrayList<>();
-        Pages page = new Pages();
-        page.setId(idToDelete);
-        pagesInCache.add(page);
-
-        when(cache.getCache()).thenReturn(Collections.singletonMap(Long.toString(idToDelete), pagesInCache));
-
-        pagesService.delete(idToDelete);
-
-        verify(cache, times(1)).remove(Long.toString(idToDelete)); // Verify cache.remove() is called
-        verify(cache, times(1)).put(anyString(), anyList()); // Ensure cache.put() is called
-        verify(pagesRepository, times(1)).deleteById(idToDelete); // Verify repository method call
-    }
-
-    @Test
-    void testDelete_PageNotInCache() {
-        long idToDelete = 1L;
-        when(cache.getCache()).thenReturn(Collections.emptyMap());
-
-        pagesService.delete(idToDelete);
-
-        verify(pagesRepository, times(1)).deleteById(idToDelete);
-        verify(cache, never()).remove(any());
-    }
-
-    @Test
-    void testUpdate_PageInCache() {
-        Pages page = new Pages();
-        long idToUpdate = 1L;
-        page.setId(idToUpdate);
-
-        List<Pages> pagesInCache = new ArrayList<>();
-        pagesInCache.add(page);
-
-        when(cache.getCache()).thenReturn(Collections.singletonMap(Long.toString(idToUpdate), pagesInCache));
-
-        pagesService.update(page);
-
-        verify(pagesRepository, times(1)).save(page);
-        verify(cache, times(1)).remove(Long.toString(idToUpdate));
-    }
-
-    @Test
-    void testUpdate_PageNotInCache() {
-        Pages page = new Pages();
-        long idToUpdate = 1L;
-        page.setId(idToUpdate);
-
-        when(cache.getCache()).thenReturn(Collections.emptyMap());
-
-        pagesService.update(page);
-
-        verify(pagesRepository, times(1)).save(page);
-        verify(cache, never()).remove(any());
-    }
-
-    @Test
-    void testRead() {
-        // Setup data
-        List<Pages> pagesList = new ArrayList<>();
+    void read_ReturnsListOfPages() {
+        // Mock data setup
         Pages page1 = new Pages();
         page1.setId(1L);
-        pagesList.add(page1);
-
+        page1.setTitle("Page 1");
         Pages page2 = new Pages();
         page2.setId(2L);
-        pagesList.add(page2);
+        page2.setTitle("Page 2");
+        List<Pages> mockedPages = List.of(page1, page2);
 
-        when(pagesRepository.findAll()).thenReturn(pagesList);
-        when(cache.get(anyString())).thenReturn(null);
+        // Configure mock repository to return the mocked data
+        when(pagesRepository.findAll()).thenReturn(mockedPages);
 
-        // Test the method
-        List<Pages> retrievedPages = pagesService.read();
-        assertNotNull(retrievedPages);
-        assertEquals(pagesList, retrievedPages);
+        // Invoke the method
+        List<Pages> result = pagesService.read();
 
-        // Verify cache interactions
-        verify(cache, times(2)).get(anyString());
-        verify(cache, times(2)).remove(anyString());
-        verify(cache, times(2)).put(anyString(), any(List.class));
+        // Verify that the repository method was called
+        verify(pagesRepository).findAll();
+
+        // Assert that the result is not null and matches the mocked data
+        assertEquals(mockedPages.size(), result.size());
+        assertEquals(mockedPages.get(0).getId(), result.get(0).getId());
+        assertEquals(mockedPages.get(0).getTitle(), result.get(0).getTitle());
+        assertEquals(mockedPages.get(1).getId(), result.get(1).getId());
+        assertEquals(mockedPages.get(1).getTitle(), result.get(1).getTitle());
+    }
+
+
+    @Test
+    void getPagesBySearch_ReturnsPagesMatchingSearch() {
+        // Mock search object
+
+        Search search = new Search();
+        search.setTitle("query");
+        // Mock data setup
+        List<Pages> mockPages = new ArrayList<>();
+        Pages page1 = new Pages();
+        page1.setTitle("Page 1");
+        page1.setId(1L);
+        page1.getSearches().add(search);
+        Pages page2 = new Pages();
+        page2.setTitle("Page 2");
+        page2.setId(2L);
+        mockPages.add(page1);
+        mockPages.add(page2);
+        when(pagesRepository.existingBySearch(search)).thenReturn(mockPages);
+
+        // Invoke the method
+        List<Pages> result = pagesService.getPagesBySearch(search);
+
+        // Verify that the repository method was called
+        verify(pagesRepository).existingBySearch(search);
+
+        // Assert that the result matches the mock data
+        assertEquals(2, result.size());
+        assertEquals("Page 1", result.get(0).getTitle());
+        assertEquals("Page 2", result.get(1).getTitle());
     }
 
     @Test
-    void testGetPagesBySearch() {
+    void getPagesBySearch_ReturnsEmptyListWhenNoMatches() {
+        // Mock search object
         Search search = new Search();
-        List<Pages> pagesList = new ArrayList<>();
-        when(pagesRepository.existingBySearch(search)).thenReturn(pagesList);
-        when(cache.get(anyString())).thenReturn(null);
+        search.setTitle("query");
+        // Mock data setup
+        when(pagesRepository.existingBySearch(search)).thenReturn(new ArrayList<>());
 
-        // Test the method
-        List<Pages> retrievedPages = pagesService.getPagesBySearch(search);
-        assertNotNull(retrievedPages);
-        assertEquals(pagesList, retrievedPages);
+        // Invoke the method
+        List<Pages> result = pagesService.getPagesBySearch(search);
 
-        // Verify cache interactions
-        verify(cache, times(1)).get(anyString());
-        verify(cache, times(1)).remove(anyString());
-        verify(cache, times(pagesList.size())).put(anyString(), any(List.class));
+        // Verify that the repository method was called
+        verify(pagesRepository).existingBySearch(search);
+
+        // Assert that the result is an empty list
+        assertEquals(0, result.size());
     }
+
 }

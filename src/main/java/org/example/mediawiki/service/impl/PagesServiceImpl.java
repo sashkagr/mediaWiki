@@ -1,5 +1,8 @@
 package org.example.mediawiki.service.impl;
 
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.example.mediawiki.cache.Cache;
 import org.example.mediawiki.modal.Pages;
 import org.example.mediawiki.modal.Search;
@@ -11,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
+@Data
 @org.springframework.stereotype.Service
 public class PagesServiceImpl implements Service<Pages> {
 
@@ -21,12 +25,9 @@ public class PagesServiceImpl implements Service<Pages> {
         this.pagesRepository = repository;
     }
 
+    // Новый метод для установки кэша
     private Cache cache = new Cache();
 
-    // Новый метод для установки кэша
-    public void setCache(Cache cache) {
-        this.cache = cache;
-    }
     public Pages getPageByPageId(final Long pageId) {
         for (String key : cache.getCache().keySet()) {
             for (Pages element : (List<Pages>) cache.getCache().get(key)) {
