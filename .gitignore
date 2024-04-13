@@ -4,9 +4,9 @@ build/
 !**/src/test/**/build/
 !gradle/wrapper
 gradlew.bat
-src/test/java/org/example/mediawiki
-!src/test/java/org/example/mediawiki/service
-!src/test/java/org/example/mediawiki/cache
+src/test/java/org/example/mediawiki/
+!**/src/test/java/org/example/mediawiki/service
+!**/src/test/java/org/example/mediawiki/cache
 
 settings.gradle
 !build.gradle
