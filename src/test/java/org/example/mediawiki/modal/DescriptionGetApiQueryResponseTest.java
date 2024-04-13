@@ -7,10 +7,10 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class DescriptionGetApiQueryResponseTest {
+class DescriptionGetApiQueryResponseTest {
 
     @Test
-    public void testSearchListInitialization() {
+    void testSearchListInitialization() {
         // Создаем объект DescriptionGetApiQueryResponse
         DescriptionGetApiQueryResponse response = new DescriptionGetApiQueryResponse();
         response.setSearch(new ArrayList<>());
@@ -20,7 +20,7 @@ public class DescriptionGetApiQueryResponseTest {
     }
 
     @Test
-    public void testSearchListModification() {
+    void testSearchListModification() {
         // Создаем объект DescriptionGetApiQueryResponse
         DescriptionGetApiQueryResponse response = new DescriptionGetApiQueryResponse();
 

@@ -9,15 +9,15 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 
-public class PagesTest {
+class PagesTest {
     private Pages pages;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         pages = new Pages();
     }
     @Test
-    public void testIdGenerationType() throws NoSuchFieldException {
+    void testIdGenerationType() throws NoSuchFieldException {
         // Assuming the field name is 'id' in the Search class
         var idField = Search.class.getDeclaredField("id");
         var generatedValueAnnotation = idField.getAnnotation(GeneratedValue.class);
@@ -26,7 +26,7 @@ public class PagesTest {
     }
 
     @Test
-    public void testTitleFieldType() {
+    void testTitleFieldType() {
         // Assuming pages is an instance of Pages class
         String title = "Sample Title"; // Assigning a sample title for testing
 
@@ -46,7 +46,7 @@ public class PagesTest {
 
 
     @Test
-    public void testPageIdFieldType() throws NoSuchFieldException {
+    void testPageIdFieldType() throws NoSuchFieldException {
         // Get the field 'pageId' from the Pages class
         java.lang.reflect.Field pageIdField = Pages.class.getDeclaredField("pageId");
 
@@ -54,12 +54,12 @@ public class PagesTest {
         assertEquals(long.class, pageIdField.getType());
     }
     @Test
-    public void testSearchesFieldType() {
+    void testSearchesFieldType() {
         assertNotNull(pages.getSearches());
     }
 
     @Test
-    public void testSearchesFetchType() throws NoSuchFieldException {
+    void testSearchesFetchType() throws NoSuchFieldException {
         // Assuming the first element of pages list is used for testing
         Search search = new Search();
         // Get the fetch type from the @ManyToMany annotation
@@ -72,42 +72,42 @@ public class PagesTest {
 
 
     @Test
-    public void testIdGetterAndSetter() {
+    void testIdGetterAndSetter() {
         long id = 1L;
         pages.setId(id);
         assertEquals(id, pages.getId());
     }
 
     @Test
-    public void testTitleGetterAndSetter() {
+    void testTitleGetterAndSetter() {
         String title = "Test Title";
         pages.setTitle(title);
         assertEquals(title, pages.getTitle());
     }
 
     @Test
-    public void testPageIdGetterAndSetter() {
+    void testPageIdGetterAndSetter() {
         long pageId = 100L;
         pages.setPageId(pageId);
         assertEquals(pageId, pages.getPageId());
     }
 
     @Test
-    public void testSearchesGetterAndSetter() {
+    void testSearchesGetterAndSetter() {
         Search search = new Search();
         pages.getSearches().add(search);
         assertEquals(1, pages.getSearches().size());
         assertEquals(search, pages.getSearches().get(0));
     }
     @Test
-    public void testToString() {
+    void testToString() {
         pages.setId(1);
         pages.setTitle("Test Title");
         assertEquals("Pages(id=1, title=Test Title, pageId=0, searches=[])", pages.toString());
     }
 
     @Test
-    public void testJoinTableAnnotation() throws NoSuchFieldException {
+    void testJoinTableAnnotation() throws NoSuchFieldException {
         Field searchesField = Pages.class.getDeclaredField("searches");
         JoinTable joinTableAnnotation = searchesField.getAnnotation(JoinTable.class);
         assertNotNull(joinTableAnnotation);
@@ -117,26 +117,26 @@ public class PagesTest {
     }
 
     @Test
-    public void testManyToManyAnnotation() throws NoSuchFieldException {
+    void testManyToManyAnnotation() throws NoSuchFieldException {
         Field searchesField = Pages.class.getDeclaredField("searches");
         ManyToMany manyToManyAnnotation = searchesField.getAnnotation(ManyToMany.class);
         assertNotNull(manyToManyAnnotation);
     }
 
     @Test
-    public void testJoinColumnAnnotation() throws NoSuchFieldException {
+    void testJoinColumnAnnotation() throws NoSuchFieldException {
         Field searchesField = Pages.class.getDeclaredField("searches");
         JoinColumn joinColumnAnnotation = searchesField.getAnnotation(JoinColumn.class);
         assertNull(joinColumnAnnotation);
     }
 
     @Test
-    public void testSearchesListNotNull() {
+    void testSearchesListNotNull() {
         assertNotNull(pages.getSearches());
     }
 
     @Test
-    public void testSearchesListAddition() {
+    void testSearchesListAddition() {
         Search search = new Search();
         pages.getSearches().add(search);
         assertTrue(pages.getSearches().contains(search));

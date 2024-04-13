@@ -6,10 +6,10 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-public class DescriptionGetApiResponseTest {
+class DescriptionGetApiResponseTest {
 
     @Test
-    public void testQueryInitialization() {
+    void testQueryInitialization() {
         // Создаем объект DescriptionGetApiResponse
         DescriptionGetApiResponse response = new DescriptionGetApiResponse();
 
@@ -21,7 +21,7 @@ public class DescriptionGetApiResponseTest {
     }
 
     @Test
-    public void testQueryModification() {
+    void testQueryModification() {
         // Создаем объект DescriptionGetApiResponse
         DescriptionGetApiResponse response = new DescriptionGetApiResponse();
 
@@ -38,7 +38,7 @@ public class DescriptionGetApiResponseTest {
     }
 
     @Test
-    public void testQueryInitializationWithNull() {
+    void testQueryInitializationWithNull() {
         // Создаем объект DescriptionGetApiResponse
         DescriptionGetApiResponse response = new DescriptionGetApiResponse();
 

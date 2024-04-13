@@ -18,7 +18,7 @@ import java.util.function.Predicate;
 @Data
 public class ArgumentLogger {
 
-    private String MESSAGE;
+
     private Logger log = LoggerFactory.getLogger(this.getClass());
 
 
@@ -31,11 +31,13 @@ public class ArgumentLogger {
                              final Predicate<Object> filter,
                              final Function<Object, String> mapper) {
         for (Object arg : arguments) {
-            if (filter.test(arg)) {
-                log.info(message, mapper.apply(arg));
-            } else {
-                log.info(message, arg);
-                MESSAGE = message;
+            try {
+                if (filter.test(arg)) {
+                    Object mappedArg = mapper.apply(arg);
+                    log.info(message, mappedArg);
+                }
+            } catch (Exception e) {
+                log.error("Error processing argument");
             }
         }
     }
@@ -61,7 +63,6 @@ public class ArgumentLogger {
 
     public void logString(final String message) {
         log.info(message);
-        MESSAGE = message;
     }
 
 

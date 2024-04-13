@@ -7,90 +7,90 @@ import java.lang.reflect.Method;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class PointCutsTest {
+class PointCutsTest {
 
     @Test
-    public void testGetMethodsPagesPointcut() {
+    void testGetMethodsPagesPointcut() {
         assertPointcutNotNull(PointCuts.class, "getMethodsPages");
     }
 
     @Test
-    public void testCreateMethodsPagesPointcut() {
+    void testCreateMethodsPagesPointcut() {
         assertPointcutNotNull(PointCuts.class, "createMethodsPages");
     }
 
     @Test
-    public void testUpdateMethodsPagesPointcut() {
+    void testUpdateMethodsPagesPointcut() {
         assertPointcutNotNull(PointCuts.class, "updateMethodsPages");
     }
 
     @Test
-    public void testDeleteMethodsPagesPointcut() {
+    void testDeleteMethodsPagesPointcut() {
         assertPointcutNotNull(PointCuts.class, "deleteMethodsPages");
     }
 
     @Test
-    public void testReadMethodsPagesPointcut() {
+    void testReadMethodsPagesPointcut() {
         assertPointcutNotNull(PointCuts.class, "readMethodsPages");
     }
 
     @Test
-    public void testGetMethodsSearchPointcut() {
+    void testGetMethodsSearchPointcut() {
         assertPointcutNotNull(PointCuts.class, "getMethodsSearch");
     }
 
     @Test
-    public void testCreateMethodsSearchPointcut() {
+    void testCreateMethodsSearchPointcut() {
         assertPointcutNotNull(PointCuts.class, "createMethodsSearch");
     }
 
     @Test
-    public void testDeleteMethodsSearchPointcut() {
+    void testDeleteMethodsSearchPointcut() {
         assertPointcutNotNull(PointCuts.class, "deleteMethodsSearch");
     }
 
     @Test
-    public void testUpdateMethodsSearchPointcut() {
+    void testUpdateMethodsSearchPointcut() {
         assertPointcutNotNull(PointCuts.class, "updateMethodsSearch");
     }
 
     @Test
-    public void testReadMethodsSearchPointcut() {
+    void testReadMethodsSearchPointcut() {
         assertPointcutNotNull(PointCuts.class, "readMethodsSearch");
     }
 
     @Test
-    public void testGetMethodsWordPointcut() {
+    void testGetMethodsWordPointcut() {
         assertPointcutNotNull(PointCuts.class, "getMethodsWord");
     }
 
     @Test
-    public void testCreateMethodsWordPointcut() {
+    void testCreateMethodsWordPointcut() {
         assertPointcutNotNull(PointCuts.class, "createMethodsWord");
     }
 
     @Test
-    public void testDeleteMethodsWordPointcut() {
+    void testDeleteMethodsWordPointcut() {
         assertPointcutNotNull(PointCuts.class, "deleteMethodsWord");
     }
 
     @Test
-    public void testUpdateMethodsWordPointcut() {
+    void testUpdateMethodsWordPointcut() {
         assertPointcutNotNull(PointCuts.class, "updateMethodsWord");
     }
 
     @Test
-    public void testReadMethodsWordPointcut() {
+    void testReadMethodsWordPointcut() {
         assertPointcutNotNull(PointCuts.class, "readMethodsWord");
     }
 
     @Test
-    public void testGetMethodsWikiApiPointcut() {
+    void testGetMethodsWikiApiPointcut() {
         assertPointcutNotNull(PointCuts.class, "getMethodsWikiApi");
     }
 
     @Test
-    public void testMapMethodsWikiApiPointcut() {
+    void testMapMethodsWikiApiPointcut() {
         assertPointcutNotNull(PointCuts.class, "mapMethodsWikiApi");
     }
 

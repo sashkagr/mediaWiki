@@ -12,10 +12,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.verify;
 
 
-public class ControllerLoggingAspectTest {
+class ControllerLoggingAspectTest {
 
     @Test
-    public void logBefore() {
+    void logBefore() {
         // Arrange
         Logger logger = Mockito.mock(Logger.class);
         ControllerLoggingAspect aspect = new ControllerLoggingAspect();
@@ -37,7 +37,7 @@ public class ControllerLoggingAspectTest {
     }
 
     @Test
-    public void logAfterReturning() {
+    void logAfterReturning() {
         // Arrange
         Logger logger = Mockito.mock(Logger.class);
         ControllerLoggingAspect aspect = new ControllerLoggingAspect();

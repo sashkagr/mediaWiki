@@ -8,13 +8,13 @@ import org.springframework.web.filter.HiddenHttpMethodFilter;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
-public class WebConfigTest {
+class WebConfigTest {
 
     @MockBean
     private HiddenHttpMethodFilter hiddenHttpMethodFilter;
 
     @Test
-    public void testHiddenHttpMethodFilterBean() {
+    void testHiddenHttpMethodFilterBean() {
         // Verify that the HiddenHttpMethodFilter bean is created
         assertNotNull(hiddenHttpMethodFilter);
     }

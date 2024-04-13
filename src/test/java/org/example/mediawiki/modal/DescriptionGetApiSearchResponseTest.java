@@ -5,24 +5,24 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class DescriptionGetApiSearchResponseTest {
+class DescriptionGetApiSearchResponseTest {
 
     @Test
-    public void testIdGetterAndSetter() {
+    void testIdGetterAndSetter() {
         DescriptionGetApiSearchResponse response = new DescriptionGetApiSearchResponse();
         response.setId("12345");
         assertEquals("12345", response.getId());
     }
 
     @Test
-    public void testTitleGetterAndSetter() {
+    void testTitleGetterAndSetter() {
         DescriptionGetApiSearchResponse response = new DescriptionGetApiSearchResponse();
         response.setTitle("Test Title");
         assertEquals("Test Title", response.getTitle());
     }
 
     @Test
-    public void testDescriptionGetterAndSetter() {
+    void testDescriptionGetterAndSetter() {
         DescriptionGetApiSearchResponse response = new DescriptionGetApiSearchResponse();
         response.setDescription("Test Description");
         assertEquals("Test Description", response.getDescription());

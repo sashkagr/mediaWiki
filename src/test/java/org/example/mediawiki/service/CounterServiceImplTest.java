@@ -7,10 +7,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class CounterServiceImplTest {
+class CounterServiceImplTest {
 
     @Test
-    public void testIncrementCount() {
+    void testIncrementCount() {
         CounterServiceImpl.resetCount();
 
         final int expectedCount = 1004;
@@ -38,7 +38,7 @@ public class CounterServiceImplTest {
     }
 
     @Test
-    public void testGetCount() {
+    void testGetCount() {
         // Reset the counter before each test
         CounterServiceImpl.resetCount();
 

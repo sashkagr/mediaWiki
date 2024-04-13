@@ -11,50 +11,48 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class SearchTest {
+class SearchTest {
 
     private Search search;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         search = new Search();
     }
 
     @AfterEach
-    public void tearDown() {
+    void tearDown() {
         search = null;
     }
 
     @Test
-    public void testIdGetterAndSetter() {
+    void testIdGetterAndSetter() {
         long id = 123;
         search.setId(id);
         assertEquals(id, search.getId());
     }
 
     @Test
-    public void testTitleGetterAndSetter() {
+    void testTitleGetterAndSetter() {
         String title = "Test Title";
         search.setTitle(title);
         assertEquals(title, search.getTitle());
     }
 
     @Test
-    public void testPagesListNotNull() {
+    void testPagesListNotNull() {
         assertNotNull(search.getPages());
     }
 
     @Test
-    public void testPagesListAddition() {
+    void testPagesListAddition() {
         Pages page = new Pages();
         search.getPages().add(page);
         assertTrue(search.getPages().contains(page));
     }
 
-
-
     @Test
-    public void testToString() {
+    void testToString() {
         // Test toString() method
         long id = 123;
         String title = "Test Title";
@@ -64,7 +62,7 @@ public class SearchTest {
     }
 
     @Test
-    public void testPagesListRemove() {
+    void testPagesListRemove() {
         // Test removing a page from pages list
         Pages page = new Pages();
         search.getPages().add(page);
@@ -74,7 +72,7 @@ public class SearchTest {
     }
 
     @Test
-    public void testWordsListRemove() {
+    void testWordsListRemove() {
         // Test removing a word from words list
         Word word = new Word();
         search.getWords().add(word);
@@ -84,21 +82,21 @@ public class SearchTest {
     }
 
     @Test
-    public void testIdGenerationType() throws NoSuchFieldException {
+    void testIdGenerationType() throws NoSuchFieldException {
         var idField = Search.class.getDeclaredField("id");
         var generatedValueAnnotation = idField.getAnnotation(GeneratedValue.class);
         assertNotNull(generatedValueAnnotation);
     }
 
     @Test
-    public void testWordsOneToManyAnnotation() throws NoSuchFieldException {
+    void testWordsOneToManyAnnotation() throws NoSuchFieldException {
         var wordsField = Search.class.getDeclaredField("words");
         var oneToManyAnnotation = wordsField.getAnnotation(OneToMany.class);
         assertNotNull(oneToManyAnnotation);
     }
 
     @Test
-    public void testAddAndRemovePages() {
+    void testAddAndRemovePages() {
         Pages page = new Pages();
         search.getPages().add(page);
         assertTrue(search.getPages().contains(page));
@@ -108,7 +106,7 @@ public class SearchTest {
     }
 
     @Test
-    public void testWordsGetterAndSetter() {
+    void testWordsGetterAndSetter() {
         Word word = new Word();
         search.getWords().add(word);
         assertTrue(search.getWords().contains(word));

@@ -12,19 +12,19 @@ import java.util.function.Consumer;
 
 import static org.mockito.Mockito.*;
 
-public class ArgumentLoggerTest {
+class ArgumentLoggerTest {
 
     private ArgumentLogger argumentLogger;
     private ProceedingJoinPoint joinPoint;
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         argumentLogger = new ArgumentLogger();
         joinPoint = mock(ProceedingJoinPoint.class);
     }
 
     @Test
-    public void testProcessMethod_Success() throws Throwable {
+    void testProcessMethod_Success() throws Throwable {
         Consumer<Object[]> startLogger = mock(Consumer.class);
         Consumer<Object[]> endLogger = mock(Consumer.class);
         Object[] arguments = {"arg1", "arg2"};
@@ -40,7 +40,7 @@ public class ArgumentLoggerTest {
     }
 
     @Test
-    public void testProcessMethod_Exception() throws Throwable {
+    void testProcessMethod_Exception() throws Throwable {
         Consumer<Object[]> startLogger = mock(Consumer.class);
         Consumer<Object[]> endLogger = mock(Consumer.class);
         Object[] arguments = {"arg1", "arg2"};
@@ -57,7 +57,7 @@ public class ArgumentLoggerTest {
     }
 
     @Test
-    public void logLongArguments() {
+    void logLongArguments() {
         // Arrange
         Logger logger = Mockito.mock(Logger.class);
         ArgumentLogger argumentLogger = new ArgumentLogger();
@@ -73,7 +73,7 @@ public class ArgumentLoggerTest {
     }
 
     @Test
-    public void logStringArguments() {
+    void logStringArguments() {
         // Arrange
         Logger logger = Mockito.mock(Logger.class);
         ArgumentLogger argumentLogger = new ArgumentLogger();
@@ -89,7 +89,7 @@ public class ArgumentLoggerTest {
     }
 
     @Test
-    public void logSearchArguments() {
+    void logSearchArguments() {
         // Arrange
         Logger logger = Mockito.mock(Logger.class);
         ArgumentLogger argumentLogger = new ArgumentLogger();
@@ -109,7 +109,7 @@ public class ArgumentLoggerTest {
     }
 
     @Test
-    public void logWordArguments() {
+    void logWordArguments() {
         // Arrange
         Logger logger = Mockito.mock(Logger.class);
         ArgumentLogger argumentLogger = new ArgumentLogger();

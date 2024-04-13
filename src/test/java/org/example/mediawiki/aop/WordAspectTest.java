@@ -18,10 +18,10 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class WordAspectTest {
+class WordAspectTest {
 
     @Test
-    public void aroundDeleteAdvice() throws Throwable {
+    void aroundDeleteAdvice() throws Throwable {
         // Arrange
         ArgumentLogger argumentLogger = Mockito.mock(ArgumentLogger.class);
         Logger logger = Mockito.mock(Logger.class);
@@ -40,7 +40,7 @@ public class WordAspectTest {
     }
 
     @Test
-    public void aroundCreateAdvice_CreateMethod() throws Throwable {
+    void aroundCreateAdvice_CreateMethod() throws Throwable {
         // Arrange
         ArgumentLogger argumentLogger = Mockito.mock(ArgumentLogger.class);
         Logger logger = Mockito.mock(Logger.class);
@@ -62,7 +62,7 @@ public class WordAspectTest {
     }
 
     @Test
-    public void aroundCreateAdvice_OtherMethod() throws Throwable {
+    void aroundCreateAdvice_OtherMethod() throws Throwable {
         // Arrange
         ArgumentLogger argumentLogger = Mockito.mock(ArgumentLogger.class);
         Logger logger = Mockito.mock(Logger.class);
@@ -84,7 +84,7 @@ public class WordAspectTest {
     }
 
     @Test
-    public void aroundUpdateAdvice() throws Throwable {
+    void aroundUpdateAdvice() throws Throwable {
         // Arrange
         ArgumentLogger argumentLogger = Mockito.mock(ArgumentLogger.class);
         Logger logger = Mockito.mock(Logger.class);
@@ -103,7 +103,7 @@ public class WordAspectTest {
     }
 
     @Test
-    public void aroundReadAdvice() throws Throwable {
+    void aroundReadAdvice() throws Throwable {
         // Arrange
         ArgumentLogger argumentLogger = Mockito.mock(ArgumentLogger.class);
         Logger logger = Mockito.mock(Logger.class);

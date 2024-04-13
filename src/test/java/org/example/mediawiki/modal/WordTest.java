@@ -4,11 +4,11 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class WordTest {
+class WordTest {
 
 
     @Test
-    public void testHandlingOfNullValues() {
+    void testHandlingOfNullValues() {
         // Create a Word instance with null values
         Word word = new Word();
         word.setId(0);
@@ -21,7 +21,7 @@ public class WordTest {
     }
 
     @Test
-    public void testWordConstructor() {
+    void testWordConstructor() {
         Word word = new Word();
 
         assertNotNull(word);
@@ -32,7 +32,7 @@ public class WordTest {
     }
 
     @Test
-    public void testGetterAndSetter() {
+    void testGetterAndSetter() {
         Word word = new Word();
         word.setId(1);
         word.setTitle("Test Title");
@@ -48,7 +48,7 @@ public class WordTest {
     }
 
     @Test
-    public void testEqualsAndHashCode() {
+    void testEqualsAndHashCode() {
         Word word1 = new Word();
         word1.setId(1);
         word1.setTitle("Test Title");
@@ -72,14 +72,14 @@ public class WordTest {
     }
 
     @Test
-    public void testEqualsWithNull() {
+    void testEqualsWithNull() {
         Word word = new Word();
         assertFalse(word.equals(null));
     }
 
 
     @Test
-    public void testToString() {
+    void testToString() {
         Word word = new Word();
         word.setId(1);
         word.setTitle("Test Title");

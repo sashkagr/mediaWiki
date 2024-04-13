@@ -22,7 +22,6 @@ public class SearchServiceImpl implements Service<Search> {
 
     private final SearchRepository searchRepository;
     private final PagesServiceImpl pagesService;
-    private final WikiApiService wikiApiService;
 
     @Autowired
     public SearchServiceImpl(final PagesServiceImpl pages,
@@ -30,7 +29,6 @@ public class SearchServiceImpl implements Service<Search> {
                              final WikiApiService wikiApi) {
         this.pagesService = pages;
         this.searchRepository = search;
-        this.wikiApiService = wikiApi;
     }
 
     @Transactional
