@@ -25,12 +25,10 @@ import java.util.Collections;
 import java.util.List;
 
 
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 class RequestManagerTest {
-
 
 
     @Mock
@@ -44,8 +42,6 @@ class RequestManagerTest {
 
     @InjectMocks
     private RequestManager requestManager;
-
-
 
 
     @Test
@@ -68,10 +64,11 @@ class RequestManagerTest {
         // Act
         ResponseEntity<List<Word>> response = requestManager.addWords(params, inputWords);
 
-        // Assert
-        assert response.getStatusCode() == HttpStatus.CREATED;
-        assert response.getBody().equals(inputWords);
+
+        assertEquals(HttpStatus.CREATED, response.getStatusCode());
+        assertEquals(inputWords, response.getBody());
     }
+
 
     @Test
     void testAddWords_BadRequest() {
@@ -93,9 +90,8 @@ class RequestManagerTest {
         // Act
         ResponseEntity<List<Word>> response = requestManager.addWords(params, inputWords);
 
-        // Assert
-        assert response.getStatusCode() == HttpStatus.BAD_REQUEST;
-        assert response.getBody().isEmpty();
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertTrue(response.getBody().isEmpty());
     }
 
     @Test
@@ -120,8 +116,8 @@ class RequestManagerTest {
         ResponseEntity<List<Word>> response = requestManager.addWords(params, inputWords);
 
         // Assert
-        assert response.getStatusCode() == HttpStatus.CREATED;
-        assert response.getBody().equals(createdWords);
+        assertEquals(HttpStatus.CREATED, response.getStatusCode());
+        assertEquals(createdWords, response.getBody());
     }
 
 
@@ -177,6 +173,7 @@ class RequestManagerTest {
 
         assertEquals("redirect:/definition/showWords", result);
     }
+
     @Test
     void testUpdateSearch_Success() {
         Long id = 1L;
@@ -283,7 +280,7 @@ class RequestManagerTest {
         String result = requestManager.showAllSearches(model);
 
         // Assert
-        assert result.equals("searches");
+        assertEquals("searches", result);
     }
 
     @Test
@@ -308,8 +305,9 @@ class RequestManagerTest {
         List<Pages> result = requestManager.showAllPages();
 
         // Assert
-        assert result.equals(pages);
+        assertEquals(pages, result);
     }
+
     @Test
     void testShowAllWords() throws Exception {
         // Arrange
@@ -330,9 +328,8 @@ class RequestManagerTest {
         String result = requestManager.showAllWords(model);
 
         // Assert
-        assert result.equals("definition");
+        assertEquals("definition", result);
     }
-
 
 
     @Test
@@ -346,7 +343,7 @@ class RequestManagerTest {
         String result = requestManager.createWord(1L, "Apple", "Description of Apple");
 
         // Assert
-        assert result.equals("redirect:/definition/showWords");
+        assertEquals("redirect:/definition/showWords", result);
     }
 
     @Test
@@ -360,7 +357,7 @@ class RequestManagerTest {
         String result = requestManager.createWord(1L, null, "Description of Apple");
 
         // Assert
-        assert result.equals("error");
+        assertEquals("error", result);
     }
 
     @Test
@@ -375,7 +372,7 @@ class RequestManagerTest {
         String result = requestManager.deleteWord(1L);
 
         // Assert
-        assert result.equals("redirect:/definition/showWords");
+        assertEquals("redirect:/definition/showWords", result);
     }
 
     @Test
@@ -392,7 +389,7 @@ class RequestManagerTest {
         String result = requestManager.deleteWord(1L);
 
         // Assert
-        assert result.equals("error");
+        assertEquals("error", result);
     }
 
 
@@ -400,6 +397,7 @@ class RequestManagerTest {
     void setUp() {
         MockitoAnnotations.openMocks(this);
     }
+
     @Mock
     private Logger log;
 
@@ -412,14 +410,8 @@ class RequestManagerTest {
         // Act
         String result = requestManager.deleteSearch(1L);
 
-        // Assert
-        assert result.equals("redirect:/definition/showWords");
-
-        // Verify if searchService.delete(id) was called with the expected ID
+        assertEquals("redirect:/definition/showWords", result);
         verify(searchService).delete(1L);
-
-        // Verify if the method logs the successful deletion
-        // verify(log).info("Search with id {} was successfully deleted", 1L);
     }
 
     @Test
@@ -435,8 +427,8 @@ class RequestManagerTest {
         // Act
         String result = requestManager.deleteSearch(1L);
 
-        // Assert
-        assert result.equals("error");
+        assertEquals("error", result);
+        verify(searchService, never()).delete(1L);
     }
 }
 

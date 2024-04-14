@@ -24,9 +24,15 @@ public class ControllerLoggingAspect {
     @Before("execution(* org.example.mediawiki.controller."
             + "RequestManager.*(..))")
     public void logBefore(final JoinPoint joinPoint) {
-        if (joinPoint!=null) { // Add your condition here
-            logger.info("Method {} called with arguments {}", joinPoint.
-                    getSignature().toShortString(), joinPoint.getArgs());
+        try {
+            if (joinPoint != null) {
+                logger.info("Method {} called with arguments {}", joinPoint.getSignature().toShortString(), joinPoint.getArgs());
+            } else {
+                throw new IllegalArgumentException("JoinPoint is null");
+            }
+        } catch (Exception e) {
+            // Handle the exception or log it
+            logger.error("An error occurred in logBefore advice: {}", e.getMessage());
         }
     }
 
@@ -34,9 +40,18 @@ public class ControllerLoggingAspect {
             + "controller.RequestManager.*(..))", returning = "result")
     public void logAfterReturning(final JoinPoint joinPoint,
                                   final Object result) {
-        if (joinPoint != null && result != null) {
-            logger.info("Method {} returned {}",
-                    joinPoint.getSignature().toShortString(), result);
+        try {
+            if (joinPoint != null && result != null) {
+                logger.info("Method {} returned {}",
+                        joinPoint.getSignature().toShortString(), result);
+            }
+            else {
+                throw new IllegalArgumentException("JoinPoint is null");
+            }
+        }catch (Exception e) {
+            // Handle the exception or log it
+            logger.error("An error occurred in logAfter advice: {}", e.getMessage());
         }
+
     }
 }

@@ -4,6 +4,9 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.slf4j.Logger;
@@ -11,7 +14,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.junit.jupiter.api.extension.ExtendWith;
 
+import java.util.stream.Stream;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
@@ -133,91 +139,29 @@ class WordAspectTest {
     @InjectMocks
     private WordAspect aspect;
 
-    @Test
-    void testAroundGetAdvice_GetWordByTitle() throws Throwable {
-        // Arrange
-        when(joinPointMock.getSignature()).thenReturn(methodSignatureMock);
-        when(methodSignatureMock.getName()).thenReturn("getWordByTitle");
-        when(argumentLoggerMock.processMethod(any(), any(), any())).thenReturn("Word by title found");
+@ParameterizedTest
+@MethodSource("provideTestData")
+void testAroundGetAdvice(String methodName, String expectedResult) throws Throwable {
+    // Arrange
+    when(joinPointMock.getSignature()).thenReturn(methodSignatureMock);
+    when(methodSignatureMock.getName()).thenReturn(methodName);
+    when(argumentLoggerMock.processMethod(any(), any(), any())).thenReturn(expectedResult);
 
-        // Act
-        Object result = aspect.aroundGetAdvice(joinPointMock);
+    // Act
+    Object result = aspect.aroundGetAdvice(joinPointMock);
 
-        // Assert
-        assertEquals("Word by title found", result);
-        verify(argumentLoggerMock).processMethod(eq(joinPointMock), any(), any());
+    // Assert
+    assertEquals(expectedResult, result);
+    verify(argumentLoggerMock).processMethod(eq(joinPointMock), any(), any());
+}
+
+    private static Stream<Arguments> provideTestData() {
+        return Stream.of(
+                arguments("getWordByTitle", "Word by title found"),
+                arguments("getWordById", "Word by id found"),
+                arguments("getExistingById", "Existing word found"),
+                arguments("getWordBySearch", "Word by search found"),
+                arguments("getWordsFromPages", "Word from pages get")
+        );
     }
-    @Test
-    void testAroundGetAdvice_GetWordById() throws Throwable {
-        // Arrange
-        when(joinPointMock.getSignature()).thenReturn(methodSignatureMock);
-        when(methodSignatureMock.getName()).thenReturn("getWordById");
-        when(argumentLoggerMock.processMethod(any(), any(), any())).thenReturn("Word by id found");
-
-        // Act
-        Object result = aspect.aroundGetAdvice(joinPointMock);
-
-        // Assert
-        assertEquals("Word by id found", result);
-        verify(argumentLoggerMock).processMethod(eq(joinPointMock), any(), any());
-    }
-
-    @Test
-    void testAroundGetAdvice_GetExistingById() throws Throwable {
-        // Arrange
-        when(joinPointMock.getSignature()).thenReturn(methodSignatureMock);
-        when(methodSignatureMock.getName()).thenReturn("getExistingById");
-        when(argumentLoggerMock.processMethod(any(), any(), any())).thenReturn("Existing word found");
-
-        // Act
-        Object result = aspect.aroundGetAdvice(joinPointMock);
-
-        // Assert
-        assertEquals("Existing word found", result);
-        verify(argumentLoggerMock).processMethod(eq(joinPointMock), any(), any());
-    }
-
-    @Test
-    void testAroundGetAdvice_GetWordBySearch() throws Throwable {
-        // Arrange
-        when(joinPointMock.getSignature()).thenReturn(methodSignatureMock);
-        when(methodSignatureMock.getName()).thenReturn("getWordBySearch");
-        when(argumentLoggerMock.processMethod(any(), any(), any())).thenReturn("Word by search found");
-
-        // Act
-        Object result = aspect.aroundGetAdvice(joinPointMock);
-
-        // Assert
-        assertEquals("Word by search found", result);
-        verify(argumentLoggerMock).processMethod(eq(joinPointMock), any(), any());
-    }
-
-    @Test
-    void testAroundGetAdvice_GetWordsFromPages() throws Throwable {
-        // Arrange
-        when(joinPointMock.getSignature()).thenReturn(methodSignatureMock);
-        when(methodSignatureMock.getName()).thenReturn("getWordsFromPages");
-        when(argumentLoggerMock.processMethod(any(), any(), any())).thenReturn("Word from pages get");
-
-        // Act
-        Object result = aspect.aroundGetAdvice(joinPointMock);
-
-        // Assert
-        assertEquals("Word from pages get", result);
-        verify(argumentLoggerMock).processMethod(eq(joinPointMock), any(), any());
-    }
-
-    @Test
-    void testAroundGetAdvice_DefaultCase() throws Throwable {
-        // Arrange
-        when(joinPointMock.getSignature()).thenReturn(methodSignatureMock);
-        when(methodSignatureMock.getName()).thenReturn("someOtherMethod");
-
-        // Act
-        Object result = aspect.aroundGetAdvice(joinPointMock);
-
-        // Assert
-        assertEquals(new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR), result);
-    }
-
 }

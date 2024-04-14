@@ -74,7 +74,7 @@ class WordTest {
     @Test
     void testEqualsWithNull() {
         Word word = new Word();
-        assertNotEquals(word, null);
+        assertNotEquals(null,word);
     }
 
 
