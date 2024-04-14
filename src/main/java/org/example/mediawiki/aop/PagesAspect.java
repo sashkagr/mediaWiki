@@ -43,21 +43,19 @@ public class PagesAspect {
                         arg -> ((Pages) arg).getTitle()));
     }
 
+    @Around("PointCuts.readMethodsPages()")
+    public Object aroundReadAdvice(final ProceedingJoinPoint joinPoint) {
+        return argumentLogger.processMethod(joinPoint,
+                arguments -> argumentLogger.logString("Try read all pages"),
+                arguments -> argumentLogger.logString("Method read all pages"));
+    }
     @Around("PointCuts.updateMethodsPages()")
     public Object aroundUpdateAdvice(final ProceedingJoinPoint joinPoint) {
         return argumentLogger.processMethod(joinPoint,
                 arguments -> argumentLogger.logArguments(arguments,
                         "Try change page", arg -> true, arg -> ""),
-                arguments -> log.info("Method change page"));
+                arguments -> argumentLogger.logString("Method change page"));
     }
-
-    @Around("PointCuts.readMethodsPages()")
-    public Object aroundReadAdvice(final ProceedingJoinPoint joinPoint) {
-        return argumentLogger.processMethod(joinPoint,
-                arguments -> log.info("Try read all pages"),
-                arguments -> log.info("Method read all pages"));
-    }
-
 
     @Around("PointCuts.getMethodsPages()")
     public Object checkStartMethod(final ProceedingJoinPoint joinPoint) {
