@@ -4,12 +4,12 @@ build/
 !**/src/test/**/build/
 !gradle/wrapper
 gradlew.bat
-src/test/java/org/example/mediawiki/aop
-src/test/java/org/example/mediawiki/modal
-src/test/java/org/example/mediawiki/repository
-src/test/java/org/example/mediawiki/config
-src/test/java/org/example/mediawiki/controller
-src/test/java/org/example/mediawiki/exeption
+!src/test/java/org/example/mediawiki/aop
+!src/test/java/org/example/mediawiki/modal
+!src/test/java/org/example/mediawiki/repository
+!src/test/java/org/example/mediawiki/config
+!src/test/java/org/example/mediawiki/controller
+!src/test/java/org/example/mediawiki/exeption
 
 
 
