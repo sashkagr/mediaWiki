@@ -22,7 +22,7 @@ public class ControllerLoggingAspect {
             + "RequestManager.*(..))")
     public void logBefore(final JoinPoint joinPoint) {
                 logger.info("Method {} called with arguments {}", joinPoint.
-                        getSignature().toShortString(), joinPoint.getArgs());
+                        getSignature(), joinPoint.getArgs());
     }
 
     @AfterReturning(pointcut = "execution(* org.example.mediawiki."
@@ -30,7 +30,7 @@ public class ControllerLoggingAspect {
     public void logAfterReturning(final JoinPoint joinPoint,
                                   final Object result) {
                 logger.info("Method {} returned {}",
-                        joinPoint.getSignature().toShortString(), result);
+                        joinPoint.getSignature(), result);
     }
 
     }
