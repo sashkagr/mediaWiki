@@ -15,23 +15,24 @@ import org.slf4j.Logger;
 public class ControllerLoggingAspect {
 
     private  Logger logger = LoggerFactory.getLogger(this.getClass());
+
+
     public void setLogger(Logger logger) {
         this.logger = logger;
     }
+
     @Before("execution(* org.example.mediawiki.controller."
             + "RequestManager.*(..))")
     public void logBefore(final JoinPoint joinPoint) {
-                logger.info("Method {} called with arguments {}", joinPoint.
-                        getSignature(), joinPoint.getArgs());
+        logger.info("Method {} called with arguments {}", joinPoint.
+                getSignature(), joinPoint.getArgs());
     }
 
     @AfterReturning(pointcut = "execution(* org.example.mediawiki."
             + "controller.RequestManager.*(..))", returning = "result")
     public void logAfterReturning(final JoinPoint joinPoint,
                                   final Object result) {
-                logger.info("Method {} returned {}",
-                        joinPoint.getSignature(), result);
+        logger.info("Method {} returned {}",
+                joinPoint.getSignature(), result);
     }
-
-    }
-
+}
