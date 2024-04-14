@@ -1,6 +1,6 @@
 package org.example.mediawiki.service;
-import static org.mockito.Mockito.doNothing;
 
+import org.example.mediawiki.cache.Cache;
 import org.example.mediawiki.modal.Pages;
 import org.example.mediawiki.modal.Search;
 import org.example.mediawiki.repository.PagesRepository;
@@ -11,13 +11,16 @@ import org.mockito.Mock;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class PagesServiceImplTest {
@@ -27,6 +30,9 @@ public class PagesServiceImplTest {
 
     @InjectMocks
     private PagesServiceImpl pagesService;
+
+    @Mock
+    private Cache cache = new Cache();
 
     @Test
     public void testGetPageByPageId() {
@@ -93,6 +99,9 @@ public class PagesServiceImplTest {
         // Проверяем, что метод pagesRepository.deleteById был вызван с идентификатором тестовой страницы в качестве аргумента
         verify(pagesRepository).deleteById(testPage.getId());
     }
+
+
+
 
     @Test
     void read_ReturnsListOfPages() {

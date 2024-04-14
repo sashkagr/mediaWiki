@@ -9,6 +9,20 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class CounterServiceImplTest {
 
+
+    @Test
+    void testBoundaryValues() {
+        // Arrange
+        CounterServiceImpl.resetCount();
+
+        // Act
+        for (int i = 0; i < Integer.MAX_VALUE; i++) {
+            CounterServiceImpl.incrementCount();
+        }
+
+        // Assert
+        assertEquals(Integer.MAX_VALUE, CounterServiceImpl.getCount());
+    }
     @Test
     void testIncrementCount() {
         CounterServiceImpl.resetCount();
