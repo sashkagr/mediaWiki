@@ -109,6 +109,36 @@ class WordServiceImplTest {
         assertNotNull(words);
         verify(wordRepository, times(1)).findAll();
     }
+//    @Test
+//    void testCreateWords() {
+//        // Arrange
+//        List<Word> words = new ArrayList<>();
+//        Word word1 = new Word();
+//        word1.setTitle("Title1");
+//        word1.setDescription("Description1");
+//        words.add(word1);
+//
+//        Word word2 = new Word();
+//        word2.setTitle("Title2");
+//        word2.setDescription("Description2");
+//        words.add(word2);
+//
+//        List<Long> params = List.of(1L, 2L);
+//
+//        // Mock the behavior of searchService
+//        when(searchService.getSearchById(anyLong())).thenReturn(new Search());
+//
+//        // Mock the behavior of wordRepository
+//        when(wordRepository.save(any(Word.class))).thenAnswer(invocation -> invocation.getArgument(0));
+//
+//        // Act
+//        List<Word> createdWords = wordService.createWords(words, params);
+//
+//        // Assert
+//        assertEquals(2, createdWords.size());
+//        verify(searchService, times(2)).getSearchById(anyLong());
+//        verify(wordRepository, times(2)).save(any(Word.class));
+//    }
     @Test
     void testCreateWords() {
         // Arrange
@@ -138,6 +168,9 @@ class WordServiceImplTest {
         assertEquals(2, createdWords.size());
         verify(searchService, times(2)).getSearchById(anyLong());
         verify(wordRepository, times(2)).save(any(Word.class));
+
+        // Additional assertion for filtering
+        assertTrue(createdWords.stream().allMatch(word -> word.getTitle() != null && word.getDescription() != null));
     }
     @Test
     void testGetWordBySearch() {
