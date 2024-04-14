@@ -19,12 +19,10 @@ import org.springframework.cache.annotation.Cacheable;
 public class PagesServiceImpl implements Service<Pages> {
 
     private final PagesRepository pagesRepository;
-    private final CacheManager cacheManager;
 
     @Autowired
     public PagesServiceImpl(final PagesRepository repository, final CacheManager cacheManager) {
         this.pagesRepository = repository;
-        this.cacheManager = cacheManager;
     }
 
     @Override

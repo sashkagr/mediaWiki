@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @org.springframework.stereotype.Service
 public class WordServiceImpl implements Service<Word> {
@@ -43,7 +44,7 @@ public class WordServiceImpl implements Service<Word> {
         return words.stream()
                 .filter(word -> word.getTitle() != null && word.getDescription() != null)
                 .map(wordRepository::save)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Transactional

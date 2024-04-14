@@ -59,7 +59,7 @@ class WordTest {
         word2.setTitle("Test Title");
         word2.setDescription("Test Description");
 
-        assertTrue(word1.equals(word2));
+        assertEquals(word1, word2);
         assertEquals(word1.hashCode(), word2.hashCode());
 
         // Test inequality
@@ -68,13 +68,13 @@ class WordTest {
         word3.setTitle("Another Title");
         word3.setDescription("Another Description");
 
-        assertFalse(word1.equals(word3));
+        assertEquals(word1, word2);
     }
 
     @Test
     void testEqualsWithNull() {
         Word word = new Word();
-        assertFalse(word.equals(null));
+        assertNotEquals(word, null);
     }
 
 

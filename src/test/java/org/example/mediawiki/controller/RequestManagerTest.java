@@ -49,7 +49,7 @@ class RequestManagerTest {
 
 
     @Test
-    public void testAddWords_Success() {
+    void testAddWords_Success() {
         // Arrange
         WordServiceImpl wordService = mock(WordServiceImpl.class);
         PagesServiceImpl pagesService = mock(PagesServiceImpl.class);
@@ -74,7 +74,7 @@ class RequestManagerTest {
     }
 
     @Test
-    public void testAddWords_BadRequest() {
+    void testAddWords_BadRequest() {
         // Arrange
         WordServiceImpl wordService = mock(WordServiceImpl.class);
         PagesServiceImpl pagesService = mock(PagesServiceImpl.class);
@@ -99,7 +99,7 @@ class RequestManagerTest {
     }
 
     @Test
-    public void testAddWords_PartiallyBadRequests() {
+    void testAddWords_PartiallyBadRequests() {
         // Arrange
         WordServiceImpl wordService = mock(WordServiceImpl.class);
         PagesServiceImpl pagesService = mock(PagesServiceImpl.class);
@@ -261,7 +261,7 @@ class RequestManagerTest {
     }
 
     @Test
-    public void testShowAllSearches() throws NoSuchMethodException {
+    void testShowAllSearches() throws NoSuchMethodException {
         // Arrange
         Constructor<CounterServiceImpl> constructor = CounterServiceImpl.class.getDeclaredConstructor();
         constructor.setAccessible(true);
@@ -287,7 +287,7 @@ class RequestManagerTest {
     }
 
     @Test
-    public void testShowAllPages() throws NoSuchMethodException {
+    void testShowAllPages() throws NoSuchMethodException {
         // Arrange
         Constructor<CounterServiceImpl> constructor = CounterServiceImpl.class.getDeclaredConstructor();
         constructor.setAccessible(true);
@@ -311,7 +311,7 @@ class RequestManagerTest {
         assert result.equals(pages);
     }
     @Test
-    public void testShowAllWords() throws Exception {
+    void testShowAllWords() throws Exception {
         // Arrange
         WordServiceImpl wordService = mock(WordServiceImpl.class);
         RequestManager requestManager = new RequestManager(wordService, null, null);
@@ -336,7 +336,7 @@ class RequestManagerTest {
 
 
     @Test
-    public void testCreateWord_Success() {
+    void testCreateWord_Success() {
         // Arrange
         WordServiceImpl wordService = mock(WordServiceImpl.class);
         SearchServiceImpl searchService = mock(SearchServiceImpl.class);
@@ -350,7 +350,7 @@ class RequestManagerTest {
     }
 
     @Test
-    public void testCreateWord_NullTitleOrDescription() {
+    void testCreateWord_NullTitleOrDescription() {
         // Arrange
         WordServiceImpl wordService = mock(WordServiceImpl.class);
         SearchServiceImpl searchService = mock(SearchServiceImpl.class);
@@ -364,7 +364,7 @@ class RequestManagerTest {
     }
 
     @Test
-    public void testDeleteWord_Success() {
+    void testDeleteWord_Success() {
         // Arrange
         WordServiceImpl wordService = mock(WordServiceImpl.class);
         SearchServiceImpl searchService = mock(SearchServiceImpl.class);
@@ -379,7 +379,7 @@ class RequestManagerTest {
     }
 
     @Test
-    public void testDeleteWord_NonExistingId() {
+    void testDeleteWord_NonExistingId() {
         // Arrange
         WordServiceImpl wordService = mock(WordServiceImpl.class);
         SearchServiceImpl searchService = mock(SearchServiceImpl.class);
@@ -397,14 +397,14 @@ class RequestManagerTest {
 
 
     @BeforeEach
-    public void setUp() {
+    void setUp() {
         MockitoAnnotations.openMocks(this);
     }
     @Mock
     private Logger log;
 
     @Test
-    public void testDeleteSearch_Success() {
+    void testDeleteSearch_Success() {
         // Arrange
         // Mocking the behavior to simulate that the search with ID 1 exists
         when(searchService.getSearchExistingById(1L)).thenReturn(true);
@@ -423,7 +423,7 @@ class RequestManagerTest {
     }
 
     @Test
-    public void testDeleteSearch_NonExistingId() {
+    void testDeleteSearch_NonExistingId() {
         // Arrange
         WordServiceImpl wordService = mock(WordServiceImpl.class);
         SearchServiceImpl searchService = mock(SearchServiceImpl.class);

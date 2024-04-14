@@ -3,13 +3,19 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.util.stream.Stream;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
@@ -43,76 +49,28 @@ class WikiApiRequestAspectTest {
         verify(argumentLoggerMock).processMethod(eq(joinPointMock), any(), any());
     }
 
-    @Test
-    void testAroundGetAdvice_GetDescriptionByTitle() throws Throwable {
-        // Arrange
-        when(joinPointMock.getSignature()).thenReturn(methodSignatureMock);
-        when(methodSignatureMock.getName()).thenReturn("getDescriptionByTitle");
-        when(argumentLoggerMock.processMethod(any(), any(), any())).thenReturn("Method get all pages");
+@ParameterizedTest
+@MethodSource("provideTestData")
+void testAroundGetAdvice(String methodName, String expectedResult) throws Throwable {
+    // Arrange
+    when(joinPointMock.getSignature()).thenReturn(methodSignatureMock);
+    when(methodSignatureMock.getName()).thenReturn(methodName);
+    when(argumentLoggerMock.processMethod(any(), any(), any())).thenReturn(expectedResult);
 
-        // Act
-        Object result = aspect.aroundGetAdvice(joinPointMock);
+    // Act
+    Object result = aspect.aroundGetAdvice(joinPointMock);
 
-        // Assert
-        assertEquals("Method get all pages", result);
-        verify(argumentLoggerMock).processMethod(eq(joinPointMock), any(), any());
-    }
+    // Assert
+    assertEquals(expectedResult, result);
+    verify(argumentLoggerMock).processMethod(eq(joinPointMock), any(), any());
+}
 
-    @Test
-    void testAroundGetAdvice_GetDescriptionByPageId() throws Throwable {
-        // Arrange
-        when(joinPointMock.getSignature()).thenReturn(methodSignatureMock);
-        when(methodSignatureMock.getName()).thenReturn("getDescriptionByPageId");
-        when(argumentLoggerMock.processMethod(any(), any(), any())).thenReturn("Method get description by pageId");
-
-        // Act
-        Object result = aspect.aroundGetAdvice(joinPointMock);
-
-        // Assert
-        assertEquals("Method get description by pageId", result);
-        verify(argumentLoggerMock).processMethod(eq(joinPointMock), any(), any());
-    }
-
-    @Test
-    void testAroundGetAdvice_GetResponse() throws Throwable {
-        // Arrange
-        when(joinPointMock.getSignature()).thenReturn(methodSignatureMock);
-        when(methodSignatureMock.getName()).thenReturn("getResponse");
-        when(argumentLoggerMock.processMethod(any(), any(), any())).thenReturn("Method get response");
-
-        // Act
-        Object result = aspect.aroundGetAdvice(joinPointMock);
-
-        // Assert
-        assertEquals("Method get response", result);
-        verify(argumentLoggerMock).processMethod(eq(joinPointMock), any(), any());
-    }
-
-    @Test
-    void testAroundGetAdvice_GetApiSearchResponsesWords() throws Throwable {
-        // Arrange
-        when(joinPointMock.getSignature()).thenReturn(methodSignatureMock);
-        when(methodSignatureMock.getName()).thenReturn("getApiSearchResponsesWords");
-        when(argumentLoggerMock.processMethod(any(), any(), any())).thenReturn("Method get description by pageId");
-
-        // Act
-        Object result = aspect.aroundGetAdvice(joinPointMock);
-
-        // Assert
-        assertEquals("Method get description by pageId", result);
-        verify(argumentLoggerMock).processMethod(eq(joinPointMock), any(), any());
-    }
-
-    @Test
-    void testAroundGetAdvice_DefaultCase() throws Throwable {
-        // Arrange
-        when(joinPointMock.getSignature()).thenReturn(methodSignatureMock);
-        when(methodSignatureMock.getName()).thenReturn("someOtherMethod");
-
-        // Act
-        Object result = aspect.aroundGetAdvice(joinPointMock);
-
-        // Assert
-        assertEquals(new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR), result);
+    private static Stream<Arguments> provideTestData() {
+        return Stream.of(
+                arguments("getDescriptionByTitle", "Method get all pages"),
+                arguments("getDescriptionByPageId", "Method get description by pageId"),
+                arguments("getResponse", "Method get response"),
+                arguments("getApiSearchResponsesWords", "Method get description by pageId")
+        );
     }
 }

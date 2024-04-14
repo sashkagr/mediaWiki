@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class PagesServiceImplTest {
+class PagesServiceImplTest {
 
     @Mock
     private PagesRepository pagesRepository;
@@ -32,7 +32,7 @@ public class PagesServiceImplTest {
     private Cache cache = new Cache();
 
     @Test
-    public void testGetPageByPageId() {
+    void testGetPageByPageId() {
         // Создаем тестовый идентификатор страницы
         Long pageId = 1L;
 
@@ -52,7 +52,7 @@ public class PagesServiceImplTest {
     }
 
     @Test
-    public void testCreate() {
+    void testCreate() {
         // Создаем тестовую страницу для создания
         Pages testPage = new Pages();
         testPage.setTitle("Test Page");
@@ -65,7 +65,7 @@ public class PagesServiceImplTest {
     }
 
     @Test
-    public void testUpdate() {
+    void testUpdate() {
         // Создаем тестовую страницу для обновления
         Pages testPage = new Pages();
         testPage.setId(1L);
@@ -82,7 +82,7 @@ public class PagesServiceImplTest {
     }
 
     @Test
-    public void testDelete() {
+    void testDelete() {
         // Создаем тестовую страницу
         Pages testPage = new Pages();
         testPage.setId(1L);

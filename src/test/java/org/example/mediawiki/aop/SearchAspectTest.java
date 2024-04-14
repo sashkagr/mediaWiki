@@ -3,13 +3,19 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.util.stream.Stream;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
@@ -110,61 +116,27 @@ class SearchAspectTest {
         assertEquals(null, result); // As no specific return value is provided
     }
 
-    @Test
-    void testCheckStartMethod_GetSearchById() throws Throwable {
-        // Arrange
-        when(joinPointMock.getSignature()).thenReturn(methodSignatureMock);
-        when(methodSignatureMock.getName()).thenReturn("getSearchById");
-        when(argumentLoggerMock.processMethod(any(), any(), any())).thenReturn("Search by id found");
+@ParameterizedTest
+@MethodSource("provideTestData")
+void testCheckStartMethod(String methodName, String expectedResult) throws Throwable {
+    // Arrange
+    when(joinPointMock.getSignature()).thenReturn(methodSignatureMock);
+    when(methodSignatureMock.getName()).thenReturn(methodName);
+    when(argumentLoggerMock.processMethod(any(), any(), any())).thenReturn(expectedResult);
 
-        // Act
-        Object result = aspect.checkStartMethod(joinPointMock);
+    // Act
+    Object result = aspect.checkStartMethod(joinPointMock);
 
-        // Assert
-        assertEquals("Search by id found", result);
-        verify(argumentLoggerMock).processMethod(eq(joinPointMock), any(), any());
-    }
+    // Assert
+    assertEquals(expectedResult, result);
+    verify(argumentLoggerMock).processMethod(eq(joinPointMock), any(), any());
+}
 
-    @Test
-    void testCheckStartMethod_GetSearchByTitle() throws Throwable {
-        // Arrange
-        when(joinPointMock.getSignature()).thenReturn(methodSignatureMock);
-        when(methodSignatureMock.getName()).thenReturn("getSearchByTitle");
-        when(argumentLoggerMock.processMethod(any(), any(), any())).thenReturn("Search by title found");
-
-        // Act
-        Object result = aspect.checkStartMethod(joinPointMock);
-
-        // Assert
-        assertEquals("Search by title found", result);
-        verify(argumentLoggerMock).processMethod(eq(joinPointMock), any(), any());
-    }
-
-    @Test
-    void testCheckStartMethod_GetSearchExistingById() throws Throwable {
-        // Arrange
-        when(joinPointMock.getSignature()).thenReturn(methodSignatureMock);
-        when(methodSignatureMock.getName()).thenReturn("getSearchExistingById");
-        when(argumentLoggerMock.processMethod(any(), any(), any())).thenReturn("Method find existing search");
-
-        // Act
-        Object result = aspect.checkStartMethod(joinPointMock);
-
-        // Assert
-        assertEquals("Method find existing search", result);
-        verify(argumentLoggerMock).processMethod(eq(joinPointMock), any(), any());
-    }
-
-    @Test
-    void testCheckStartMethod_DefaultCase() throws Throwable {
-        // Arrange
-        when(joinPointMock.getSignature()).thenReturn(methodSignatureMock);
-        when(methodSignatureMock.getName()).thenReturn("someOtherMethod");
-
-        // Act
-        Object result = aspect.checkStartMethod(joinPointMock);
-
-        // Assert
-        assertEquals(new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR), result);
+    private static Stream<Arguments> provideTestData() {
+        return Stream.of(
+                arguments("getSearchById", "Search by id found"),
+                arguments("getSearchByTitle", "Search by title found"),
+                arguments("getSearchExistingById", "Method find existing search")
+        );
     }
 }

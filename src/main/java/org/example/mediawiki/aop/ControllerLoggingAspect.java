@@ -24,15 +24,19 @@ public class ControllerLoggingAspect {
     @Before("execution(* org.example.mediawiki.controller."
             + "RequestManager.*(..))")
     public void logBefore(final JoinPoint joinPoint) {
-        logger.info("Method {} called with arguments {}", joinPoint.
-                getSignature().toShortString(), joinPoint.getArgs());
+        if (joinPoint!=null) { // Add your condition here
+            logger.info("Method {} called with arguments {}", joinPoint.
+                    getSignature().toShortString(), joinPoint.getArgs());
+        }
     }
 
     @AfterReturning(pointcut = "execution(* org.example.mediawiki."
             + "controller.RequestManager.*(..))", returning = "result")
     public void logAfterReturning(final JoinPoint joinPoint,
                                   final Object result) {
-        logger.info("Method {} returned {}",
-                joinPoint.getSignature().toShortString(), result);
+        if (joinPoint != null && result != null) {
+            logger.info("Method {} returned {}",
+                    joinPoint.getSignature().toShortString(), result);
+        }
     }
 }
