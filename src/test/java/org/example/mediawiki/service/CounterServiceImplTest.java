@@ -55,4 +55,53 @@ class CounterServiceImplTest {
         CounterServiceImpl.incrementCount();
         assertEquals(4, CounterServiceImpl.getCount());
     }
+
+    @Test
+    void testResetCount() {
+        // Reset the counter before each test
+        CounterServiceImpl.resetCount();
+
+        // Increment count multiple times
+        for (int i = 0; i < 5; i++) {
+            CounterServiceImpl.incrementCount();
+        }
+
+        // Reset the counter
+        CounterServiceImpl.resetCount();
+
+        // Check that the counter is reset to 0
+        assertEquals(0, CounterServiceImpl.getCount());
+    }
+
+    @Test
+    void testMultithreadedIncrement() {
+        // Reset the counter before each test
+        CounterServiceImpl.resetCount();
+
+        final int threadCount = 10;
+        final int incrementsPerThread = 100;
+
+        // Create multiple threads to increment the counter concurrently
+        Thread[] threads = new Thread[threadCount];
+        for (int i = 0; i < threadCount; i++) {
+            threads[i] = new Thread(() -> {
+                for (int j = 0; j < incrementsPerThread; j++) {
+                    CounterServiceImpl.incrementCount();
+                }
+            });
+            threads[i].start();
+        }
+
+        // Wait for all threads to finish
+        for (Thread thread : threads) {
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        // Check that the final count is equal to the expected count
+        assertEquals(threadCount * incrementsPerThread, CounterServiceImpl.getCount());
+    }
 }
