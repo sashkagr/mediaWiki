@@ -1,16 +1,17 @@
 package org.example.mediawiki.service.impl;
 
-import org.example.mediawiki.cache.Cache;
+
 import org.example.mediawiki.modal.Pages;
 import org.example.mediawiki.modal.Search;
 import org.example.mediawiki.modal.Word;
 import org.example.mediawiki.repository.WordRepository;
 import org.example.mediawiki.service.Service;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,7 +20,6 @@ public class WordServiceImpl implements Service<Word> {
 
     private final WordRepository wordRepository;
     private final PagesServiceImpl pagesService;
-
     private final SearchServiceImpl searchService;
 
     @Autowired
@@ -31,18 +31,10 @@ public class WordServiceImpl implements Service<Word> {
         this.searchService = search;
     }
 
-    private Cache cache = new Cache();
-
-
     @Transactional
     public List<Word> createWords(final List<Word> words, final List<Long> params) {
-        Iterator<Word> listIterator = words.iterator();
-        Iterator<Long> idIterator = params.iterator();
-
-        while (listIterator.hasNext() && idIterator.hasNext()) {
-            Word word = listIterator.next();
-            Long id = idIterator.next();
-
+        for (Word word : words) {
+            Long id = params.get(words.indexOf(word));
             Search search = searchService.getSearchById(id);
             if (search != null) {
                 word.setSearch(search);
@@ -51,59 +43,23 @@ public class WordServiceImpl implements Service<Word> {
         return words.stream()
                 .filter(word -> word.getTitle() != null && word.getDescription() != null)
                 .map(wordRepository::save)
-                .toList(); // использование метода toList() вместо collect(Collectors.toList())
-
+                .collect(Collectors.toList());
     }
 
     @Transactional
+    @Cacheable(value = "words", key = "#id")
     public boolean getExistingById(final Long id) {
-        for (String key : cache.getCache().keySet()) {
-            for (Word element : (List<Word>) cache.getCache().get(key)) {
-                if (element.getId() == id) {
-                    return true;
-                }
-            }
-        }
-        Word word = wordRepository.existingById(id);
-        return word != null;
-
+        return wordRepository.existingById(id) != null;
     }
 
+    @CachePut(value = "words", key = "#search.id")
     public List<Word> getWordBySearch(final Search search) {
-        String cacheKey = Long.toString(search.getId());
-        Object cachedData = cache.get(cacheKey);
-        if (cachedData != null) {
-            return (List<Word>) cachedData;
-        } else {
-            List<Word> result = wordRepository.existingBySearch(search);
-            if (result != null) {
-                cache.put(cacheKey, result);
-            }
-            return result;
-        }
+        return wordRepository.existingBySearch(search);
     }
 
-    @Transactional
+    @Cacheable(value = "words", key = "#id")
     public Word getWordById(final Long id) {
-        for (String key : cache.getCache().keySet()) {
-            for (Word element : (List<Word>) cache.getCache().get(key)) {
-                if (element.getId() == id) {
-                    return element;
-                }
-            }
-        }
-        Word word = wordRepository.existingById(id);
-        List<Word> words = new ArrayList<>();
-        Object cachedData = cache.
-                get(Long.toString((word.getSearch().getId())));
-        if (cachedData != null) {
-            cache.remove(Long.toString((word.getSearch().getId())));
-            words = (List<Word>) cachedData;
-        }
-        words.add(word);
-        cache.put((Long.toString((word.getSearch().getId()))), words);
-
-        return word;
+        return wordRepository.existingById(id);
     }
 
     @Override
@@ -113,95 +69,27 @@ public class WordServiceImpl implements Service<Word> {
 
     @Override
     @Transactional
+    @CacheEvict(value = "words", allEntries = true)
     public void delete(final Long id) {
-        for (String key : cache.getCache().keySet()) {
-            List<Word> words = (List<Word>) cache.getCache().get(key);
-            for (Word element : words) {
-                if (element.getId() == id) {
-                    words.remove(element);
-                    cache.remove(key);
-                    cache.put(key, words);
-                    break;
-                }
-            }
-        }
         wordRepository.deleteById(id);
     }
 
     @Override
     @Transactional
     public void update(final Word entity) {
-        for (String key : cache.getCache().keySet()) {
-            List<Word> words = (List<Word>) cache.getCache().get(key);
-            for (Word element : words) {
-                if (element.getId() == entity.getId()) {
-                    words.remove(element);
-                    cache.remove(key);
-                    cache.put(key, words);
-                    break;
-                }
-            }
-        }
         wordRepository.save(entity);
     }
 
     @Override
     @Transactional
     public List<Word> read() {
-        cache.clear();
-        List<Word> words = wordRepository.findAll();
-        for (Word word : words) {
-            Long searchId;
-            if (word.getSearch() == null) {
-                searchId = -1L;
-            } else {
-                searchId = word.getSearch().getId();
-            }
-
-            List<Word> wordsList = (List<Word>) cache.
-                    get(Long.toString(searchId));
-            if (wordsList != null) {
-                cache.remove(Long.toString(word.getId()));
-                wordsList.add(word);
-            } else {
-                wordsList = new ArrayList<>();
-                wordsList.add(word);
-                cache.put(Long.toString(searchId), wordsList);
-            }
-        }
-        return words;
+        return wordRepository.findAll();
     }
 
     @Transactional
     public List<Word> getWordByTitle(final String title) {
-        List<Word> words = new ArrayList<>();
-        for (String key : cache.getCache().keySet()) {
-            for (Word element : (List<Word>) cache.getCache().get(key)) {
-                if (element.getTitle() == title) {
-                    words.add(element);
-                }
-            }
-        }
-        if (!words.isEmpty()) {
-            return words;
-        } else {
-            List<Word> wordsByTitle = wordRepository.
-                    findWordByTitle(title);
-            for (Word word : wordsByTitle) {
-                words = (List<Word>) cache.
-                        get(Long.toString(word.getSearch().getId()));
-                if (words == null) {
-                    words = new ArrayList<>();
-                } else {
-                    cache.remove((Long.toString(word.getSearch().getId())));
-                }
-                words.add(word);
-                cache.put((Long.toString(word.getSearch().getId())), words);
-            }
-            return wordsByTitle;
-        }
+        return wordRepository.findWordByTitle(title);
     }
-
 
     public List<Word> getWordsFromPages(final Search search) {
         List<Word> words = new ArrayList<>();
@@ -215,5 +103,4 @@ public class WordServiceImpl implements Service<Word> {
         }
         return words;
     }
-
 }

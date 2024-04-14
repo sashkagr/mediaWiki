@@ -1,11 +1,9 @@
 package org.example.mediawiki.service.impl;
 
-import lombok.Data;
 import org.example.mediawiki.modal.ServiceCounter;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-@Data
 public final class CounterServiceImpl {
 
     private CounterServiceImpl() {
