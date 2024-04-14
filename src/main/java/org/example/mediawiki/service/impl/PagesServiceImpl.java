@@ -1,8 +1,6 @@
 package org.example.mediawiki.service.impl;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 import org.example.mediawiki.cache.Cache;
 import org.example.mediawiki.modal.Pages;
 import org.example.mediawiki.modal.Search;

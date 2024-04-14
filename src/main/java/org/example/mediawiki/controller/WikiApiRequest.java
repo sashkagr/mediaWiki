@@ -5,6 +5,7 @@ import org.example.mediawiki.modal.DescriptionGetApiResponse;
 import org.example.mediawiki.modal.DescriptionGetApiSearchResponse;
 import org.example.mediawiki.modal.Word;
 import org.json.JSONObject;
+import org.springframework.stereotype.Controller;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -19,8 +20,6 @@ import java.util.List;
 import java.util.logging.Logger;
 
 public final class WikiApiRequest {
-    private WikiApiRequest() {
-    }
 
     private static final Logger LOGGER = Logger.
             getLogger(WikiApiRequest.class.getName());

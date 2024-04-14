@@ -7,7 +7,6 @@ import org.example.mediawiki.modal.Search;
 import org.example.mediawiki.modal.Word;
 import org.example.mediawiki.repository.SearchRepository;
 import org.example.mediawiki.service.Service;
-import org.example.mediawiki.service.WikiApiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,8 +24,7 @@ public class SearchServiceImpl implements Service<Search> {
 
     @Autowired
     public SearchServiceImpl(final PagesServiceImpl pages,
-                             final SearchRepository search,
-                             final WikiApiService wikiApi) {
+                             final SearchRepository search) {
         this.pagesService = pages;
         this.searchRepository = search;
     }

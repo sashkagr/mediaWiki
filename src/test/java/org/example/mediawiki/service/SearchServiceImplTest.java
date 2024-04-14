@@ -30,8 +30,6 @@ class SearchServiceImplTest {
     @InjectMocks
     private SearchServiceImpl searchService;
 
-    @Mock
-    private WikiApiService wikiApiService;
 
 
     @BeforeEach
@@ -103,7 +101,7 @@ class SearchServiceImplTest {
             words.add(word);
         }
 
-        when(wikiApiService.getDescriptionByTitle(name)).thenReturn(words);
+       // when(wikiApiService.getDescriptionByTitle(name)).thenReturn(words);
 
         // Act
         List<Word> result = searchService.createSearchAndPages(name);
