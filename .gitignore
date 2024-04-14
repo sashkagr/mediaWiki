@@ -10,7 +10,7 @@ gradlew.bat
 src/test/java/org/example/mediawiki/config
 !src/test/java/org/example/mediawiki/controller
 !src/test/java/org/example/mediawiki/exeption
-
+lib
 
 
 !**/service
