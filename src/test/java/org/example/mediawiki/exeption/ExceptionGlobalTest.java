@@ -14,7 +14,7 @@ import org.springframework.http.ResponseEntity;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
- class ExceptionGlobalTest {
+class ExceptionGlobalTest {
 
 
     @Mock
@@ -29,7 +29,7 @@ import static org.mockito.Mockito.*;
     }
 
     @Test
-     void testHandleBadRequestException() {
+    void testHandleBadRequestException() {
         String errorMessage = "Bad request error message";
 
         ResponseEntity<String> responseEntity = exceptionGlobal.handleBadRequestException(new BadRequestException(errorMessage));
@@ -41,7 +41,7 @@ import static org.mockito.Mockito.*;
 
 
     @Test
-     void testHandleNotFoundException() {
+    void testHandleNotFoundException() {
         String errorMessage = "Not found message";
         when(notFoundException.getMessage()).thenReturn(errorMessage);
 
@@ -54,7 +54,7 @@ import static org.mockito.Mockito.*;
 
 
     @Test
-     void testHandleGlobalException() {
+    void testHandleGlobalException() {
         String errorMessage = "Internal server error message";
 
         ResponseEntity<String> responseEntity = exceptionGlobal.handleGlobalException(new Exception(errorMessage));

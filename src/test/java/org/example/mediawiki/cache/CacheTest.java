@@ -5,17 +5,17 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
- class CacheTest {
+class CacheTest {
 
     private Cache cache;
 
     @BeforeEach
-     void setUp() {
+    void setUp() {
         cache = new Cache();
     }
 
     @Test
-     void testPutAndGet() {
+    void testPutAndGet() {
         String key = "testKey";
         String value = "testValue";
 
@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.*;
     }
 
     @Test
-     void testRemove() {
+    void testRemove() {
         String key = "testKey";
         String value = "testValue";
         cache.put(key, value);
@@ -36,7 +36,7 @@ import static org.junit.jupiter.api.Assertions.*;
     }
 
     @Test
-     void testClear() {
+    void testClear() {
         cache.put("key1", "value1");
         cache.put("key2", "value2");
 
@@ -46,7 +46,7 @@ import static org.junit.jupiter.api.Assertions.*;
     }
 
     @Test
-     void testEviction() {
+    void testEviction() {
         for (int i = 0; i < 201; i++) {
             cache.put("key" + i, "value" + i);
         }

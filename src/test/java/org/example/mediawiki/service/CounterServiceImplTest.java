@@ -12,24 +12,21 @@ class CounterServiceImplTest {
 
     @Test
     void testBoundaryValues() {
-        // Arrange
         CounterServiceImpl.resetCount();
 
-        // Act
         for (int i = 0; i < Integer.MAX_VALUE; i++) {
             CounterServiceImpl.incrementCount();
         }
 
-        // Assert
         assertEquals(Integer.MAX_VALUE, CounterServiceImpl.getCount());
     }
+
     @Test
     void testIncrementCount() {
         CounterServiceImpl.resetCount();
 
         final int expectedCount = 1004;
 
-        // Use AtomicInteger for atomic incrementation of the counter
         AtomicInteger actualCount = new AtomicInteger(0);
 
         Thread incrementThread = new Thread(() -> {
@@ -47,24 +44,19 @@ class CounterServiceImplTest {
             e.printStackTrace();
         }
 
-        // Check that the counter increased by the expected amount
         assertEquals(expectedCount, actualCount.get());
     }
 
     @Test
     void testGetCount() {
-        // Reset the counter before each test
         CounterServiceImpl.resetCount();
 
-        // Increment count to start from 1
         CounterServiceImpl.incrementCount();
         assertEquals(1, CounterServiceImpl.getCount());
 
-        // Increment count and verify
         CounterServiceImpl.incrementCount();
         assertEquals(2, CounterServiceImpl.getCount());
 
-        // Increment count multiple times and verify
         CounterServiceImpl.incrementCount();
         CounterServiceImpl.incrementCount();
         assertEquals(4, CounterServiceImpl.getCount());
@@ -72,30 +64,24 @@ class CounterServiceImplTest {
 
     @Test
     void testResetCount() {
-        // Reset the counter before each test
         CounterServiceImpl.resetCount();
 
-        // Increment count multiple times
         for (int i = 0; i < 5; i++) {
             CounterServiceImpl.incrementCount();
         }
 
-        // Reset the counter
         CounterServiceImpl.resetCount();
 
-        // Check that the counter is reset to 0
         assertEquals(0, CounterServiceImpl.getCount());
     }
 
     @Test
     void testMultithreadedIncrement() {
-        // Reset the counter before each test
         CounterServiceImpl.resetCount();
 
         final int threadCount = 10;
         final int incrementsPerThread = 100;
 
-        // Create multiple threads to increment the counter concurrently
         Thread[] threads = new Thread[threadCount];
         for (int i = 0; i < threadCount; i++) {
             threads[i] = new Thread(() -> {
@@ -106,7 +92,6 @@ class CounterServiceImplTest {
             threads[i].start();
         }
 
-        // Wait for all threads to finish
         for (Thread thread : threads) {
             try {
                 thread.join();
@@ -115,7 +100,6 @@ class CounterServiceImplTest {
             }
         }
 
-        // Check that the final count is equal to the expected count
         assertEquals(threadCount * incrementsPerThread, CounterServiceImpl.getCount());
     }
 }

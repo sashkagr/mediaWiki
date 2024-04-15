@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestBody;
+
 import java.util.List;
 
 @Slf4j
@@ -66,12 +67,17 @@ public class RequestManager {
     }
 
     @GetMapping("/findByTitle")
-    public List<Word>
-    getWordByTitle(@RequestParam("title") final String title) {
+    public String
+    getWordByTitle(@RequestParam("title") final String title, Model model) {
         CounterServiceImpl.incrementCount();
         int requestCount = CounterServiceImpl.getCount();
         log.info("Current count of requests findByTitle: {}", requestCount);
-        return wordService.getWordByTitle(title);
+        List<Word> words = wordService.getWordByTitle(title);
+        if (words == null || words.isEmpty()) {
+            return ERROR;
+        }
+        model.addAttribute("words", words);
+        return WORDS;
     }
 
     @GetMapping("/findById/{id}")
@@ -122,7 +128,7 @@ public class RequestManager {
             return PAGES;
         } catch (Exception e) {
             log.error("An error occurred while processing the request for '{}'", name, e);
-            Thread.currentThread().interrupt(); // или throw e; в зависимости от требований приложения
+            Thread.currentThread().interrupt();
 
             return ERROR;
         }
@@ -147,12 +153,12 @@ public class RequestManager {
                 pagesService.delete(page.getId());
             }
             return REDIRECT;
-        } catch (NumberFormatException e ) {
+        } catch (NumberFormatException e) {
             log.error("Invalid input!", e);
             return ERROR;
         } catch (InterruptedException e) {
             log.error("Runtime error", e);
-            Thread.currentThread().interrupt(); // или throw e; в зависимости от требований приложения
+            Thread.currentThread().interrupt();
             return ERROR;
         }
     }
@@ -194,11 +200,20 @@ public class RequestManager {
     }
 
     @GetMapping("/showPages")
-    public List<Pages> showAllPages() {
+    public String showAllPages(Model model) {
         CounterServiceImpl.incrementCount();
         int requestCount = CounterServiceImpl.getCount();
         log.info("Current count of requests showPages: {}", requestCount);
-        return pagesService.read();
+        List<Pages> pages = pagesService.getPagesBySearch(currentSearch);
+        if (pages.isEmpty()) {
+            return ERROR;
+        }
+        for (Pages page : pages) {
+            page.setId(page.getPageId());
+        }
+        model.addAttribute("pages", pages);
+        return PAGES;
+
     }
 
     @GetMapping("/showWords")
@@ -234,9 +249,8 @@ public class RequestManager {
             }
         } catch (Exception e) {
             log.error("An error occurred while creating word", e);
-            // Перезапуск потока
-            Thread.currentThread().interrupt(); // или throw e; в зависимости от требований приложения
-        return ERROR;
+            Thread.currentThread().interrupt();
+            return ERROR;
 
         }
     }
@@ -258,10 +272,9 @@ public class RequestManager {
         } catch (Exception e) {
             log.error("An error occurred while deleting word with id: {}",
                     id, e);
-            // Перезапуск потока
-            Thread.currentThread().interrupt(); // или throw e; в зависимости от требований приложения
+            Thread.currentThread().interrupt();
 
-        return ERROR;
+            return ERROR;
 
         }
     }
@@ -302,7 +315,7 @@ public class RequestManager {
                 if (!description.equals("")) {
                     word1.setDescription(description);
                 }
-                if(title.equals("")&&description.equals("")){
+                if (title.equals("") && description.equals("")) {
                     return ERROR;
                 }
                 wordService.update(word1);

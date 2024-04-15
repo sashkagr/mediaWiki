@@ -52,7 +52,7 @@ public class PagesServiceImpl implements Service<Pages> {
     }
 
     @Transactional(readOnly = true)
-    @Cacheable(value = "pages", key = "#pageId")
+    @CachePut(value = "pages", key = "#pageId")
     public Pages getPageByPageId(final Long pageId) {
         return pagesRepository.existingByPageId(pageId);
     }

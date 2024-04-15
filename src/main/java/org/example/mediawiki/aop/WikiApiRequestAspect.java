@@ -41,7 +41,7 @@ public class WikiApiRequestAspect {
                 return argumentLogger.processMethod(joinPoint,
                         arguments -> argumentLogger.
                                 logStringArguments(arguments,
-                                "Try get pages by title {}"),
+                                        "Try get pages by title {}"),
                         arguments -> argumentLogger.
                                 logString("Method get all pages"));
             }

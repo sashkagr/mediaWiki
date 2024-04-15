@@ -1,4 +1,5 @@
 package org.example.mediawiki.modal;
+
 import jakarta.persistence.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
@@ -8,7 +9,6 @@ import java.lang.reflect.Field;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-
 class PagesTest {
     private Pages pages;
 
@@ -16,9 +16,9 @@ class PagesTest {
     void setUp() {
         pages = new Pages();
     }
+
     @Test
     void testIdGenerationType() throws NoSuchFieldException {
-        // Assuming the field name is 'id' in the Search class
         var idField = Search.class.getDeclaredField("id");
         var generatedValueAnnotation = idField.getAnnotation(GeneratedValue.class);
         assertNotNull(generatedValueAnnotation);
@@ -27,32 +27,27 @@ class PagesTest {
 
     @Test
     void testTitleFieldType() {
-        // Assuming pages is an instance of Pages class
-        String title = "Sample Title"; // Assigning a sample title for testing
-
-        // Set the title using reflection
+        String title = "Sample Title";
         try {
             Field titleField = Pages.class.getDeclaredField("title");
-            titleField.setAccessible(true); // Enable access to private field
-            titleField.set(pages, title); // Set the title field with the sample title
+            titleField.setAccessible(true);
+            titleField.set(pages, title);
         } catch (NoSuchFieldException | IllegalAccessException e) {
             e.printStackTrace();
             fail("Failed to access or set title field via reflection");
         }
 
-        // Now perform the assertion on the title field type
         assertEquals(String.class, pages.getTitle().getClass());
     }
 
 
     @Test
     void testPageIdFieldType() throws NoSuchFieldException {
-        // Get the field 'pageId' from the Pages class
         java.lang.reflect.Field pageIdField = Pages.class.getDeclaredField("pageId");
 
-        // Assert that the type of 'pageId' field is long
         assertEquals(long.class, pageIdField.getType());
     }
+
     @Test
     void testSearchesFieldType() {
         assertNotNull(pages.getSearches());
@@ -60,9 +55,6 @@ class PagesTest {
 
     @Test
     void testSearchesFetchType() throws NoSuchFieldException {
-        // Assuming the first element of pages list is used for testing
-        Search search = new Search();
-        // Get the fetch type from the @ManyToMany annotation
         FetchType fetchType = Search.class.getDeclaredField("pages")
                 .getAnnotation(ManyToMany.class)
                 .fetch();
@@ -99,6 +91,7 @@ class PagesTest {
         assertEquals(1, pages.getSearches().size());
         assertEquals(search, pages.getSearches().get(0));
     }
+
     @Test
     void testToString() {
         pages.setId(1);

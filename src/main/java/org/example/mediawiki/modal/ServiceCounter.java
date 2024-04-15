@@ -1,4 +1,5 @@
 package org.example.mediawiki.modal;
+
 import lombok.Data;
 
 import java.util.concurrent.atomic.AtomicInteger;

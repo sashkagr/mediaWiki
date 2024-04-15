@@ -50,16 +50,15 @@ public final class WikiApiRequest {
                 LOGGER.info("Error with response code");
             }
         } catch (IOException e) {
-        LOGGER.info("IOException");
-    } catch (InterruptedException e) {
-        LOGGER.info("InterruptedException");
-        Thread.currentThread().interrupt(); // повторное прерывание потока
-        throw e; // повторная генерация InterruptedException для обработки в другом месте
-    }
+            LOGGER.info("IOException");
+        } catch (InterruptedException e) {
+            LOGGER.info("InterruptedException");
+            Thread.currentThread().interrupt();
+            throw e;
+        }
 
         return result;
     }
-
 
 
     private static List<DescriptionGetApiSearchResponse>
@@ -135,12 +134,11 @@ public final class WikiApiRequest {
             LOGGER.info("IOException");
         } catch (InterruptedException e) {
             LOGGER.info("InterruptedException");
-            Thread.currentThread().interrupt(); // повторное прерывание потока
-            throw e; // повторная генерация InterruptedException для обработки в другом месте
+            Thread.currentThread().interrupt();
+            throw e;
         }
-            return null;
+        return null;
     }
-
 
 
 }

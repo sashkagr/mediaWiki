@@ -12,13 +12,13 @@ import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
- class SearchRepositoryTest {
+class SearchRepositoryTest {
 
     @Mock
     private SearchRepository searchRepository;
 
     @Test
-     void testExistingByTitle() {
+    void testExistingByTitle() {
         String title = "Example Title";
         Search search = new Search();
         when(searchRepository.existingByTitle(any(String.class))).thenReturn(search);
@@ -30,7 +30,7 @@ import static org.mockito.Mockito.*;
     }
 
     @Test
-     void testExistingById() {
+    void testExistingById() {
         Long id = 1L;
         Search search = new Search();
         when(searchRepository.existingById(anyLong())).thenReturn(search);

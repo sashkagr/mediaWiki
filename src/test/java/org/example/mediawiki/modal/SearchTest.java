@@ -53,7 +53,6 @@ class SearchTest {
 
     @Test
     void testToString() {
-        // Test toString() method
         long id = 123;
         String title = "Test Title";
         search.setId(id);
@@ -63,7 +62,6 @@ class SearchTest {
 
     @Test
     void testPagesListRemove() {
-        // Test removing a page from pages list
         Pages page = new Pages();
         search.getPages().add(page);
         assertTrue(search.getPages().contains(page));
@@ -73,7 +71,6 @@ class SearchTest {
 
     @Test
     void testWordsListRemove() {
-        // Test removing a word from words list
         Word word = new Word();
         search.getWords().add(word);
         assertTrue(search.getWords().contains(word));

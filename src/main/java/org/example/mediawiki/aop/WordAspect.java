@@ -23,6 +23,7 @@ public class WordAspect {
     public void setLogger(Logger logger) {
         this.log = logger;
     }
+
     @Autowired
     public WordAspect(final ArgumentLogger argument) {
         this.argumentLogger = argument;

@@ -1,4 +1,5 @@
 package org.example.mediawiki.aop;
+
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.junit.jupiter.api.Test;
@@ -38,99 +39,74 @@ class SearchAspectTest {
 
     @Test
     void testAroundDeleteAdvice() throws Throwable {
-        // Arrange
         when(argumentLoggerMock.processMethod(any(), any(), any())).thenReturn("Search with id delete");
 
-        // Act
         Object result = aspect.aroundDeleteAdvice(joinPointMock);
 
-        // Assert
         assertEquals("Search with id delete", result);
         verify(argumentLoggerMock).processMethod(eq(joinPointMock), any(), any());
     }
 
     @Test
     void testAroundCreateAdvice_CreateMethod() throws Throwable {
-        // Arrange
         when(joinPointMock.getSignature()).thenReturn(methodSignatureMock);
         when(methodSignatureMock.getName()).thenReturn("create");
         when(argumentLoggerMock.processMethod(any(), any(), any())).thenReturn("Search Test add");
 
-        // Act
         Object result = aspect.aroundCreateAdvice(joinPointMock);
 
-        // Assert
         assertEquals("Search Test add", result);
         verify(argumentLoggerMock).processMethod(eq(joinPointMock), any(), any());
     }
 
     @Test
     void testAroundCreateAdvice_CreateSearchAndPagesMethod() throws Throwable {
-        // Arrange
         when(joinPointMock.getSignature()).thenReturn(methodSignatureMock);
         when(methodSignatureMock.getName()).thenReturn("createSearchAndPages");
         when(argumentLoggerMock.processMethod(any(), any(), any())).thenReturn("Method create pages and search");
 
-        // Act
         Object result = aspect.aroundCreateAdvice(joinPointMock);
 
-        // Assert
         assertEquals("Method create pages and search", result);
         verify(argumentLoggerMock).processMethod(eq(joinPointMock), any(), any());
     }
 
     @Test
     void testAroundCreateAdvice_OtherMethod() throws Throwable {
-        // Arrange
         when(joinPointMock.getSignature()).thenReturn(methodSignatureMock);
         when(methodSignatureMock.getName()).thenReturn("someOtherMethod");
 
-        // Act
         Object result = aspect.aroundCreateAdvice(joinPointMock);
 
-        // Assert
         assertEquals(new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR), result);
     }
 
     @Test
     void testAroundUpdateAdvice() throws Throwable {
-        // Arrange
-        // No specific behavior to mock, as the method does not call the argument logger
-
-        // Act
         Object result = aspect.aroundUpdateAdvice(joinPointMock);
 
-        // Assert
         assertEquals(null, result); // As no specific return value is provided
     }
 
     @Test
     void testAroundReadAdvice() throws Throwable {
-        // Arrange
-        // No specific behavior to mock, as the method does not call the argument logger
-
-        // Act
         Object result = aspect.aroundReadAdvice(joinPointMock);
 
-        // Assert
         assertEquals(null, result); // As no specific return value is provided
     }
 
-@ParameterizedTest
-@MethodSource("provideTestData")
-void testCheckStartMethod(String methodName, String expectedResult) throws Throwable {
-    // Arrange
-    when(joinPointMock.getSignature()).thenReturn(methodSignatureMock);
-    when(methodSignatureMock.getName()).thenReturn(methodName);
-    when(argumentLoggerMock.processMethod(any(), any(), any())).thenReturn(expectedResult);
+    @ParameterizedTest
+    @MethodSource("provideTestData")
+    void testCheckStartMethod(String methodName, String expectedResult) throws Throwable {
+        when(joinPointMock.getSignature()).thenReturn(methodSignatureMock);
+        when(methodSignatureMock.getName()).thenReturn(methodName);
+        when(argumentLoggerMock.processMethod(any(), any(), any())).thenReturn(expectedResult);
 
-    // Act
-    Object result = aspect.checkStartMethod(joinPointMock);
+        Object result = aspect.checkStartMethod(joinPointMock);
 
-    // Assert
-    assertEquals(expectedResult, result);
-    verify(argumentLoggerMock).processMethod(eq(joinPointMock), any(), any());
-}
+        assertEquals(expectedResult, result);
+        verify(argumentLoggerMock).processMethod(eq(joinPointMock), any(), any());
+    }
 
     private static Stream<Arguments> provideTestData() {
         return Stream.of(

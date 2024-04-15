@@ -1,4 +1,5 @@
 package org.example.mediawiki.aop;
+
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.junit.jupiter.api.Test;
@@ -9,8 +10,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 
 import java.util.stream.Stream;
 
@@ -38,32 +37,26 @@ class WikiApiRequestAspectTest {
 
     @Test
     void testAroundMapAdvice() throws Throwable {
-        // Arrange
         when(argumentLoggerMock.processMethod(any(), any(), any())).thenReturn("Method map to word");
 
-        // Act
         Object result = aspect.aroundMapAdvice(joinPointMock);
 
-        // Assert
         assertEquals("Method map to word", result);
         verify(argumentLoggerMock).processMethod(eq(joinPointMock), any(), any());
     }
 
-@ParameterizedTest
-@MethodSource("provideTestData")
-void testAroundGetAdvice(String methodName, String expectedResult) throws Throwable {
-    // Arrange
-    when(joinPointMock.getSignature()).thenReturn(methodSignatureMock);
-    when(methodSignatureMock.getName()).thenReturn(methodName);
-    when(argumentLoggerMock.processMethod(any(), any(), any())).thenReturn(expectedResult);
+    @ParameterizedTest
+    @MethodSource("provideTestData")
+    void testAroundGetAdvice(String methodName, String expectedResult) throws Throwable {
+        when(joinPointMock.getSignature()).thenReturn(methodSignatureMock);
+        when(methodSignatureMock.getName()).thenReturn(methodName);
+        when(argumentLoggerMock.processMethod(any(), any(), any())).thenReturn(expectedResult);
 
-    // Act
-    Object result = aspect.aroundGetAdvice(joinPointMock);
+        Object result = aspect.aroundGetAdvice(joinPointMock);
 
-    // Assert
-    assertEquals(expectedResult, result);
-    verify(argumentLoggerMock).processMethod(eq(joinPointMock), any(), any());
-}
+        assertEquals(expectedResult, result);
+        verify(argumentLoggerMock).processMethod(eq(joinPointMock), any(), any());
+    }
 
     private static Stream<Arguments> provideTestData() {
         return Stream.of(

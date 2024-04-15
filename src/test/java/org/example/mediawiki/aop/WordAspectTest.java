@@ -10,8 +10,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.slf4j.Logger;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import java.util.stream.Stream;
@@ -28,17 +26,14 @@ class WordAspectTest {
 
     @Test
     void aroundDeleteAdvice() throws Throwable {
-        // Arrange
         ArgumentLogger argumentLogger = Mockito.mock(ArgumentLogger.class);
         Logger logger = Mockito.mock(Logger.class);
         WordAspect aspect = new WordAspect(argumentLogger);
         aspect.setLogger(logger);
         ProceedingJoinPoint joinPoint = Mockito.mock(ProceedingJoinPoint.class);
 
-        // Act
         aspect.aroundDeleteAdvice(joinPoint);
 
-        // Assert
         Mockito.verify(argumentLogger).processMethod(
                 eq(joinPoint),
                 any(),
@@ -47,7 +42,6 @@ class WordAspectTest {
 
     @Test
     void aroundCreateAdvice_CreateMethod() throws Throwable {
-        // Arrange
         ArgumentLogger argumentLogger = Mockito.mock(ArgumentLogger.class);
         Logger logger = Mockito.mock(Logger.class);
         WordAspect aspect = new WordAspect(argumentLogger);
@@ -57,10 +51,8 @@ class WordAspectTest {
         when(joinPoint.getSignature()).thenReturn(signature);
         when(signature.getName()).thenReturn("create");
 
-        // Act
         aspect.aroundCreateAdvice(joinPoint);
 
-        // Assert
         Mockito.verify(argumentLogger).processMethod(
                 eq(joinPoint),
                 any(),
@@ -69,7 +61,6 @@ class WordAspectTest {
 
     @Test
     void aroundCreateAdvice_OtherMethod() throws Throwable {
-        // Arrange
         ArgumentLogger argumentLogger = Mockito.mock(ArgumentLogger.class);
         Logger logger = Mockito.mock(Logger.class);
         WordAspect aspect = new WordAspect(argumentLogger);
@@ -79,10 +70,8 @@ class WordAspectTest {
         when(joinPoint.getSignature()).thenReturn(signature);
         when(signature.getName()).thenReturn("someOtherMethod");
 
-        // Act
         aspect.aroundCreateAdvice(joinPoint);
 
-        // Assert
         Mockito.verify(argumentLogger).processMethod(
                 eq(joinPoint),
                 any(),
@@ -91,17 +80,14 @@ class WordAspectTest {
 
     @Test
     void aroundUpdateAdvice() throws Throwable {
-        // Arrange
         ArgumentLogger argumentLogger = Mockito.mock(ArgumentLogger.class);
         Logger logger = Mockito.mock(Logger.class);
         WordAspect aspect = new WordAspect(argumentLogger);
         aspect.setLogger(logger);
         ProceedingJoinPoint joinPoint = Mockito.mock(ProceedingJoinPoint.class);
 
-        // Act
         aspect.aroundUpdateAdvice(joinPoint);
 
-        // Assert
         Mockito.verify(argumentLogger).processMethod(
                 eq(joinPoint),
                 any(),
@@ -110,17 +96,14 @@ class WordAspectTest {
 
     @Test
     void aroundReadAdvice() throws Throwable {
-        // Arrange
         ArgumentLogger argumentLogger = Mockito.mock(ArgumentLogger.class);
         Logger logger = Mockito.mock(Logger.class);
         WordAspect aspect = new WordAspect(argumentLogger);
         aspect.setLogger(logger);
         ProceedingJoinPoint joinPoint = Mockito.mock(ProceedingJoinPoint.class);
 
-        // Act
         aspect.aroundReadAdvice(joinPoint);
 
-        // Assert
         Mockito.verify(argumentLogger).processMethod(
                 eq(joinPoint),
                 any(),
@@ -139,21 +122,18 @@ class WordAspectTest {
     @InjectMocks
     private WordAspect aspect;
 
-@ParameterizedTest
-@MethodSource("provideTestData")
-void testAroundGetAdvice(String methodName, String expectedResult) throws Throwable {
-    // Arrange
-    when(joinPointMock.getSignature()).thenReturn(methodSignatureMock);
-    when(methodSignatureMock.getName()).thenReturn(methodName);
-    when(argumentLoggerMock.processMethod(any(), any(), any())).thenReturn(expectedResult);
+    @ParameterizedTest
+    @MethodSource("provideTestData")
+    void testAroundGetAdvice(String methodName, String expectedResult) throws Throwable {
+        when(joinPointMock.getSignature()).thenReturn(methodSignatureMock);
+        when(methodSignatureMock.getName()).thenReturn(methodName);
+        when(argumentLoggerMock.processMethod(any(), any(), any())).thenReturn(expectedResult);
 
-    // Act
-    Object result = aspect.aroundGetAdvice(joinPointMock);
+        Object result = aspect.aroundGetAdvice(joinPointMock);
 
-    // Assert
-    assertEquals(expectedResult, result);
-    verify(argumentLoggerMock).processMethod(eq(joinPointMock), any(), any());
-}
+        assertEquals(expectedResult, result);
+        verify(argumentLoggerMock).processMethod(eq(joinPointMock), any(), any());
+    }
 
     private static Stream<Arguments> provideTestData() {
         return Stream.of(

@@ -39,13 +39,13 @@ public class SearchAspect {
         MethodSignature methodSignature =
                 (MethodSignature) joinPoint.getSignature();
         if (methodSignature.getName().equals("create")) {
-                return argumentLogger.processMethod(joinPoint,
-                        arguments -> argumentLogger.logArguments(arguments,
-                                "Try add search", Pages.class::isInstance,
-                                arg -> ((Search) arg).getTitle()),
-                        arguments -> argumentLogger.logArguments(arguments,
-                                "Search {} add", Pages.class::isInstance,
-                                arg -> ((Search) arg).getTitle()));
+            return argumentLogger.processMethod(joinPoint,
+                    arguments -> argumentLogger.logArguments(arguments,
+                            "Try add search", Pages.class::isInstance,
+                            arg -> ((Search) arg).getTitle()),
+                    arguments -> argumentLogger.logArguments(arguments,
+                            "Search {} add", Pages.class::isInstance,
+                            arg -> ((Search) arg).getTitle()));
 
         }
         if (methodSignature.getName().equals("createSearchAndPages")) {
@@ -58,6 +58,7 @@ public class SearchAspect {
         }
         return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
     @Around("PointCuts.updateMethodsSearch()")
     public Object aroundUpdateAdvice(final ProceedingJoinPoint joinPoint) {
         return argumentLogger.processMethod(joinPoint,
@@ -93,7 +94,7 @@ public class SearchAspect {
                 return argumentLogger.processMethod(joinPoint,
                         arguments -> argumentLogger.
                                 logStringArguments(arguments,
-                                "Try find search by title {}"),
+                                        "Try find search by title {}"),
                         arguments -> argumentLogger.logArguments(arguments,
                                 "Search with title {} found",
                                 Search.class::isInstance,
@@ -103,7 +104,7 @@ public class SearchAspect {
                 return argumentLogger.processMethod(joinPoint,
                         arguments -> argumentLogger.logLongArguments(arguments,
                                 "Try find existing search by id {}"),
-                        arguments ->  log.info("Method find existing search"));
+                        arguments -> log.info("Method find existing search"));
             }
             default -> {
                 log.warn("Unrecognized method: {}", method);

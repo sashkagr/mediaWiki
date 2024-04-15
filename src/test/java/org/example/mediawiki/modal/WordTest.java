@@ -9,13 +9,11 @@ class WordTest {
 
     @Test
     void testHandlingOfNullValues() {
-        // Create a Word instance with null values
         Word word = new Word();
         word.setId(0);
         word.setTitle(null);
         word.setDescription(null);
 
-        // Verify that null values are handled properly
         assertNull(word.getTitle());
         assertNull(word.getDescription());
     }
@@ -62,7 +60,6 @@ class WordTest {
         assertEquals(word1, word2);
         assertEquals(word1.hashCode(), word2.hashCode());
 
-        // Test inequality
         Word word3 = new Word();
         word3.setId(2);
         word3.setTitle("Another Title");
@@ -74,7 +71,7 @@ class WordTest {
     @Test
     void testEqualsWithNull() {
         Word word = new Word();
-        assertNotEquals(null,word);
+        assertNotEquals(null, word);
     }
 
 

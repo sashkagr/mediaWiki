@@ -17,14 +17,14 @@ import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
- class WordRepositoryTest {
+class WordRepositoryTest {
 
     @Mock
     private WordRepository wordRepository;
 
 
     @Test
-     void testFindWordByTitle() {
+    void testFindWordByTitle() {
         String title = "Example Title";
         List<Word> wordList = new ArrayList<>();
         when(wordRepository.findWordByTitle(any(String.class))).thenReturn(wordList);
@@ -36,7 +36,7 @@ import static org.mockito.Mockito.*;
     }
 
     @Test
-     void testExistingById() {
+    void testExistingById() {
         Long id = 1L;
         Word word = new Word();
         when(wordRepository.existingById(anyLong())).thenReturn(word);
@@ -48,7 +48,7 @@ import static org.mockito.Mockito.*;
     }
 
     @Test
-     void testExistingBySearch() {
+    void testExistingBySearch() {
         Search search = new Search();
         List<Word> wordList = new ArrayList<>();
         when(wordRepository.existingBySearch(any(Search.class))).thenReturn(wordList);

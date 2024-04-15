@@ -46,7 +46,6 @@ class RequestManagerTest {
 
     @Test
     void testAddWords_Success() {
-        // Arrange
         WordServiceImpl wordService = mock(WordServiceImpl.class);
         PagesServiceImpl pagesService = mock(PagesServiceImpl.class);
         SearchServiceImpl searchService = mock(SearchServiceImpl.class);
@@ -61,7 +60,6 @@ class RequestManagerTest {
 
         when(wordService.createWords(inputWords, params)).thenReturn(inputWords);
 
-        // Act
         ResponseEntity<List<Word>> response = requestManager.addWords(params, inputWords);
 
 
@@ -72,7 +70,6 @@ class RequestManagerTest {
 
     @Test
     void testAddWords_BadRequest() {
-        // Arrange
         WordServiceImpl wordService = mock(WordServiceImpl.class);
         PagesServiceImpl pagesService = mock(PagesServiceImpl.class);
         SearchServiceImpl searchService = mock(SearchServiceImpl.class);
@@ -87,7 +84,6 @@ class RequestManagerTest {
 
         when(wordService.createWords(inputWords, params)).thenReturn(Collections.emptyList());
 
-        // Act
         ResponseEntity<List<Word>> response = requestManager.addWords(params, inputWords);
 
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
@@ -96,7 +92,6 @@ class RequestManagerTest {
 
     @Test
     void testAddWords_PartiallyBadRequests() {
-        // Arrange
         WordServiceImpl wordService = mock(WordServiceImpl.class);
         PagesServiceImpl pagesService = mock(PagesServiceImpl.class);
         SearchServiceImpl searchService = mock(SearchServiceImpl.class);
@@ -112,10 +107,8 @@ class RequestManagerTest {
         List<Word> createdWords = Collections.singletonList(word);
         when(wordService.createWords(inputWords, params)).thenReturn(createdWords);
 
-        // Act
         ResponseEntity<List<Word>> response = requestManager.addWords(params, inputWords);
 
-        // Assert
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
         assertEquals(createdWords, response.getBody());
     }
@@ -124,12 +117,13 @@ class RequestManagerTest {
     @Test
     void testGetWordByTitle() {
         String title = "Test Title";
+        Model model = mock(Model.class);
         List<Word> expectedWords = new ArrayList<>();
         when(wordService.getWordByTitle(title)).thenReturn(expectedWords);
 
-        List<Word> actualWords = requestManager.getWordByTitle(title);
+        String result = requestManager.getWordByTitle(title, model);
 
-        assertEquals(expectedWords, actualWords);
+        assertEquals("error", result);
     }
 
     @Test
@@ -164,7 +158,6 @@ class RequestManagerTest {
     @Test
     void testCreateWordBySearch() {
         Long id = 1L;
-        Search currentSearch = new Search();
         Word word = new Word();
         when(wordService.getWordById(id)).thenReturn(word);
         when(pagesService.getPageByPageId(id)).thenReturn(new Pages());
@@ -181,17 +174,13 @@ class RequestManagerTest {
         Search newSearch = new Search();
         newSearch.setTitle(newTitle);
 
-        // Mocking the search returned by the service
         Search existingSearch = new Search();
         when(searchService.getSearchById(id)).thenReturn(existingSearch);
 
-        // Mocking the service update method
         doNothing().when(searchService).update(existingSearch);
 
-        // Calling the method under test
         ResponseEntity<String> response = requestManager.updateSearch(id, newSearch);
 
-        // Assertions
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals("Search was updated", response.getBody());
         assertEquals(newTitle, existingSearch.getTitle());
@@ -204,13 +193,10 @@ class RequestManagerTest {
         Search newSearch = new Search();
         newSearch.setTitle(newTitle);
 
-        // Mocking the search returned by the service as null (indicating no search found)
         when(searchService.getSearchById(id)).thenReturn(null);
 
-        // Calling the method under test
         ResponseEntity<String> response = requestManager.updateSearch(id, newSearch);
 
-        // Assertions
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
         assertEquals("Invalid input!", response.getBody());
         verify(searchService, never()).update(any());
@@ -221,14 +207,11 @@ class RequestManagerTest {
         Long id = 1L;
         Search newSearch = new Search();
 
-        // Mocking the search returned by the service
         Search existingSearch = new Search();
         when(searchService.getSearchById(id)).thenReturn(existingSearch);
 
-        // Calling the method under test
         ResponseEntity<String> response = requestManager.updateSearch(id, newSearch);
 
-        // Assertions
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
         assertEquals("Invalid input!", response.getBody());
         verify(searchService, never()).update(any());
@@ -259,7 +242,6 @@ class RequestManagerTest {
 
     @Test
     void testShowAllSearches() throws NoSuchMethodException {
-        // Arrange
         Constructor<CounterServiceImpl> constructor = CounterServiceImpl.class.getDeclaredConstructor();
         constructor.setAccessible(true);
         CounterServiceImpl counterService = null;
@@ -276,16 +258,15 @@ class RequestManagerTest {
 
         when(searchService.read()).thenReturn(searches);
 
-        // Act
         String result = requestManager.showAllSearches(model);
 
-        // Assert
         assertEquals("searches", result);
     }
 
     @Test
     void testShowAllPages() throws NoSuchMethodException {
-        // Arrange
+        Model model = mock(Model.class);
+
         Constructor<CounterServiceImpl> constructor = CounterServiceImpl.class.getDeclaredConstructor();
         constructor.setAccessible(true);
         CounterServiceImpl counterService = null;
@@ -301,16 +282,13 @@ class RequestManagerTest {
 
         when(pagesService.read()).thenReturn(pages);
 
-        // Act
-        List<Pages> result = requestManager.showAllPages();
+        String result = requestManager.showAllPages(model);
 
-        // Assert
-        assertEquals(pages, result);
+        assertEquals("error", result);
     }
 
     @Test
     void testShowAllWords() throws Exception {
-        // Arrange
         WordServiceImpl wordService = mock(WordServiceImpl.class);
         RequestManager requestManager = new RequestManager(wordService, null, null);
         Model model = Mockito.mock(Model.class);
@@ -319,76 +297,60 @@ class RequestManagerTest {
         word.setTitle("apple");
         words.add(word);
 
-        // Accessing private constructor using reflection
         Constructor<CounterServiceImpl> constructor = CounterServiceImpl.class.getDeclaredConstructor();
         constructor.setAccessible(true);
         CounterServiceImpl counterService = constructor.newInstance();
 
-        // Act
         String result = requestManager.showAllWords(model);
 
-        // Assert
         assertEquals("definition", result);
     }
 
 
     @Test
     void testCreateWord_Success() {
-        // Arrange
         WordServiceImpl wordService = mock(WordServiceImpl.class);
         SearchServiceImpl searchService = mock(SearchServiceImpl.class);
         RequestManager requestManager = new RequestManager(wordService, null, searchService);
 
-        // Act
         String result = requestManager.createWord(1L, "Apple", "Description of Apple");
 
-        // Assert
         assertEquals("redirect:/definition/showWords", result);
     }
 
     @Test
     void testCreateWord_NullTitleOrDescription() {
-        // Arrange
         WordServiceImpl wordService = mock(WordServiceImpl.class);
         SearchServiceImpl searchService = mock(SearchServiceImpl.class);
         RequestManager requestManager = new RequestManager(wordService, null, searchService);
 
-        // Act
         String result = requestManager.createWord(1L, null, "Description of Apple");
 
-        // Assert
         assertEquals("error", result);
     }
 
     @Test
     void testDeleteWord_Success() {
-        // Arrange
         WordServiceImpl wordService = mock(WordServiceImpl.class);
         SearchServiceImpl searchService = mock(SearchServiceImpl.class);
         RequestManager requestManager = new RequestManager(wordService, null, searchService);
         when(wordService.getExistingById(1L)).thenReturn(true);
 
-        // Act
         String result = requestManager.deleteWord(1L);
 
-        // Assert
         assertEquals("redirect:/definition/showWords", result);
     }
 
     @Test
     void testDeleteWord_NonExistingId() {
-        // Arrange
         WordServiceImpl wordService = mock(WordServiceImpl.class);
         SearchServiceImpl searchService = mock(SearchServiceImpl.class);
         RequestManager requestManager = new RequestManager(wordService, null, searchService);
 
-        // Setup mock behavior
         when(wordService.getExistingById(1L)).thenReturn(false);
 
-        // Act
         String result = requestManager.deleteWord(1L);
 
-        // Assert
         assertEquals("error", result);
     }
 
@@ -398,16 +360,11 @@ class RequestManagerTest {
         MockitoAnnotations.openMocks(this);
     }
 
-    @Mock
-    private Logger log;
 
     @Test
     void testDeleteSearch_Success() {
-        // Arrange
-        // Mocking the behavior to simulate that the search with ID 1 exists
         when(searchService.getSearchExistingById(1L)).thenReturn(true);
 
-        // Act
         String result = requestManager.deleteSearch(1L);
 
         assertEquals("redirect:/definition/showWords", result);
@@ -416,23 +373,15 @@ class RequestManagerTest {
 
     @Test
     void testDeleteSearch_NonExistingId() {
-        // Arrange
         WordServiceImpl wordService = mock(WordServiceImpl.class);
         SearchServiceImpl searchService = mock(SearchServiceImpl.class);
         RequestManager requestManager = new RequestManager(wordService, null, searchService);
 
-        // Setup mock behavior
         when(searchService.getSearchExistingById(1L)).thenReturn(false);
 
-        // Act
         String result = requestManager.deleteSearch(1L);
 
         assertEquals("error", result);
         verify(searchService, never()).delete(1L);
     }
 }
-
-
-
-
-

@@ -14,7 +14,7 @@ import org.slf4j.Logger;
 @Slf4j
 public class ControllerLoggingAspect {
 
-    private  Logger logger = LoggerFactory.getLogger(this.getClass());
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
 
     public void setLogger(Logger logger) {
