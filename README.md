@@ -12,15 +12,15 @@ https://sonarcloud.io/project/overview?id=sashkagr_MediaWiki
 ## UI
 * Home page
 
-[img.png](.github/pics/img.png)
+![img.png](.github/pics/img.png)
 
 * MediaWiki word
 
-[img_1.png](.github/pics/img_1.png)
+![img_1.png](.github/pics/img_1.png)
 
 * User word
 
-[img_2.png](.github/pics/img_2.png)
+![img_2.png](.github/pics/img_2.png)
 
 ## Requirements
 The project utilizes Spring Boot, Gradle, and MySQL (any database can be connected). Database operations are performed using JPA repository. It is mandatory to create the ```application.properties``` file.

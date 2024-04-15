@@ -39,6 +39,7 @@ application.log
 .idea/jarRepositories.xml
 .idea/compiler.xml
 .idea/libraries/
+gradlew
 *.iws
 *.iml
 *.ipr
