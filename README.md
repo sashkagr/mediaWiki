@@ -9,20 +9,22 @@ entities Search and Word).
 
 https://sonarcloud.io/project/overview?id=sashkagr_MediaWiki
 
+## UI
+* Home page
+
+![img.png](.github/pics/img.png)
+
+* MediaWiki word
+
+![img_1.png](.github/pics/img_1.png)
+
+* User word
+
+![img_2.png](.github/pics/img_2.png)
+
 ## Requirements
 The project utilizes Spring Boot, Gradle, and MySQL (any database can be connected). Database operations are performed using JPA repository. It is mandatory to create the ```application.properties``` file.
-* Dependencies of the project (build.gradle)
-``` implementation 'org.json:json:20211205'
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.projectlombok:lombok:1.18.22'
-    runtimeOnly 'com.mysql:mysql-connector-j'
-```
-* Plugins
-``` id 'org.springframework.boot' version '2.6.3'
-    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
- ```
-    
+ 
 ## Installation and Running
 * Configure Spring Boot Application in the ```Main class```. 
 * Make sure you have connected to the database. 
@@ -37,21 +39,21 @@ spring.jpa.hibernate.ddl-auto=update
 ```
 * It is recommended to install Postman, from which requests will be sent.
 
-To work with all requests related to this code, enter the URL in the following format: ```http://localhost:8080/search```. 
+To work with all requests related to this code, enter the URL in the following format: ```http://localhost:8080/definition```. 
 * Use ```@GetMapping``` (GET request in Postman). 
 To enter a word for search:
 ```
-http://localhost:8080/search/?name=<your word>
+http://localhost:8080/definition/?name=<your word>
 ```
 To select the desired article from the list: 
 ```
-http://localhost:8080/search/{id}
+http://localhost:8080/definition/{id}
 ```
 Then the article will be added to the database.
 * Use ```@PostMapping``` (POST request in Postman). 
 To add a word and its definition to the database, enter the URL:
 ```
-http://localhost:8080/search/add
+http://localhost:8080/definition/add
 ```
 Then open the  ```Body``` tab, select ```raw```, and enter the request in JSON format:
 ```
@@ -64,13 +66,13 @@ Then open the  ```Body``` tab, select ```raw```, and enter the request in JSON f
 To delete a record from the database, you need to know its ```id```.
 Enter:
 ```
-http://localhost:8080/search/delete/{id}
+http://localhost:8080/definition/delete/{id}
 ```
 * Use ```@PutMapping``` (PUT request in Postman). 
 To update a record in the database, you need to know its id. 
 Enter: 
 ```
-http://localhost:8080/search/update/{id}
+http://localhost:8080/definition/update/{id}
 ```
 Then open the  ```Body``` tab, select ```raw```, and enter the request in JSON format:
 ```{

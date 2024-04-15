@@ -76,7 +76,7 @@ public class RequestManager {
         if (words == null || words.isEmpty()) {
             return ERROR;
         }
-        model.addAttribute("words", words);
+            model.addAttribute(WORDS, words);
         return WORDS;
     }
 
@@ -87,7 +87,7 @@ public class RequestManager {
         int requestCount = CounterServiceImpl.getCount();
         log.info("Current count of requests findById: {}", requestCount);
         Word word = wordService.getWordById(id);
-        model.addAttribute("word", word);
+        model.addAttribute(WORDS, word);
         return "update";
     }
 
@@ -211,7 +211,7 @@ public class RequestManager {
         for (Pages page : pages) {
             page.setId(page.getPageId());
         }
-        model.addAttribute("pages", pages);
+        model.addAttribute(PAGES, pages);
         return PAGES;
 
     }
