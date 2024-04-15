@@ -15,7 +15,7 @@ lib
 
 !**/service
 !**/cache
-
+!.github/pics
 settings.gradle
 !build.gradle
 !src/test/java/org/example/mediawiki/MediaWikiApplicationTest.java
