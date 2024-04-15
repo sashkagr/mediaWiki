@@ -18,15 +18,12 @@ lib
 
 settings.gradle
 !build.gradle
-!gradlew
 !src/test/java/org/example/mediawiki/MediaWikiApplicationTest.java
-!gradle/wrapper
 gradlew
-.gradle
+gradle
 gradlew.bat
 settings.gradle
 !build.gradle
-!gradlew
 LICENSE
 application.log
 !**/src/test
