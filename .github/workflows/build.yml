@@ -44,9 +44,9 @@ jobs:
                             mysql password: 'root' # Required if "mysql user" exists. The password for the "mysql user"
 
       - name : Chmod
-        run: chmod +x ./.github/gradlew
+        run: chmod +x ./gradlew
       - name: Build and analyze
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: ./.github/gradlew build sonar --info
+        run: ./gradlew build sonar --info
