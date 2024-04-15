@@ -21,6 +21,8 @@ settings.gradle
 !gradlew
 !src/test/java/org/example/mediawiki/MediaWikiApplicationTest.java
 !gradle/wrapper
+gradlew
+.gradle
 gradlew.bat
 settings.gradle
 !build.gradle
