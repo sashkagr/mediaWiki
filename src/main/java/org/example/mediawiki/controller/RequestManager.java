@@ -87,7 +87,7 @@ public class RequestManager {
         int requestCount = CounterServiceImpl.getCount();
         log.info("Current count of requests findById: {}", requestCount);
         Word word = wordService.getWordById(id);
-        model.addAttribute(WORDS, word);
+        model.addAttribute("word", word);
         return "update";
     }
 
