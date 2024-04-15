@@ -20,7 +20,7 @@ settings.gradle
 !build.gradle
 !src/test/java/org/example/mediawiki/MediaWikiApplicationTest.java
 gradlew
-gradle
+!gradle
 gradlew.bat
 settings.gradle
 !build.gradle
