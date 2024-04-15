@@ -202,7 +202,7 @@ fi
 set -- \
         "-Dorg.gradle.appname=$APP_BASE_NAME" \
         -classpath "$CLASSPATH" \
-        org..github.gradle.wrapper.GradleWrapperMain \
+        org.github.gradle.wrapper.GradleWrapperMain \
         "$@"
 
 # Use "xargs" to parse quoted args.
