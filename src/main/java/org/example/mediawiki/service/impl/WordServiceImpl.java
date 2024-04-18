@@ -34,16 +34,20 @@ public class WordServiceImpl implements Service<Word> {
     @Transactional
     public List<Word> createWords(final List<Word> words, final List<Long> params) {
         for (Word word : words) {
-            Long id = params.get(words.indexOf(word));
-            Search search = searchService.getSearchById(id);
-            if (search != null) {
-                word.setSearch(search);
+            if((params.size())>words.indexOf(word)) {
+                Long id = params.get(words.indexOf(word));
+                Search search = searchService.getSearchById(id);
+                if (search != null) {
+                    word.setSearch(search);
+                }
             }
         }
-        return words.stream()
+        words.stream()
                 .filter(word -> word.getTitle() != null && word.getDescription() != null)
-                .map(wordRepository::save)
                 .toList();
+
+        wordRepository.saveAll(words);
+        return words;
     }
 
     @Transactional

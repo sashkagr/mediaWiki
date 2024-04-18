@@ -1,0 +1,33 @@
+# Этап сборки
+FROM gradle:8.5.0-jdk21 AS build
+
+WORKDIR /app
+
+# Копирование файла настроек Gradle (если есть)
+COPY settings.gradle .
+# Копирование файла сборки Gradle (build.gradle.kts или build.gradle)
+COPY build.gradle .
+# Копирование исходного кода
+COPY src ./src
+
+# Сборка проекта Gradle
+RUN gradle build -x test
+
+# Этап сборки образа
+FROM eclipse-temurin:21-jdk11-adoptopenjdk-slim AS final
+
+WORKDIR /app
+
+# Копирование собранного JAR из этапа сборки
+COPY --from=build /app/build/libs/MediaWiki.jar MediaWiki.jar
+
+# Установка переменных среды для подключения к базе данных MySQL
+ENV SPRING_DATASOURCE_URL=jdbc:mysql://localhost:3306/mediawiki
+ENV SPRING_DATASOURCE_USERNAME=root
+ENV SPRING_DATASOURCE_PASSWORD=root
+
+# Определение параметров JVM
+ENV JAVA_OPTS=""
+
+# Команда запуска приложения
+CMD ["java", "-jar", "MediaWiki.jar"]
