@@ -1,5 +1,13 @@
 .gradle
-build/
+build/classes
+build/generated
+build/jacoco
+build/reports
+build/resources
+build/test-results
+build/tmp
+build/resolvedMainClassName
+!**/libs/**
 !**/src/main/**/build/
 !**/src/test/**/build/
 !gradle/wrapper
