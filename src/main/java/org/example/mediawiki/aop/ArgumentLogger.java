@@ -2,6 +2,7 @@ package org.example.mediawiki.aop;
 
 import lombok.Data;
 import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Aspect;
 import org.example.mediawiki.modal.Search;
 import org.example.mediawiki.modal.Word;
 import org.slf4j.Logger;

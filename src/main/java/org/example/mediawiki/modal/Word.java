@@ -3,6 +3,7 @@ package org.example.mediawiki.modal;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import jakarta.persistence.Column;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -25,6 +26,8 @@ public class Word {
     private Search search;
 
     private String title;
+
+    @Column(columnDefinition = "TEXT")
     private String description;
 }
 

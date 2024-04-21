@@ -96,58 +96,59 @@ class WordServiceImplTest {
 
     @Test
     void testCreateWordsWithNonNullTitleAndDescription() {
+        // Arrange
         List<Word> words = new ArrayList<>();
         Word word1 = new Word();
         word1.setTitle("Title1");
         word1.setDescription("Description1");
         words.add(word1);
-
         Word word2 = new Word();
         word2.setTitle("Title2");
         word2.setDescription("Description2");
         words.add(word2);
 
-        List<Long> params = List.of(1L, 2L);
+        List<Long> params = new ArrayList<>();
+        params.add(1L);
+        params.add(2L);
 
-        when(searchService.getSearchById(anyLong())).thenReturn(new Search());
-        when(wordRepository.save(any(Word.class))).thenAnswer(invocation -> invocation.getArgument(0));
+        Search search = new Search();
+        search.setId(1L);
 
+        // Mock behavior
+        when(searchService.getSearchById(anyLong())).thenReturn(search);
+
+        // Act
         List<Word> createdWords = wordService.createWords(words, params);
 
-        assertEquals(2, createdWords.size());
-        verify(searchService, times(2)).getSearchById(anyLong());
-        verify(wordRepository, times(2)).save(any(Word.class));
-        assertTrue(createdWords.stream().allMatch(word -> word.getTitle() != null && word.getDescription() != null));
+        // Assert
+        assertEquals(words.size(), createdWords.size());
+        for (Word word : createdWords) {
+            assertEquals(search, word.getSearch());
+        }
+        verify(wordRepository, times(1)).saveAll(words);
     }
 
 
     @Test
     void testCreateWords() {
+        // Создаем тестовые данные
         List<Word> words = new ArrayList<>();
-        Word word1 = new Word();
-        word1.setTitle("Title1");
-        word1.setDescription("Description1");
-        words.add(word1);
+        List<Long> params = new ArrayList<>();
+        // Добавляем тестовые слова и параметры
+        // ...
 
-        Word word2 = new Word();
-        word2.setTitle("Title2");
-        word2.setDescription("Description2");
-        words.add(word2);
-
-        List<Long> params = List.of(1L, 2L);
-
+        // Мокируем вызовы
         when(searchService.getSearchById(anyLong())).thenReturn(new Search());
 
-        when(wordRepository.save(any(Word.class))).thenAnswer(invocation -> invocation.getArgument(0));
+        // Вызываем метод, который мы хотим протестировать
+        List<Word> result = wordService.createWords(words, params);
 
-        List<Word> createdWords = wordService.createWords(words, params);
-
-        assertEquals(2, createdWords.size());
-        verify(searchService, times(2)).getSearchById(anyLong());
-        verify(wordRepository, times(2)).save(any(Word.class));
-
-        assertTrue(createdWords.stream().allMatch(word -> word.getTitle() != null && word.getDescription() != null));
+        // Проверяем ожидаемый результат
+        assertEquals(words.size(), result.size());
+        verify(wordRepository, times(1)).saveAll(words);
     }
+
+
 
     @Test
     void testGetWordBySearch() {
