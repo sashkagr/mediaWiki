@@ -1,0 +1,40 @@
+# Версия файла конфигурации Railway
+version = "1.0"
+
+# Описание вашего сервиса
+[[services]]
+# Имя вашего сервиса (в данном случае это ваше приложение)
+name = "app"
+
+# Команда, которая будет выполняться для запуска вашего приложения
+command = "java -jar app.jar"
+
+# Переменные окружения, необходимые для вашего приложения
+[services.env]
+SPRING_APPLICATION_JSON = '{
+"spring.datasource.url"  : "jdbc:mysql://mysql-db:3306/mediawiki",
+"spring.datasource.username" : "root",
+"spring.datasource.password" : "root",
+"spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQL8Dialect",
+"spring.jpa.hibernate.ddl-auto" : "update"
+}'
+
+# Описание вашей базы данных
+[[services]]
+# Имя вашей базы данных
+name = "mysql-db"
+
+# Docker-образ для вашей базы данных
+image = "mysql:latest"
+
+# Переменные окружения, необходимые для вашей базы данных
+[services.env]
+MYSQL_ROOT_PASSWORD = "root"
+MYSQL_DATABASE = "mediawiki"
+
+# Описание портов, которые нужно открыть
+[ports]
+# Порт для вашего приложения
+app = 8080
+# Порт для вашей базы данных
+mysql-db = 3307
