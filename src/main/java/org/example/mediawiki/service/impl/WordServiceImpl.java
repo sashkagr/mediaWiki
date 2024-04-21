@@ -42,12 +42,12 @@ public class WordServiceImpl implements Service<Word> {
                 }
             }
         }
-        words.stream()
+        List<Word> filteredWords = words.stream()
                 .filter(word -> word.getTitle() != null && word.getDescription() != null)
                 .toList();
+        wordRepository.saveAll(filteredWords);
 
-        wordRepository.saveAll(words);
-        return words;
+        return filteredWords;
     }
 
     @Transactional
