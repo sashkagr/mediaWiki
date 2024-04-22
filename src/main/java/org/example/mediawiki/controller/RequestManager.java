@@ -102,6 +102,7 @@ public class RequestManager {
                 if (words.isEmpty()) {
                     log.info("No words found for '{}'. Attempting to retrieve from pages", name);
                     words = wordService.getWordsFromPages(search);
+                    currentSearch = search;
                     model.addAttribute(PAGES, words);
                     return PAGES;
                 }
