@@ -218,7 +218,7 @@ public class RequestManager {
         return "definition";
     }
 
-    @PostMapping("/add")
+    @PostMapping("/add/")
     public String createWord(@RequestParam(required = false) Long id,
                              @RequestParam String title,
                              @RequestParam String description) {

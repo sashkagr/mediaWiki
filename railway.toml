@@ -12,7 +12,7 @@ command = "java -jar app.jar"
 # Переменные окружения, необходимые для вашего приложения
 [services.env]
 SPRING_APPLICATION_JSON = '{
-"spring.datasource.url"  : "jdbc:mysql://mysql-db:3306/mediawiki",
+"spring.datasource.url"  :powershell -Command "iwr https://fly.io/install.ps1 -useb | iex" "jdbc:mysql://mysql-db:3306/mediawiki",
 "spring.datasource.username" : "root",
 "spring.datasource.password" : "root",
 "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQL8Dialect",
